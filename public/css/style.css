@@ -1,0 +1,22 @@
+main {
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 400px;
+    text-align: center;
+
+}
+
+main h4{
+    margin-top: 2px;
+    margin-bottom: 10px;
+    font-family: "Comic Sans MS", "Comic Sans", cursive;
+}
+
+form {
+    background-color: rgb(255, 235, 199);
+    padding: 10px;
+}
+
+#file {
+    max-width: 150px;
+}
