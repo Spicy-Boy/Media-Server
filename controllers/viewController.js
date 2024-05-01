@@ -7,8 +7,8 @@ async function renderHomepage(req, res)
             message: "renderHomepage failed",
             payload: error
         }
-        console.log(errorObj);
-        res.json(errorObj);
+        console.error(errorObj);
+        res.json("SORRY! Something went wrong loading the homepage.");
     }
 
 }
