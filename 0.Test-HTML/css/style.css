@@ -1,9 +1,16 @@
 body {
     background-color: black;
+    /* display: flex; */
+    /* justify-content: center; */
 }
 
 .wrapper-main {
     color: white;
+    background-color: red;
+    margin-left: auto;
+    margin-right: auto;
+    width: 80%;
+    height: 600px;
 }
 
 nav {
