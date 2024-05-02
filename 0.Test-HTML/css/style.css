@@ -13,9 +13,9 @@ body {
     height: 600px;
 }
 
-nav {
+/* nav {
 
-}
+} */
 nav ul {
     list-style: none;
     padding: 0;
@@ -25,4 +25,24 @@ nav li {
     margin: 0;
     padding: 0;
     display: inline;
+}
+
+header {
+    
+}
+
+/* anna portrait sprite is 48 px */
+.anna-portrait {
+    width: 192px;
+    /* max-height: 125px; */
+    float: left;
+
+    image-rendering: pixelated;
+    image-rendering: -moz-crisp-edges;
+    image-rendering: crisp-edges;
+}
+
+
+header h2 {
+    font-family: 'Adventure ReQuest', "Comic Sans MS", "Comic Sans", sans-serif;
 }
