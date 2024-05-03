@@ -2,15 +2,90 @@ body {
     background-color: black;
     /* display: flex; */
     /* justify-content: center; */
+    margin: 0;
+    padding: 0;
 }
 
-.wrapper-main {
-    color: white;
-    background-color: red;
+.tienda-wrapper {
+    background-image: url("../images/sprites/secret-shop-background.png");
+    background-size: 80%;
+
+    height: 100vh;
+}
+
+header {
+    /* margin-top: 100px; */
+    max-width: 1000px;
     margin-left: auto;
     margin-right: auto;
-    width: 80%;
-    height: 600px;
+    /* padding-top: 25px; */
+
+    display: flex;
+}
+
+.title {
+    font-family: 'Adventure ReQuest', "Comic Sans MS", "Comic Sans", sans-serif;
+
+    color: white;
+
+    padding-left: 70px;
+    margin-top: 60px;
+
+}
+.title h2 {
+    text-align: center;
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.anna-portrait {
+    width: 192px;
+    /* max-height: 125px; */
+    /* float: left; */
+
+    image-rendering: pixelated;
+    image-rendering: -moz-crisp-edges;
+    image-rendering: crisp-edges;
+
+    box-shadow: -10px 0 10px rgba(0, 0, 0, 0.5), 10px 0 10px rgba(0, 0, 0, 0.5); /* Drop shadow to left and right */
+}
+
+footer {
+    height: 25px;
+    background-color: blue;
+}
+
+.sneaky-anna {
+    display: block;
+}
+
+.sneaky-top {
+    position: fixed;
+    top: 0px;
+    left: 5%;
+    z-index: -1;
+    color: white;
+    padding: 0;
+    margin: 0;
+}
+
+
+
+/* DISCARDED ISH vvv */
+.la-tienda {
+    background-image: url("../images/sprites/secret-shop-background.png");
+    background-size: 80%;
+    position: absolute;
+    top: 0px;
+    width: 100%;
+
+    color: white;
+    /* background-color: red; */
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 25px;
+    /* width: 80%; */
+    /* height: 300px; */
 }
 
 /* nav {
@@ -27,22 +102,5 @@ nav li {
     display: inline;
 }
 
-header {
-    
-}
-
 /* anna portrait sprite is 48 px */
-.anna-portrait {
-    width: 192px;
-    /* max-height: 125px; */
-    float: left;
 
-    image-rendering: pixelated;
-    image-rendering: -moz-crisp-edges;
-    image-rendering: crisp-edges;
-}
-
-
-header h2 {
-    font-family: 'Adventure ReQuest', "Comic Sans MS", "Comic Sans", sans-serif;
-}
