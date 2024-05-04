@@ -223,6 +223,11 @@ header {
     #selection-menu img {
         width: 50%;
     }
+    #pointer {
+        position: absolute;
+        z-index: 9999;
+        width: 50%;
+    }
 
     .tienda-sidebar {
         margin-top: 50px;
