@@ -7,33 +7,68 @@
     <link rel="stylesheet" href="css/style.css">
 
     <link href="https://fonts.cdnfonts.com/css/adventure-request" rel="stylesheet">
+    
 </head>
 <body>
     <img src="./images/bboy.png" class="sneaky-top" style="width: 100px">
     <p class="sneaky-top" style="left: 50%; padding: 5px">Can you taste it?</p>
 
     <div class="tienda-wrapper">
-        <div>hi</div>
-        <!-- <div>hello</div> -->
-        <div>super!</div>
-        <header>
-            <img src="./images/sprites/anna-face.png" class="anna-portrait">
-            <div class="title"> 
-                <h2>Welcome to</h2>
-                <h2>The Secret Shop</h2>
+
+
+        <div class="tienda-main">
+            <br>
+            <header>
+                <img src="./images/sprites/anna-face.png" class="anna-portrait" id="anna-portrait">
+                <div class="title">
+                    <h1 class="welcome-desktop">Welcome to</h1>
+                    <h1 class="welcome-desktop">The Secret Shop</h1>
+                    <h1 class="welcome-mobile">La Tienda Secreta</h1>
+                </div>
+            </header>
+            <div id="selection-menu">
+                <ul>
+                    <li>
+                        <a href="#"><img src="./images/sprites/sprite-text-movies.png" alt="Link to movies!"></a>
+                    </li>
+                    <li>
+                        <a href="#"><img src="./images/sprites/sprite-text-anime.png" alt="Link to anime!"></a>
+                    </li>
+                </ul>
             </div>
-        </header>
+        </div>
+
+        <!-- <div class="tienda-sidebar">
+            <div style="text-align: center;">
+                <h3>Latest Uploads</h3>
+            </div>
+            <ul>
+                <li>HELLO</li>
+                <li>hi hi hi</li>
+            </ul>
+        </div> -->
 
 
     </div>
     
     <img src="./images/sprites/cheeky.png" class="sneaky-anna">
 
-    <!-- <footer>
-        (DO NOT DISTRIBUTE)
-    </footer> -->
+    
+    <script>
+        // anna hover smile script
+        let annaPortrait = document.getElementById('anna-portrait');
+        annaPortrait.addEventListener("mouseenter", (event) => {
+            annaPortrait.src="./images/sprites/anna-face-wink.png";
+        });
+        annaPortrait.addEventListener("mouseleave", () => {
+            annaPortrait.src="./images/sprites/anna-face.png";
+        });
+    </script>
 
+    <script>
+        // Movie hover script
 
+    </script>
 
 </body>
 </html>
