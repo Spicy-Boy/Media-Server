@@ -18,7 +18,10 @@ body {
     display: flex;
     flex-direction: column;
 }
-#selection-menu ul > li:not(:first-child) {
+/* #selection-menu ul > li:not(:first-child) {
+    margin-top: 15px;
+} */
+#selection-menu > a:not(:first-child) {
     margin-top: 15px;
 }
 #selection-menu li {
@@ -27,6 +30,17 @@ body {
     display: inline;
 
     font-family: "Comic Sans MS", "Comic Sans", sans-serif;
+}
+#pointer{
+    position: absolute;
+    z-index: 9999;
+
+}
+#pointer img{
+    width: 60px;
+    image-rendering: pixelated;
+    image-rendering: -moz-crisp-edges;
+    image-rendering: crisp-edges;
 }
 
 
@@ -91,6 +105,9 @@ header {
 
     max-width: 300px;
 
+    display: flex;
+    flex-direction: column;
+
     /* height: 2000px; */
     
     margin-left: auto;
@@ -110,6 +127,7 @@ header {
 /* vv pixelated text form FE font are 60px X 13px */
 #selection-menu img {
     width: 200px;
+    /* padding-left: 200px; */
 }
 
 .sneaky-anna {
@@ -223,11 +241,7 @@ header {
     #selection-menu img {
         width: 50%;
     }
-    #pointer {
-        position: absolute;
-        z-index: 9999;
-        width: 50%;
-    }
+
 
     .tienda-sidebar {
         margin-top: 50px;
