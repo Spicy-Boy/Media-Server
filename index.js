@@ -5,6 +5,10 @@ const logger = require("morgan");
 const path = require("path");
 const methodOverride = require("method-override");
 
+//mongodb connection
+// const connectToMongoDB = require('./db/mongodb');
+require('dotenv').config();
+
 //app middleware vv
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));

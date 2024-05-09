@@ -1,18 +1,32 @@
-async function renderHomepage(req, res)
+async function renderHomePage(req, res)
 {
     try {
-        res.render("homepage");
+        res.render("homePage");
     } catch (error) {
         let errorObj = {
-            message: "renderHomepage failed",
+            message: "renderHomePage failed",
             payload: error
         }
         console.error(errorObj);
-        res.json("SORRY! Something went wrong loading the homepage.");
+        res.json("SORRY! Something went wrong loading the homePage.");
     }
+}
 
+async function renderLoginPage(req, res)
+{
+    try {
+        res.render("loginPage");
+    } catch (error) {
+        let errorObj = {
+            message: "renderLoginPage failed",
+            payload: error
+        }
+        console.error(errorObj);
+        res.json("SORRY! Something went wrong loading the loginPage.");
+    }
 }
 
 module.exports = {
-    renderHomepage
+    renderHomePage,
+    renderLoginPage
 }

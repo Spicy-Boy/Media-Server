@@ -1,22 +1,392 @@
-main {
+/* body {
+    
+} */
+
+.tienda-body {
+    background-color: black;
+    /* display: flex; */
+    /* justify-content: center; */
+    margin: 0;
+    padding: 0;
+
+    background-image: url("../images/sprites/secret-shop-background.png");
+    background-size: 100%;
+}
+
+.entrance {
+    background-color: #6f6078;
+
+    background-image: url("../images/sprites/tienda-secreta-map.png");
+    background-repeat: no-repeat;
+
+    display: flex;
+    flex-direction: column;
+}
+
+/* LOGIN PAGE */
+.literal-space-filler {
+    min-height: 35vh;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+
+    image-rendering: pixelated;
+    image-rendering: -moz-crisp-edges;
+    image-rendering: crisp-edges;
+}
+
+.literal-space-filler form {
+    background-color: rgb(137, 137, 137);
+
+    border: 4px groove;
+    /* display: flex;
+
+    justify-content: center;
+    align-items: center;
+    flex-direction: column; */
+
+    padding: 15px;
+
+    width: 200px;
+
+    font-family: "Comic Sans MS", "Comic Sans", sans-serif;
+
+    text-align: center;
+}
+.form-group label {
+    color: white; 
+
+    display: inline-block;
+    width: 75px; /* Adjust the width as needed */
+    text-align: left;
+    margin-right: 10px;
+}
+#login-button{
+    margin-top: 25px;
+    width: 50px;
+}
+
+/* TIENDA STOREFRONT PAGE (home) */
+#selection-menu ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+
+    display: flex;
+    flex-direction: column;
+}
+/* #selection-menu ul > li:not(:first-child) {
+    margin-top: 15px;
+} */
+#selection-menu > a:not(:first-child) {
+    margin-top: 15px;
+}
+#selection-menu li {
+    margin: 0;
+    padding: 0;
+    display: inline;
+
+    font-family: "Comic Sans MS", "Comic Sans", sans-serif;
+}
+#pointer{
+    position: absolute;
+    z-index: 9999;
+
+}
+#pointer img{
+    width: 60px;
+    image-rendering: pixelated;
+    image-rendering: -moz-crisp-edges;
+    image-rendering: crisp-edges;
+}
+
+
+
+/**** Mobile View / Slim type monitor ****/
+header {
+    /* margin-top: 100px; */
+    max-width: 1000px;
     margin-left: auto;
     margin-right: auto;
-    max-width: 400px;
+    /* padding-top: 25px; */
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+.title {
+    font-family: 'Adventure ReQuest', "Comic Sans MS", "Comic Sans", sans-serif;
+
+    color: white;
+
     text-align: center;
 
 }
-
-main h4{
-    margin-top: 2px;
-    margin-bottom: 10px;
-    font-family: "Comic Sans MS", "Comic Sans", cursive;
+.title h2 {
+    text-align: center;
+    margin-top: 0;
+    margin-bottom: 0;
+}
+.title h1 {
+    text-align: center;
+    margin-top: 0;
+    margin-bottom: 0;
+}
+.welcome-desktop {
+    display: none;
+}
+.welcome-mobile {
+    display: inline;
 }
 
-form {
-    background-color: rgb(255, 235, 199);
-    padding: 10px;
+.tienda-wrapper {
+
+    height: 100%;
 }
 
-#file {
-    max-width: 150px;
+.anna-portrait {
+    display: none;
+
+    width: 192px;
+
+    image-rendering: pixelated;
+    image-rendering: -moz-crisp-edges;
+    image-rendering: crisp-edges;
+
+    order: 1;
 }
+
+#selection-menu {
+    margin-top: 15px;
+
+    max-width: 300px;
+
+    display: flex;
+    flex-direction: column;
+
+    /* height: 2000px; */
+    
+    margin-left: auto;
+    margin-right: auto;
+
+
+    padding: 25px;
+
+    background-image: url("../images/sprites/purpletiles.png");
+    background-size: 75%;
+    image-rendering: pixelated;
+    image-rendering: -moz-crisp-edges;
+    image-rendering: crisp-edges;
+    border: 4px solid #e5dfb3;
+    box-shadow: -10px 0 10px rgba(0, 0, 0, 0.5), 10px 0 10px rgba(0, 0, 0, 0.5);
+}
+/* vv pixelated text form FE font are 60px X 13px */
+#selection-menu img {
+    width: 200px;
+    /* padding-left: 200px; */
+}
+
+.sneaky-anna {
+    display: none;
+}
+
+.sneaky-top {
+    display: none;
+}
+
+.tienda-sidebar {
+    display: none;
+}
+
+
+/* --- tablet >_< view --- */
+
+@media (min-width: 800px) {
+
+    .tienda-body {
+        background-image: none;
+    }
+
+    /* login page tab/des */
+    .entrance {
+        /* background-color: red; */
+        flex-direction: row;
+
+        justify-content: center;
+        align-items: center;
+        /* background-color: #2c2c2c; */
+        background-color: #6f6078;
+    }
+    .literal-space-filler {
+        
+        min-height: 87vh;
+        width: 50%;
+        flex-grow: 1;
+    }
+    .literal-space-filler form {
+        width: 300px;
+    }
+    .literal-space-filler img {
+        margin-top: 25px;
+    }
+
+
+    #selection-menu {
+        max-width: 600px;
+    }
+
+    .anna-portrait {
+
+        order: 2;
+        display: inline;
+        margin-top: 20px;
+
+        width: 192px;
+    
+        image-rendering: pixelated;
+        image-rendering: -moz-crisp-edges;
+        image-rendering: crisp-edges;
+    
+        box-shadow: -10px 0 10px rgba(0, 0, 0, 0.5), 10px 0 10px rgba(0, 0, 0, 0.5); /* Drop shadow to left and right */
+
+    }
+    /* anna portrait sprite is 48 px */
+}
+
+/* ` ` [  ] DESKTOP x VIEW [  ] ` ` */
+
+@media (min-width: 1000px) {
+    body {
+        background-image: none;
+    }
+
+    header {
+        justify-content: start;
+        align-items: start;
+
+        flex-direction: row;
+
+        max-width: 800px;
+        
+    }
+
+    .tienda-wrapper {
+        background-image: url("../images/sprites/secret-shop-background.png");
+        background-size: 80%;
+    
+        height: 100vh;
+
+        display: flex;
+    }
+
+    .tienda-main {
+        flex-basis: 90%
+    }
+
+    .anna-portrait {
+        margin-top: 0px;
+        order: 0;
+    }
+
+    .title {
+        font-family: 'Adventure ReQuest', "Comic Sans MS", "Comic Sans", sans-serif;
+    
+        color: white;
+    
+        padding-left: 125px;
+        margin-top: 60px;
+
+        display: flex;
+        flex-direction: column;
+    
+    }
+    .title h2 {
+        margin-top: 0;
+        margin-bottom: 0;
+    }
+    .title h1 {
+        margin-top: 0;
+        margin-bottom: 0;
+    }
+    .welcome-desktop {
+        display: inline;
+    }
+    .welcome-mobile {
+        display: none;
+        font-size: 16px;
+    }
+
+    #selection-menu {
+        /* background-color: red; */
+        margin-top: 100px;
+
+    }
+
+    #selection-menu img {
+        width: 50%;
+    }
+
+
+    .tienda-sidebar {
+        margin-top: 50px;
+        display: inline;
+
+        background-color: black;
+        color: white;
+
+        margin-right: 150px;
+
+        max-height: 300px;
+        width: 300px;
+
+        padding: 5px;
+
+        font-family: "Comic Sans MS", "Comic Sans", sans-serif;
+
+        border: 4px solid #000020;
+        box-shadow: -10px 0 10px rgba(0, 0, 0, 0.5), 10px 0 10px rgba(0, 0, 0, 0.5);
+    
+    }    
+    .tienda-sidebar h3 {
+        margin: 0;
+        padding: 0;
+    }
+    .tienda-sidebar ul {
+
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    
+        display: flex;
+        flex-direction: column;
+    }
+    .tienda-sidebar li {
+        margin: 0;
+        padding: 0;
+        /* display: inline; */
+    
+        font-family: "Comic Sans MS", "Comic Sans", sans-serif;
+    }
+
+    .sneaky-top {
+        position: fixed;
+        top: 0px;
+        left: 5%;
+        z-index: -1;
+        color: white;
+        padding: 0;
+        margin: 0;
+    }
+
+    .sneaky-anna {
+        display: block;
+    }
+}
+
+
+
+
+

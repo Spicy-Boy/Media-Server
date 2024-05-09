@@ -4,23 +4,68 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>UPLOAD TEST</title>
+    <title>LA TIENDA</title>
 
     <link rel="icon" type="image/x-icon" href="images/favicon.ico">
 
     <link rel="stylesheet" type="text/css" href="css/style.css">
 </head>
 
-<body>
-    <main>
-        <form action="/file/" enctype="multipart/form-data" method="post">
-            <h4>Suicune Mail Service</h4>
-            <img src="images/245.png">
+<body class="tienda-body">
+    <img src="./images/bboy.png" class="sneaky-top" style="width: 100px">
+    <p class="sneaky-top" style="left: 50%; padding: 5px">Can you taste it?</p>
+
+    <div class="tienda-wrapper">
+
+        <div class="tienda-main">
+            <br>
             
-            <h2>HI MARK</h2>
-        </form>
+            <header>
+                <img src="./images/sprites/anna-face.png" class="anna-portrait" id="anna-portrait">
+                <div class="title">
+                    <h1 class="welcome-desktop">Welcome to</h1>
+                    <h1 class="welcome-desktop">The Secret Shop</h1>
+                    <h1 class="welcome-mobile">La Tienda Secreta</h1>
+                </div>
+            </header>
 
+            <div id="selection-menu">
+                <a href="#"><img src="./images/sprites/sprite-text-movies.png" alt="Link to movies!"></a>
+                <a href="#"><img src="./images/sprites/sprite-text-anime.png" alt="Link to anime!"></a>
+            </div>
 
+        </div>
 
-    </main>
+        <!-- <div class="tienda-sidebar">
+            <div style="text-align: center;">
+                <h3>Latest Uploads</h3>
+            </div>
+            <ul>
+                <li>HELLO</li>
+                <li>hi hi hi</li>
+            </ul>
+        </div> -->
+
+    </div>
+    <div id="pointer">
+        <img src="./images/sprites/pointer.png">
+    </div>
+
+    <img src="./images/sprites/cheeky.png" class="sneaky-anna">
+
+    <script>
+        // anna hover smile script
+        let annaPortrait = document.getElementById('anna-portrait');
+
+        annaPortrait.addEventListener("mouseenter", (event) => {
+            annaPortrait.src="./images/sprites/anna-face-wink.png";
+        });
+
+        annaPortrait.addEventListener("mouseleave", () => {
+            annaPortrait.src="./images/sprites/anna-face.png";
+        });
+    </script>
+
+    <script src="./js/setPointerMenuHover.js"></script>
 </body>
+</html>
