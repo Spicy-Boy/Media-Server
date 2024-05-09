@@ -15,7 +15,7 @@ async function renderHomePage(req, res)
 async function renderLoginPage(req, res)
 {
     try {
-        res.render("loginPage");
+        res.render("loginPage", { loginMessage: null });
     } catch (error) {
         let errorObj = {
             message: "renderLoginPage failed",

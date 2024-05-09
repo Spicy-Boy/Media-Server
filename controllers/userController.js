@@ -1,7 +1,7 @@
 const User = require('../models/userModel')
 const argon2 = require('argon2')
 // non-snippet JWT
-const jwt = require('jsonwebtoken')
+// const jwt = require('jsonwebtoken')
 require('dotenv').config()
 
 async function createUser(req, res) {
@@ -10,19 +10,13 @@ async function createUser(req, res) {
         let userPassword = req.body.password
 
         // encrypt password
-        const sentPassword = await argon2.hash(userPassword)
+        const encryptedPassword = await argon2.hash(userPassword)
 
         // generate new user document
         let newUser = {
             username: req.body.username,
-            password: sentPassword
+            password: encryptedPassword
         }
-
-        const token = jwt.sign(
-            { username: newUser.username },
-            process.env.JWT_SECRET,
-            { expiresIn: '30d' }
-        );
 
         // insert document into the database
         await User.create(newUser)
