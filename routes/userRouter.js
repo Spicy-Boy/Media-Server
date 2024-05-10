@@ -1,21 +1,16 @@
 const router = require('express').Router()
 
 const {
-    createUser,
-    verifyPassword,
-    updatePassword
+    loginUser,
+    logoutUser
 } = require('../controllers/userController')
 
 // requires you to be logged in
 const authMiddleware = require('../middlewares/authMiddleware');
 
-// localhost:3001/user/createUser
-router.post('/createUser', createUser)
+// localhost:PORT/api/user/loginUser
+router.post('/login', loginUser);
 
-// localhost:3001/user/verifyPassword
-router.post('/verifyPassword', verifyPassword)
-
-// localhost:3001/user/updatePassword
-router.put('/updatePassword', authMiddleware, updatePassword)
+router.post('/logout', logoutUser)
 
 module.exports = router

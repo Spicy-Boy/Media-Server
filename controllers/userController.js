@@ -4,129 +4,68 @@ const argon2 = require('argon2')
 // const jwt = require('jsonwebtoken')
 require('dotenv').config()
 
-async function createUser(req, res) {
-    try {
-        // temporarily hold password
-        let userPassword = req.body.password
+async function loginUser(req, res)
+{
+    try
+    {
+        //the request must contain a username or password
+        const {username, password} = req.body;
 
-        // encrypt password
-        const encryptedPassword = await argon2.hash(userPassword)
+        //find the target user based on entered username
+        let foundUser = await User.findOne({username});
 
-        // generate new user document
-        let newUser = {
-            username: req.body.username,
-            password: encryptedPassword
+        //verify the password is correct
+        const isCorrectPassword = await argon2.verify(foundUser.password, password);
+
+        if (isCorrectPassword) 
+        {
+            console.log(username+' successfully verified password!');
+            //if password matches, set session userId to the database's secret user ID...
+            req.session.userId = foundUser._id;
+            //this means, if the _id is discovered, a user could impersonate a valid session!
+
+            res.redirect('/');
+        } else {
+            res.json({
+                message: "function excecuted properly",
+                payload: "Password could not be verified.. :) TRY AGAIN"
+            });
         }
 
-        // insert document into the database
-        await User.create(newUser)
-
-        res.json({
-            message: 'success',
-            payload: newUser,
-            token
-        })
     } catch (error) {
         let errorObj = {
-            message: 'create user failure',
+            message: "loginUser failed",
             payload: error
         }
-
-        res.json(errorObj)
-        console.log(errorObj)
+        console.error(errorObj);
+        res.send("LOGIN FAILED :) TRY AGAIN");
     }
 }
 
-async function verifyPassword(req, res) {
-    try {
-        // hold username & password individually
-        let incomingUsername = req.body.username
-        let incomingPassword = req.body.password
+async function logoutUser(req, res)
+{
+    try
+    {
+        req.session.destroy( err => {
+            if (err)
+            {
+                res.redirect("/");
+            }
+            res.redirect("/login");
+        });
 
-        // find the target user
-        let foundUser = await User.findOne({ username: incomingUsername })
-
-        // compare passwords
-        const isCorrectPassword = await argon2.verify(foundUser.password, incomingPassword)
-
-        // respond based on password correctness
-        if (isCorrectPassword) {
-            const token = jwt.sign(
-                { username: foundUser.username },
-                process.env.JWT_SECRET,
-                { expiresIn: '30d' });
-
-            res.json({
-                message: 'verify password success',
-                payload: 'logged in!',
-                token
-            })
-        } else {
-            res.json({
-                message: 'verify password success',
-                payload: 'Please check your password and try again'
-            })
-        }
+        res.clearCookie("Session-ID"); //name of session cookie set in index.js
     } catch (error) {
         let errorObj = {
-            message: 'verify password failure',
+            message: "logoutUser failed",
             payload: error
         }
-
-        res.json(errorObj)
-        console.log(errorObj)
-    }
-}
-
-async function updatePassword(req, res) {
-    try {
-        // capture all necessary info
-        const { username, oldPassword, newPassword } = req.body
-
-        // Target the correct user
-        let foundUser = await User.findOne({ username: username })
-
-        // Verify the original password is correct
-        let isCorrectPassword = await argon2.verify(foundUser.password, oldPassword)
-
-        // Double check that the new password isn't the same as the old one
-        let isSamePassword = await argon2.verify(foundUser.password, newPassword)
-
-        // respond accordingly
-        if (isCorrectPassword && !isSamePassword) {
-            const newSafePassword = await argon2.hash(newPassword)
-
-            foundUser.password = newSafePassword
-
-            await foundUser.save()
-            res.json({
-                message: 'update password success',
-                payload: 'Your password has been updated!'
-            })
-        } else if (isSamePassword) {
-            res.json({
-                message: 'update password success',
-                payload: 'New password must be different from the old password'
-            })
-        } else {
-            res.json({
-                message: 'update password success',
-                payload: 'Original password is incorrect, please check the spelling and try again'
-            })
-        }
-    } catch (error) {
-        let errorObj = {
-            message: 'update password failure',
-            payload: error
-        }
-
-        res.json(errorObj)
-        console.log(errorObj)
+        console.error(errorObj);
+        res.send("LOGOUT FAILED :( TRY AGAIN?");
     }
 }
 
 module.exports = {
-    createUser,
-    verifyPassword,
-    updatePassword
+    loginUser,
+    logoutUser
 }

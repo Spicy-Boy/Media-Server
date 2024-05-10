@@ -18,22 +18,21 @@
     </div>
 
     <div class="literal-space-filler">
-        <%if (loginMessage) {%>
-        <h1><%=loginMessage%></h1>
-        <%}%>
+
         <img src="./images/sprites/Nils_battle_animation.webp">
-        <form>
+
+        <form action="/api/user/login" method="post">
 
             <div class="form-group">
                 <label for="username">Username</label>
-                <input type="text" id="username" name="username" placeholder="" value="">
+                <input type="text" id="username" name="username" placeholder="" value="" required>
             </div>
 
             <br>
 
             <div class="form-group">
                 <label for="password">Password</label>
-                <input type="password" id="password" name="password" placeholder="" value="">
+                <input type="password" id="password" name="password" placeholder="" value="" required>
             </div>
 
             <input type="submit" value="Login" id="login-button">

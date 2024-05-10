@@ -206,10 +206,6 @@ header {
 
 @media (min-width: 800px) {
 
-    .tienda-body {
-        background-image: none;
-    }
-
     /* login page tab/des */
     .entrance {
         /* background-color: red; */
@@ -260,6 +256,10 @@ header {
 
 @media (min-width: 1000px) {
     body {
+        background-image: none;
+    }
+    
+    .tienda-body {
         background-image: none;
     }
 

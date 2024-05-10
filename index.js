@@ -16,27 +16,39 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use(methodOverride('_method'));
 
-require('dotenv').config()
-
-/* ~ R O U T E S ~ */
-const viewRouter = require("./routes/viewRouter");
-app.use("/", viewRouter);
+require('dotenv').config();
 
 // LOGIN session Middleware
 // (if using express-session....... O_O)
 const session = require('express-session');
 app.use(session(
     {
+        name: "Session-ID",
         secret: process.env.SECRET_SESSION_KEY,
         resave: false,
         saveUninitialized: true,
         cookies: 
         {
+            sameSite: true, // in theory, only accept the session cookie from my own site
             maxAge: 24*60*60*1000 // 24 hours before logged out automagically
         }
     }
 ));
 
+// AARON's custom user middleware!
+
+// <%if (loginMessage) {%>
+//     <h1><%=loginMessage%></h1>
+// <%}%>
+
+/* ~ R O U T E S ~ */
+const viewRouter = require("./routes/viewRouter");
+app.use("/", viewRouter);
+
+const userRouter = require("./routes/userRouter");
+app.use("/api/user", userRouter)
+
+/* && _ && */
 
 //mongodb connection
 const connectToMongoDB = require('./db/mongodb');
