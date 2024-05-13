@@ -5,6 +5,10 @@ const logger = require("morgan");
 const path = require("path");
 const methodOverride = require("method-override");
 
+require('dotenv').config();
+
+console.log(process.env.MAIL_DELIVERY_LOCATION);
+
 //app middleware vv
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
@@ -15,8 +19,6 @@ app.use(logger("dev"));
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use(methodOverride('_method'));
-
-require('dotenv').config();
 
 // LOGIN session Middleware
 // (if using express-session....... O_O)
@@ -47,6 +49,9 @@ app.use("/", viewRouter);
 
 const userRouter = require("./routes/userRouter");
 app.use("/api/user", userRouter)
+
+const suicuneRouter = require("./routes/suicuneRouter");
+app.use("/api/suicune", suicuneRouter);
 
 /* && _ && */
 
