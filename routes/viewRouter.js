@@ -6,11 +6,14 @@ const {
 
 const {
     renderHomePage,
-    renderLoginPage
+    renderLoginPage,
+    renderSuicuneDeliveryPage
 } = require("../controllers/viewController");
 
 router.get("/", redirectLogin, renderHomePage);
 
 router.get("/login", renderLoginPage);
+
+router.get("/mail", redirectLogin, renderSuicuneDeliveryPage);
 
 module.exports = router;

@@ -26,7 +26,22 @@ async function renderLoginPage(req, res)
     }
 }
 
+async function renderSuicuneDeliveryPage(req, res)
+{
+    try {
+        res.render("suicuneDeliveryPage");
+    } catch (error) {
+        let errorObj = {
+            message: "renderLoginPage failed",
+            payload: error
+        }
+        console.error(errorObj);
+        res.json("SORRY! Something went wrong loading the Suicune Mail Delivery Service.");
+    }
+}
+
 module.exports = {
     renderHomePage,
-    renderLoginPage
+    renderLoginPage,
+    renderSuicuneDeliveryPage
 }
