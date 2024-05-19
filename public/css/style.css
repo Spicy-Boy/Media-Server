@@ -16,11 +16,28 @@
 .entrance {
     background-color: #6f6078;
 
-    background-image: url("../images/sprites/tienda-secreta-map.png");
-    background-repeat: no-repeat;
+    /* background-image: url("../images/sprites/tienda-secreta-map.png");
+    background-repeat: no-repeat; */
 
     display: flex;
     flex-direction: column;
+
+    padding: 0;
+    margin: 0;
+}
+.entrance-background-absolute {
+    position: absolute;
+    background-image: url("../images/sprites/tienda-secreta-map.png");
+    background-repeat: no-repeat;
+
+    z-index: -1;
+    
+    width: 75vh;
+    height: 75vh;
+
+    
+    padding: 0;
+    margin: 0;
 }
 
 /* LOGIN PAGE */
@@ -231,6 +248,11 @@ header {
 /* --- tablet >_< view --- */
 
 @media (min-width: 800px) {
+
+    .entrance-background-absolute {
+        top: 55px;
+        left: 35px;
+    }
 
     /* login page tab/des */
     .entrance {
