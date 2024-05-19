@@ -1,6 +1,10 @@
-/* Database Presentation Stles vvv */
+body {
+    margin: 0;
+    padding: 0;
+}
+/* Generic HEADER and DB Presentation Styles vvv */
 nav {
-    display: flex;
+    display: none;
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: space-between;
@@ -12,9 +16,48 @@ nav ul {
     /* width: 50%; */
 }
 nav li {
-    margin: 0;
     padding: 0;
-    display: inline;
+    display: inline-block;
+}
+/* nav li a {
+
+} */
+nav li div {
+    display: inline-block;
+    padding: 15px;
+    border: 3px outset purple;
+    background-color: black;
+
+    width: 75px;
+
+    text-align: center;
+    text-decoration: underline;
+
+    color: purple;
+}
+nav li div:hover {
+    background-color: rgb(192, 0, 0);
+    color: white;
+}
+.header-blue-keeper {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+
+    background-color: black;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+#blue-keeper {
+    image-rendering: pixelated;
+    image-rendering: -moz-crisp-edges;
+    image-rendering: crisp-edges;
+
+    margin-right: 15px;
+
+    min-height: 75px;
 }
 
 /* HOMEPAGE and BODY Styles vvv */
@@ -259,6 +302,11 @@ header {
 /* --- tablet >_< view --- */
 
 @media (min-width: 800px) {
+
+    /* generic page header */
+    nav {
+        display: flex;
+    }
 
     .entrance-background-absolute {
         top: 55px;
