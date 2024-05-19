@@ -4,8 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Movies</title>
+
+    <link rel="stylesheet" href="../public/css/style.css">
 </head>
-<body>
+<body class="media-index">
 
     <div class="header-blue-keeper">
         <a href="/tienda">
@@ -32,6 +34,64 @@
         </nav>
     </div>
 
-    
+
+    <div class="media-catalog-wrapper">
+        
+        <div class="tac flex-column margin-bottom-25">
+            <h1>Movie Database</h1>
+            <form action="/action_page.php">
+                <input type="text" placeholder="Search.." name="search">
+                <button type="submit"><i class="fa fa-search"></i></button>
+            </form>
+        </div>
+        <div class="flex-row">
+            <div class="hilda-christmas">
+                <img src="../public/images/sprites/cipherfe-secret-shop.png">
+            </div>
+            <div>
+                <h3 class="recent-uploads-header">Recent Uploads</h3>
+                <table>
+                <tr>
+                    <th>Title</th>
+                    <th>Release Date</th>
+                    <th>Genre</th>
+                    <th>Size</th>
+                </tr>
+                <tr>
+                    <td>Alfreds Futterkiste</td>
+                    <td>Maria Anders</td>
+                </tr>
+                <tr>
+                    <td>Centro comercial Moctezuma</td>
+                    <td>Francisco Chang</td>
+                </tr>
+                <tr>
+                    <td>Ernst Handel</td>
+                    <td>Roland Mendel</td>
+                </tr>
+                <tr>
+                    <td>Island Trading</td>
+                    <td>Helen Bennett</td>
+                </tr>
+                <tr>
+                    <td>Laughing Bacchus Winecellars</td>
+                    <td>Yoshi Tannamuri</td>
+                </tr>
+                <tr>
+                    <td>Magazzini Alimentari Riuniti</td>
+                    <td>Giovanni Rovelli</td>
+                </tr>
+                </table>
+            </div>
+        </div>
+
+    </div>
+
+    <script src="../public/js/setHoverEasterEggs.js"></script>
+
+    <script>
+        changeImgOnHover("blue-keeper", "../public/images/sprites/man-keeper.png");
+    </script>
+
 </body>
 </html>
