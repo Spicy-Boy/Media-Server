@@ -102,6 +102,10 @@ nav li div:hover {
     max-width: 500px;
 }
 
+.search-container button:hover {
+background: #ccc;
+}
+
 /* table for presenting  */
 .recent-uploads-header {
     text-align: center;
