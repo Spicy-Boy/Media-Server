@@ -1,6 +1,23 @@
-/* body {
-    
-} */
+/* Database Presentation Stles vvv */
+nav {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    /* width: 50%; */
+}
+nav li {
+    margin: 0;
+    padding: 0;
+    display: inline;
+}
+
+/* HOMEPAGE and BODY Styles vvv */
 
 .tienda-body {
     background-color: black;
@@ -119,8 +136,6 @@
     image-rendering: crisp-edges;
 }
 
-
-
 /**** Mobile View / Slim type monitor ****/
 header {
     /* margin-top: 100px; */
@@ -219,7 +234,6 @@ header {
 }
 
 /* SUICUNE Styles ;p */
-
 .suicune-main {
     margin-left: auto;
     margin-right: auto;
@@ -227,20 +241,17 @@ header {
     text-align: center;
 
 }
-
 .suicune-main h4{
     margin-top: 2px;
     margin-bottom: 10px;
     font-family: "Comic Sans MS", "Comic Sans", cursive;
 }
-
 .suicune-form {
     background-color: rgb(255, 235, 199);
     padding: 10px;
 
     border: 4px groove;
 }
-
 #file {
     max-width: 150px;
 }
