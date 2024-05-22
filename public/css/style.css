@@ -99,24 +99,33 @@ nav li div:hover {
     display: flex;
     flex-direction: column;
 }
-/* .hilda-christmas {
-    
-} */
-.hilda-christmas img{
+.anime-girl {
+    order: 2
+}
+.anime-girl img{
     image-rendering: pixelated;
     image-rendering: -moz-crisp-edges;
     image-rendering: crisp-edges;
 
     vertical-align: text-bottom;
 
-    max-width: 500px;
+    max-width: 100%;
 }
 
 .search-container button:hover {
 background: #ccc;
 }
 
+.flex-dynamic {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+}
+
 /* table for presenting  */
+.recent-uploads {
+    margin-bottom: 15px;
+}
 .recent-uploads-header {
     text-align: center;
 }
@@ -445,6 +454,18 @@ header {
 @media (min-width: 1000px) {
     body {
         background-image: none;
+    }
+
+    .flex-dynamic {
+        flex-direction: row;
+        justify-content: center;
+    }
+    
+    .anime-girl {
+        order: -1;
+    }
+    .anime-girl img{
+        max-width: 500px;
     }
     
     .tienda-body {
