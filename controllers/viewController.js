@@ -32,7 +32,7 @@ async function renderSuicuneDeliveryPage(req, res)
         res.render("suicuneDeliveryPage");
     } catch (error) {
         let errorObj = {
-            message: "renderLoginPage failed",
+            message: "renderSuicuneDeliveryPage failed",
             payload: error
         }
         console.error(errorObj);
