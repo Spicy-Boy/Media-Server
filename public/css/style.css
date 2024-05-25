@@ -125,6 +125,14 @@ background: #ccc;
     text-align: center;
 }
 
+.genre-box {
+    background-color: red;
+}
+.genre-box h1 {
+    padding: 0;
+    margin: 0;
+}
+
 /* table for presenting  */
 .recent-uploads {
     margin-bottom: 15px;
