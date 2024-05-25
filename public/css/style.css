@@ -126,12 +126,16 @@ background: #ccc;
 }
 
 .genre-box {
-    background-color: red;
+    /* max-width: 1000px; */
+    background-color: #151515;
+    border-top: purple solid 3px;
+
 }
-.genre-box h1 {
-    padding: 0;
+.genre-box h2 {
+    padding: 3px;
     margin: 0;
 }
+
 
 /* table for presenting  */
 .recent-uploads {
@@ -616,6 +620,11 @@ header {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
+}
+
+.flex-centered {
+    justify-content: center;
+    align-items: center;
 }
 
 .flex-column {
