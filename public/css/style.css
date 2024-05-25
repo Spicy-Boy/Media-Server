@@ -91,6 +91,8 @@ nav li div:hover {
 
 .media-catalog-wrapper {
     max-width: 1000px;
+    /* height: 100vh; */
+
     margin: 0 auto 0 auto;
     padding: 0 15px 0 15px;
 
@@ -116,6 +118,7 @@ nav li div:hover {
 background: #ccc;
 }
 
+/* dynamic changes between row or column depending on size of device */
 .flex-dynamic {
     display: flex;
     flex-direction: column;
@@ -612,9 +615,20 @@ header {
     flex-direction: column;
 }
 
+.flex-grow-1 {
+    flex-grow: 1;
+}
+
 .margin-bottom-25 {
     margin-bottom: 25px;
 }
+
+.align-self-flex-end {
+    /* align-self: flex-end; */
+    margin-top: auto;
+}
+
+
 
 
 
