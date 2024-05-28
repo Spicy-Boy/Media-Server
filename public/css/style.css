@@ -11,7 +11,7 @@ body {
 }
 .header-blue-keeper {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     flex-wrap: wrap;
@@ -23,7 +23,9 @@ body {
     border-bottom: ridge 2px purple;
 }
 nav {
-    display: none;
+    display: flex;
+    /* display: none; */
+
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: space-between;
@@ -34,9 +36,20 @@ nav ul {
     margin: 0;
     /* width: 50%; */
 }
+
+#nav-desktop {
+    display: none;
+}
+#nav-mobile {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
 nav li {
     padding: 0;
     display: inline-block;
+    margin: 5px 5px 10px 5px;
 }
 /* nav li a {
 
@@ -403,9 +416,18 @@ header {
 @media (min-width: 800px) {
 
     /* generic page header */
-    nav {
-        display: flex;
+
+    .header-blue-keeper {
+        flex-direction: row;
     }
+
+    #nav-desktop {
+        display: block;
+    }
+    #nav-mobile {
+        display: none;
+    }
+
     #blue-keeper {
     
         margin-right: 15px;

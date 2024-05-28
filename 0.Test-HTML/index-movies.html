@@ -16,7 +16,8 @@
             <img src="../public/images/sprites/blue-keeper.png" id="blue-keeper">
         </a>
         <nav id="top">
-            <ul>
+            <!-- DESKTOP nav only visible by media query -->
+            <ul id="nav-desktop">
                 <li>
                     <a href=""><div>Movies</div></a>
                 </li>
@@ -31,6 +32,25 @@
                 </li>
                 <li>
                     <a href=""><div>Anime</div></a>
+                </li>
+            </ul>
+
+            <!-- MOBILE would be here vv -->
+            <ul id="nav-mobile">
+                <li>
+                    <button>Movies</button>
+                </li>
+                <li>
+                    <button>Books</button>
+                </li>
+                <li>
+                    <button>Music</button>
+                </li>
+                <li>
+                    <button>TV-Shows</button>
+                </li>
+                <li>
+                    <button>Anime</button>
                 </li>
             </ul>
         </nav>
@@ -100,9 +120,10 @@
         <br>
         <h2>Select by Genre</h2>
         <div class="flex-row flex-centered">
-            <a href="#">Action</a>
+            <button onclick="window.location.href='www.serebii.net'">Action</button>
+            <!-- <a href="#">Action</a>
             <a href="#">Adventure</a>
-            <a href="#">Drama</a>
+            <a href="#">Drama</a> -->
         </div>
 
     </div>
