@@ -1,7 +1,8 @@
 const router = require("express").Router();
 
 const {
-    redirectLogin
+    redirectLogin,
+    redirectIfLoggedIn
  } = require("../middlewares/authMiddleware");
 
 const {
@@ -12,7 +13,7 @@ const {
 
 router.get("/", redirectLogin, renderHomePage);
 
-router.get("/login", renderLoginPage);
+router.get("/login", redirectIfLoggedIn, renderLoginPage);
 
 router.get("/mail", redirectLogin, renderSuicuneDeliveryPage);
 

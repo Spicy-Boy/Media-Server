@@ -14,6 +14,18 @@ const redirectLogin = (req, res, next) => {
     }
 };
 
+const redirectIfLoggedIn = (req, res, next) => {
+    if (req.session.userId)
+    {
+        res.redirect("/");
+    }
+    else
+    {
+        return next();
+    }
+}
+
 module.exports = {
-    redirectLogin
+    redirectLogin,
+    redirectIfLoggedIn
 };
