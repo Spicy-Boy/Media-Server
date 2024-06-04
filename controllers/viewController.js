@@ -29,6 +29,7 @@ async function renderLoginPage(req, res)
 async function renderSuicuneDeliveryPage(req, res)
 {
     try {
+        
         res.render("suicuneDeliveryPage");
     } catch (error) {
         let errorObj = {
