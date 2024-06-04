@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BUSBOY TEST</title>
+
+    <link rel="icon" type="image/x-icon" href="images/favicon.ico">
+
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+</head>
+
+<body>
+    <main class="suicune-main">
+        <h4>BUSBOY TEST</h4>
+
+        <!-- form using multer's middleware -->
+        <form class="suicune-form" action="/api/suicune/uploadSingle" enctype="multipart/form-data" method="post">
+            <img src="./images/245.png">
+            <div>
+                <label for="file">File:</label>
+                <input id="file" name="uploaded_file" type="file">
+            </div>
+            <br>
+            <input type="submit" value="UPLOAD">
+            <br>
+        </form>
+
+    </main>
+</body>
+
+</html>

@@ -8,10 +8,13 @@ const {
  } = require("../middlewares/authMiddleware");
 
 const {
-    uploadOneFile
+    uploadOneFile,
+    uploadWithBusboy
 } = require("../controllers/suicuneController");
 
 // /api/suicune/uploadSingle
 router.post("/uploadSingle", redirectLogin, upload.single("uploaded_file"), uploadOneFile);
+
+router.post("/uploadBusboy", redirectLogin, uploadWithBusboy)
 
 module.exports = router;

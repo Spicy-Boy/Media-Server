@@ -8,7 +8,8 @@ const {
 const {
     renderHomePage,
     renderLoginPage,
-    renderSuicuneDeliveryPage
+    renderSuicuneDeliveryPage,
+    renderSuicuneDeliveryPageBusboy
 } = require("../controllers/viewController");
 
 router.get("/", redirectLogin, renderHomePage);
@@ -16,5 +17,7 @@ router.get("/", redirectLogin, renderHomePage);
 router.get("/login", redirectIfLoggedIn, renderLoginPage);
 
 router.get("/mail", redirectLogin, renderSuicuneDeliveryPage);
+
+router.get("/busboy", redirectLogin, renderSuicuneDeliveryPageBusboy)
 
 module.exports = router;

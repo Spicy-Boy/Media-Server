@@ -1,4 +1,5 @@
-
+const fs = require("fs");
+const path = require("path");
 
 async function uploadOneFile(req, res)
 {
@@ -6,6 +7,12 @@ async function uploadOneFile(req, res)
     res.redirect("/mail");
 }
 
+async function uploadWithBusboy(req, res)
+{
+
+}
+
 module.exports = {
-    uploadOneFile
+    uploadOneFile,
+    uploadWithBusboy
 };

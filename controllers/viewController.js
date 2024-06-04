@@ -39,9 +39,23 @@ async function renderSuicuneDeliveryPage(req, res)
         res.json("SORRY! Something went wrong loading the Suicune Mail Delivery Service.");
     }
 }
+async function renderSuicuneDeliveryPageBusboy(req, res)
+{
+    try {
+        res.render("suicuneDeliveryPageBusboy");
+    } catch (error) {
+        let errorObj = {
+            message: "renderSuicuneDeliveryPageBusboy failed",
+            payload: error
+        }
+        console.error(errorObj);
+        res.json("SORRY! Something went wrong loading the Suicune Mail Delivery Service with Busboy.");
+    }
+}
 
 module.exports = {
     renderHomePage,
     renderLoginPage,
-    renderSuicuneDeliveryPage
+    renderSuicuneDeliveryPage,
+    renderSuicuneDeliveryPageBusboy
 }
