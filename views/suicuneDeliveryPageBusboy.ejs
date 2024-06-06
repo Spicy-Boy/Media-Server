@@ -18,9 +18,9 @@
         <!-- form using multer's middleware -->
         <form class="suicune-form" action="/api/suicune/uploadBusboy" enctype="multipart/form-data" method="post">
             <img src="./images/245.png">
-            <div>
+            <div id="upload-button">
                 <label for="file">File:</label>
-                <input id="file" name="uploaded_file" type="file">
+                <input id="file" name="uploaded_file" type="file" multiple>
             </div>
             <br>
             <input type="submit" value="UPLOAD">
@@ -28,6 +28,8 @@
         </form>
 
     </main>
+
+    <script src="./js/uploadLogic.js"></script>
 </body>
 
 </html>
