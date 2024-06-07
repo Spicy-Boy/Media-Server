@@ -10,6 +10,7 @@ async function uploadOneFile(req, res)
 
 async function uploadWithBusboy(req, res)
 {
+    /* vv OLD busboy functionality, its basically multer */
     let filename = "";
 
     const bb = busboy({
@@ -31,7 +32,29 @@ async function uploadWithBusboy(req, res)
     req.pipe(bb);
 }
 
+async function uploadWithXMLHttpRequest(req, res) 
+{
+    res.send("HIIIII :D");
+}
+
+//check the status of an upload to the server
+function manageUploadStatus(req, res)
+{
+
+}
+
+function manageUploadRequest(req, res)
+{
+    if (!req.body || !req.body.fileName)
+    {
+        res.status(400).json({message: "Missing file name!"});
+    }
+}
+
 module.exports = {
     uploadOneFile,
-    uploadWithBusboy
+    uploadWithBusboy,
+    uploadWithXMLHttpRequest,
+    manageUploadStatus,
+    manageUploadRequest
 };
