@@ -3,7 +3,9 @@ const uploadFiles = (() => {
     const fileRequests = new WeakMap(); //keeps track of the requests sent
 
     const defaultOptions = {
-        url: "/api/suicune/uploadXML",
+        url: "/api/suicune/upload-request",
+        fileId: null,
+        startingType: 0,
         onAbort() {},
         onError() {},
         onProgress() {},
@@ -11,17 +13,27 @@ const uploadFiles = (() => {
 
     }
 
-    // vv the magic happens here, upload each file individually
-    const uploadFile = (file, options) => {
+    const uploadFileChunks = (file, options) => {
 
         // create an XMLHttpRequest to asynchronously manage an upload without page change
         const req = new XMLHttpRequest();
 
         // vv add data to request body
         const formData = new FormData();
-        formData.append('file', file, file.name) //params: name (like the variable in a hard coded form), the literal file data, file name
+
+        const chunk = file.slice(options.startingType)
+
+        // formData.append('file', file, file.name); //params: name (like the variable in a hard coded form), the literal file data, file name
+        formData.append('chunk', chunk, file.name);
+        formData.append('fileId', options.fileId)
 
         req.open('POST', options.url, true); //params: method (POST), url or request, async (true)
+
+        req.setRequestHeader("X-File-Id", options.fileId);
+        req.setRequestHeader("Content-Length", chunk.size);
+        req.setRequestHeader("Content-Range", 
+            `bytes=${options.startingType}-${options.startingType+chunk.size}/${file.size}`
+        );
 
         /* You can listen for request events after opening the request */
         req.onload = (e) => options.onComplete(e, file);
@@ -33,9 +45,27 @@ const uploadFiles = (() => {
         req.upload.onprogress = (e) => options.onProgress(e, file);
         req.onabort = (e) => options.onAbort(e, file);
 
-        fileRequests.set(file, {request: req, options});
+        fileRequests.get(file).request = req;
 
         req.send(formData);
+    }
+
+    // vv the magic happens here, upload each file individually
+    const uploadFile = (file, options) => {
+        fetch("http://localhost:8080/api/suicune/upload-request", {
+            method: 'POST',
+            headers: {
+                'Content-type': 'application/json'
+            },
+            body: JSON.stringify({fileName: file.name})
+        })
+        .then(res => res.json())
+        .then(res => {
+            options = {...options, fileId: res.fileId};
+            fileRequests.set(file, {request: null, options});
+            
+            uploadFileChunks(file, options);
+        });
     }
 
     const abortFileUpload = (file) => {

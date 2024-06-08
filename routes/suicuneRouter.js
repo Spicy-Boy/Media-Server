@@ -22,7 +22,7 @@ router.post("/uploadBusboy", redirectLogin, uploadWithBusboy);
 
 router.post("/uploadXML", redirectLogin, uploadWithXMLHttpRequest);
 
-router.post("/uploadXML-status", redirectLogin, manageUploadStatus);
+router.post("/upload-status", redirectLogin, manageUploadStatus);
 
 router.post("/upload-request", redirectLogin, manageUploadRequest);
 
