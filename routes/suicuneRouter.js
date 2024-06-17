@@ -12,7 +12,8 @@ const {
     uploadWithBusboy,
     uploadWithXMLHttpRequest,
     manageUploadStatus,
-    manageUploadRequest
+    manageUploadRequest,
+    manageUpload
 } = require("../controllers/suicuneController");
 
 // /api/suicune/uploadSingle
@@ -23,7 +24,7 @@ router.post("/uploadBusboy", redirectLogin, uploadWithBusboy);
 router.post("/uploadXML", redirectLogin, uploadWithXMLHttpRequest);
 
 router.post("/upload-status", redirectLogin, manageUploadStatus);
-
 router.post("/upload-request", redirectLogin, manageUploadRequest);
+router.post("/upload", redirectLogin, manageUpload);
 
 module.exports = router;

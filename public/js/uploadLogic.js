@@ -3,7 +3,7 @@ const uploadFiles = (() => {
     const fileRequests = new WeakMap(); //keeps track of the requests sent
 
     const defaultOptions = {
-        url: "/api/suicune/upload-request",
+        url: "/api/suicune/upload",
         fileId: null,
         startingType: 0,
         onAbort() {},
@@ -68,6 +68,16 @@ const uploadFiles = (() => {
         });
     }
 
+    const resumeFileUpload = (file) => {
+        fileRequests.get(file).request = req;
+
+        fetch(`http://localhost:8080/api/suicune/upload-status?fileName=${file.name}&fileId=${fileReq.options.fileId}`)
+            .then(res => res.json())
+            .then(res => {
+                console.log('-- status', res);
+            })
+    }
+
     const abortFileUpload = (file) => {
         const fileReq = fileRequests.get(file);
 
@@ -88,7 +98,8 @@ const uploadFiles = (() => {
 
         return {
             abortFileUpload,
-            clearFileUpload
+            clearFileUpload,
+            resumeFileUpload
         }
     }
 })();
@@ -133,6 +144,7 @@ const uploadAndTrackFiles = ( () => {
             </div>
             <div class="file-actions">
                 <button type="button" class="pause-button">Pause</button>
+                <button type="button" class="resume-button">Resume</button>
             </div>
         `;
 
@@ -145,9 +157,10 @@ const uploadAndTrackFiles = ( () => {
         });
 
         //lets easily me grab the pause button even without an id signifier
-        const [, {children: [pauseButton]}] = fileElement.children;
+        const [, {children: [pauseButton, resumeButton]}] = fileElement.children;
 
         pauseButton.addEventListener('click', () => uploader.abortFileUpload(file));
+        resumeButton.addEventListener('click', () => uploader.resumeFileUpload(file));
 
         fileProgressWrapper.appendChild(fileElement);
     }
