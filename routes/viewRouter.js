@@ -19,8 +19,10 @@ router.get("/login", redirectIfLoggedIn, renderLoginPage);
 
 router.get("/mail", redirectLogin, renderSuicuneDeliveryPage);
 
+//vv using the beforeSemicolon test
 router.get("/busboy", redirectLogin, renderSuicuneDeliveryPageBusboy)
 
+//vv using the simpleUploadLogic rewrite
 router.get("/simpleBusboy", redirectLogin, renderSuicuneDeliveryPageSimpleBusboy)
 
 
