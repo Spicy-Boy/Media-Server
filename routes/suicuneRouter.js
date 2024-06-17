@@ -21,10 +21,19 @@ router.post("/uploadSingle", redirectLogin, upload.single("uploaded_file"), uplo
 
 router.post("/uploadBusboy", redirectLogin, uploadWithBusboy);
 
-router.post("/uploadXML", redirectLogin, uploadWithXMLHttpRequest);
-
+// router.post("/uploadXML", redirectLogin, uploadWithXMLHttpRequest);
+/* vvv routes for the Before Semicolon Multi-File Uploader tut
+https://www.youtube.com/watch?v=R2AD1h0iQAw
+*/
 router.post("/upload-status", redirectLogin, manageUploadStatus);
 router.post("/upload-request", redirectLogin, manageUploadRequest);
 router.post("/upload", redirectLogin, manageUpload);
+
+/* vvv routes for Aaron's simplified version, rewritten scratch 
+
+*/
+router.post("/simpleUpload")
+
+
 
 module.exports = router;

@@ -10,7 +10,6 @@ const uploadFiles = (() => {
         onError() {},
         onProgress() {},
         onComplete() {}
-
     }
 
     const uploadFileChunks = (file, options) => {

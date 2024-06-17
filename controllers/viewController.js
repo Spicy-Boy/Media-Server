@@ -40,6 +40,7 @@ async function renderSuicuneDeliveryPage(req, res)
         res.json("SORRY! Something went wrong loading the Suicune Mail Delivery Service.");
     }
 }
+//vv the Before Semicolon chunked upload test
 async function renderSuicuneDeliveryPageBusboy(req, res)
 {
     try {
@@ -53,10 +54,25 @@ async function renderSuicuneDeliveryPageBusboy(req, res)
         res.json("SORRY! Something went wrong loading the Suicune Mail Delivery Service with Busboy.");
     }
 }
+//vv Aaron's simplified version
+async function renderSuicuneDeliveryPageSimpleBusboy(req, res)
+{
+    try {
+        res.render("suicuneDeliveryPageSimpleBusboy");
+    } catch (error) {
+        let errorObj = {
+            message: "renderSuicuneDeliveryPageSimpleBusboy failed",
+            payload: error
+        }
+        console.error(errorObj);
+        res.json("SORRY! Something went wrong loading the Suicune Mail Delivery Service with Simple Busboy.");
+    }
+}
 
 module.exports = {
     renderHomePage,
     renderLoginPage,
     renderSuicuneDeliveryPage,
-    renderSuicuneDeliveryPageBusboy
+    renderSuicuneDeliveryPageBusboy,
+    renderSuicuneDeliveryPageSimpleBusboy
 }
