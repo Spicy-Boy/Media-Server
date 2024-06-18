@@ -13,7 +13,8 @@ const {
     uploadWithXMLHttpRequest,
     manageUploadStatus,
     manageUploadRequest,
-    manageUpload
+    manageUpload,
+    simpleUpload
 } = require("../controllers/suicuneController");
 
 // /api/suicune/uploadSingle
@@ -32,8 +33,7 @@ router.post("/upload", redirectLogin, manageUpload);
 /* vvv routes for Aaron's simplified version, rewritten scratch 
 
 */
-router.post("/simpleUpload")
-
+router.post("/simpleUpload", redirectLogin, simpleUpload);
 
 
 module.exports = router;

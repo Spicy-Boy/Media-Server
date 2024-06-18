@@ -165,11 +165,17 @@ function manageUpload(req, res)
     req.pipe(busBoy);
 }
 
+function simpleUpload(req, res)
+{
+    console.log('SIMPLE UPLOAD CALLED! HI AARON!!');
+}
+
 module.exports = {
     uploadOneFile,
     uploadWithBusboy,
     uploadWithXMLHttpRequest,
     manageUploadStatus,
     manageUploadRequest,
-    manageUpload
+    manageUpload,
+    simpleUpload
 };
