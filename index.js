@@ -120,9 +120,11 @@ app.use("/api/suicune", suicuneRouter);
 const connectToMongoDB = require('./db/mongodb');
 
 const PORT = 8080;
-app.listen(PORT, () => {
+const server = app.listen(PORT, () => {
     console.log(`Server listening on port ${PORT}`);
 
     connectToMongoDB();
 });
+
+server.setTimeout(3600000); //server will timeout requests longer than 1 hour (represented in milliseconds)
 

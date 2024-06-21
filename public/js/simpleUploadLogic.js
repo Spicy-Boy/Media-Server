@@ -27,6 +27,8 @@ function uploadIndividualFile(file)
     //create a xmlhttprequest to asynch manage data from active uploads
     const req = new XMLHttpRequest();
 
+    req.timeout = 3600000; //1 hour in milliseconds
+
     req.open('POST', uploadUrl, true); //true means asynchronous
     // req.setRequestHeader("Content-Length", file.size);
 
