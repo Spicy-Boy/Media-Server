@@ -10,7 +10,7 @@ const fs = require("fs");
 const session = require('express-session');
 require('dotenv').config();
 
-console.log(process.env.MAIL_DELIVERY_LOCATION);
+console.log("Deliver mail to: ",process.env.MAIL_DELIVERY_LOCATION);
 
 //app middleware vv
 app.set("view engine", "ejs");

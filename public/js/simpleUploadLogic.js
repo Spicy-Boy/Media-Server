@@ -14,6 +14,7 @@ function uploadFiles(files)
 {
     for (const file of files)
     {
+        console.log('About to upload', file.name);
         uploadIndividualFile(file);
     }
 }
@@ -21,13 +22,13 @@ function uploadFiles(files)
 function uploadIndividualFile(file)
 {
     const formData = new FormData();
-    formData.append('files', file);
+    formData.append('file', file);
     
     //create a xmlhttprequest to asynch manage data from active uploads
     const req = new XMLHttpRequest();
 
-    req.open('POST', uploadUrl, true);
-    req.setRequestHeader("Content-Length", file.size);
+    req.open('POST', uploadUrl, true); //true means asynchronous
+    // req.setRequestHeader("Content-Length", file.size);
 
     req.upload.addEventListener('progress', (event) => {
         onProgress(event, file);
@@ -41,11 +42,19 @@ function uploadIndividualFile(file)
     req.addEventListener('abort', (event) => {
         onCanceled(event, file);
     });
+
+    //send the xmlhttprequest to the server
+    req.send(formData);
+}
+
+function createUploadElements()
+{
+
 }
 
 function onProgress(e, file)
 {
-    
+    console.log('PROGRESS EVENT!',file);
 }
 function onError(e, file)
 {

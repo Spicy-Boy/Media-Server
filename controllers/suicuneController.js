@@ -3,8 +3,8 @@ const path = require("path");
 const busboy = require("busboy");
 const { v4: uuidv4 } = require('uuid');
 
-const {promisify} = require('util');
-const getFileDetails = promisify(fs.stat);
+// const {promisify} = require('util');
+// const getFileDetails = promisify(fs.stat);
 
 async function uploadOneFile(req, res)
 {
@@ -168,6 +168,52 @@ function manageUpload(req, res)
 function simpleUpload(req, res)
 {
     console.log('SIMPLE UPLOAD CALLED! HI AARON!!');
+    const busBoy = busboy({headers: req.headers});
+
+    console.log("req.headers --",req.headers);
+
+    busBoy.on('error', e => {
+        console.error('Failed to read file',e);
+        res.sendStatus(500);
+    });
+
+    busBoy.on('finish', e => {
+        res.sendStatus(200);
+    });
+
+    //upon recieving the file, set save location
+    //begin write stream using fs
+    busBoy.on('file', (fieldname, file, filename) => {
+
+        console.log("file:",filename);
+        //the .env location is the simple mailbox. More advanced routing will be implemented later
+        const filePath = process.env.MAIL_DELIVERY_LOCATION+filename.filename
+        console.log('filepath:',filePath);
+
+        //unused vv error detection null path
+        // if (!filePath) {
+        //     console.error('MAIL_DELIVERY_LOCATION not set in environment variables');
+        //     res.sendStatus(500);
+        //     return;
+        // }
+
+        const writeStream = fs.createWriteStream(filePath, {flags: 'w'})
+
+        file.pipe(writeStream);
+
+        //error handling for back end writing file
+        writeStream.on('error', (err) => {
+            console.error('Failed to write file:', err);
+            res.sendStatus(500);
+        });
+
+        writeStream.on('finish', () => {
+            console.log('File successfully written:', filename);
+        });
+
+    });
+
+    req.pipe(busBoy);
 }
 
 module.exports = {
