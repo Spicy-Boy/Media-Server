@@ -183,10 +183,10 @@ function simpleUpload(req, res)
     //begin write stream using fs
     busBoy.on('file', (fieldname, file, filename) => {
 
-        console.log("file:",filename);
+        // console.log("file:",filename);
         //the .env location is the simple mailbox. More advanced routing will be implemented later
         const filePath = process.env.MAIL_DELIVERY_LOCATION+filename.filename
-        console.log('filepath:',filePath);
+        console.log('Upload initiated at:',filePath);
 
         //unused vv error detection null path
         // if (!filePath) {
