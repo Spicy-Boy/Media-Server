@@ -17,13 +17,13 @@ router.get("/", redirectLogin, renderHomePage);
 
 router.get("/login", redirectIfLoggedIn, renderLoginPage);
 
-router.get("/mail", redirectLogin, renderSuicuneDeliveryPage);
+// OLD MAIL ROUTE vv using multer (deprecated)
+// router.get("/mail", redirectLogin, renderSuicuneDeliveryPage);
+// vv NEW mail route using an xmlhttprequest frontend and busboy writestream backend
+router.get("/mail", redirectLogin, renderSuicuneDeliveryPageSimpleBusboy)
+//^^ using the simpleUploadLogic rewrite
 
-//vv using the beforeSemicolon test
-router.get("/busboy", redirectLogin, renderSuicuneDeliveryPageBusboy)
-
-//vv using the simpleUploadLogic rewrite
-router.get("/simpleBusboy", redirectLogin, renderSuicuneDeliveryPageSimpleBusboy)
-
+//vv DEPRECATED UPLOAD ROUTE using the beforeSemicolon test
+// router.get("/busboy", redirectLogin, renderSuicuneDeliveryPageBusboy)
 
 module.exports = router;

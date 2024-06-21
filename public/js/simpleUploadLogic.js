@@ -54,7 +54,9 @@ function createUploadElements()
 
 function onProgress(e, file)
 {
-    console.log('PROGRESS EVENT!',file);
+    console.log(`Upload Progress: uploaded ${e.loaded}/${e.total} of ${file.name}..`);
+    // console.log('PROGRESS EVENT!',file);
+
 }
 function onError(e, file)
 {
@@ -62,7 +64,7 @@ function onError(e, file)
 }
 function onComplete(e, file)
 {
-    
+    console.log(`UPLOAD COMPLETE: ${file.name}`);
 }
 function onCanceled(e, file)
 {

@@ -170,8 +170,6 @@ function simpleUpload(req, res)
     console.log('SIMPLE UPLOAD CALLED! HI AARON!!');
     const busBoy = busboy({headers: req.headers});
 
-    console.log("req.headers --",req.headers);
-
     busBoy.on('error', e => {
         console.error('Failed to read file',e);
         res.sendStatus(500);

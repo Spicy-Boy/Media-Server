@@ -17,18 +17,23 @@ const {
     simpleUpload
 } = require("../controllers/suicuneController");
 
+
+// !!! vvv DEPRECATED route using multer
 // /api/suicune/uploadSingle
-router.post("/uploadSingle", redirectLogin, upload.single("uploaded_file"), uploadOneFile);
+// router.post("/uploadSingle", redirectLogin, upload.single("uploaded_file"), uploadOneFile);
 
-router.post("/uploadBusboy", redirectLogin, uploadWithBusboy);
-
+// !!! vvv DEPRECATED ROUTES, for learning and testing :)
+//vv first busboy test
+// router.post("/uploadBusboy", redirectLogin, uploadWithBusboy);
+//vv first xmlhttp test
 // router.post("/uploadXML", redirectLogin, uploadWithXMLHttpRequest);
-/* vvv routes for the Before Semicolon Multi-File Uploader tut
+/* vvv routes for the Before Semicolon Multi-File Uploader tutorial
 https://www.youtube.com/watch?v=R2AD1h0iQAw
+vv
 */
-router.post("/upload-status", redirectLogin, manageUploadStatus);
-router.post("/upload-request", redirectLogin, manageUploadRequest);
-router.post("/upload", redirectLogin, manageUpload);
+// router.post("/upload-status", redirectLogin, manageUploadStatus);
+// router.post("/upload-request", redirectLogin, manageUploadRequest);
+// router.post("/upload", redirectLogin, manageUpload);
 
 /* vvv routes for Aaron's simplified version, rewritten scratch 
 
