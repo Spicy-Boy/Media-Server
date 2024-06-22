@@ -27,8 +27,6 @@ function uploadIndividualFile(file)
     //create a xmlhttprequest to asynch manage data from active uploads
     const req = new XMLHttpRequest();
 
-    req.timeout = 3600000; //1 hour in milliseconds
-
     req.open('POST', uploadUrl, true); //true means asynchronous
     // req.setRequestHeader("Content-Length", file.size);
 
@@ -44,6 +42,12 @@ function uploadIndividualFile(file)
     req.addEventListener('abort', (event) => {
         onCanceled(event, file);
     });
+
+    req.onTimeout = (e) => {
+        console.log('TIME OUT DETECTED!!! TIME OUT DETECTED!!! OMG!!! OMG!!! TIME OUT DETECTED!!!');
+        console.log('TIME OUT DETECTED!!! TIME OUT DETECTED!!! OMG!!! OMG!!! TIME OUT DETECTED!!!');
+        console.log('TIME OUT DETECTED!!! TIME OUT DETECTED!!! OMG!!! OMG!!! TIME OUT DETECTED!!!');
+    }
 
     //send the xmlhttprequest to the server
     req.send(formData);
