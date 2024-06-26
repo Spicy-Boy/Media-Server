@@ -175,7 +175,7 @@ function simpleUpload(req, res)
         res.sendStatus(500);
     });
 
-    busBoy.on('finish', e => {
+    busBoy.on('end', e => {
         res.sendStatus(200);
     });
 
@@ -183,19 +183,13 @@ function simpleUpload(req, res)
     //begin write stream using fs
     busBoy.on('file', (fieldname, file, filename) => {
 
-        // console.log("file:",filename);
+        console.log("file:",filename);
         //the .env location is the simple mailbox. More advanced routing will be implemented later
         const filePath = process.env.MAIL_DELIVERY_LOCATION+filename.filename
         console.log('Upload initiated at:',filePath);
 
-        //unused vv error detection null path
-        // if (!filePath) {
-        //     console.error('MAIL_DELIVERY_LOCATION not set in environment variables');
-        //     res.sendStatus(500);
-        //     return;
-        // }
-
-        const writeStream = fs.createWriteStream(filePath, {flags: 'w'})
+        const writeStream = fs.createWriteStream(filePath, {flags: 'a'})
+        // const writeStream = fs.appendFileSync(filePath, chunk)
 
         file.pipe(writeStream);
 
@@ -208,7 +202,7 @@ function simpleUpload(req, res)
         writeStream.on('finish', () => {
             console.log('File successfully written:', filename);
         });
-
+        
     });
 
     req.pipe(busBoy);
