@@ -1,6 +1,6 @@
 //vv the backend route that handles writing the file
 //front end (this script) recieves file, sends request to back end, starts an upload connection via xmlhttprequest
-const localServerUrl = "http://localhost:8080"
+// const localServerUrl = "http://localhost:8080"
 const uploadUrl = "/api/suicune/simpleUpload";
 
 const uploadButton = document.getElementById('upload-button');
@@ -24,18 +24,28 @@ function uploadFiles(files)
 //vv divides recieved file into chunks, sends chunks as individual requests
 async function uploadIndividualFile(file)
 {
-    const CHUNK_SIZE = 1000000; //1000000 bytes is a mb
+    let CHUNK_SIZE = 0;
+    //1 gb = 1073741824 bytes
+    if (file.size < 1073741824)
+    {
+        CHUNK_SIZE = 107374182.4; // 0.10 gb in bytes
+    }
+    else
+    {
+        CHUNK_SIZE = 268435456; // 0.25 gb in bytes
+    }
+
 
     const chunkCount = Math.ceil(file.size/CHUNK_SIZE);
 
-    console.log('Initialized upload of '+file.name+' -- # of chunks = '+chunkCount+', file.size/CHUNK_SIZE = '+file.size/CHUNK_SIZE);
+    console.log('Initialized upload of '+file.name+' -- # of chunks = '+String(chunkCount-1)+', file.size/CHUNK_SIZE = '+file.size/CHUNK_SIZE);
     //loop through all chunks based on calculated chunk counts (plus an extra loop for any remainder bytes)
     for (let chunkId = 0; chunkId < chunkCount; chunkId++)
     {
         //a chunk is a string of bytes sliced based on chunkId position
         const chunk = file.slice(chunkId*CHUNK_SIZE, chunkId*CHUNK_SIZE+CHUNK_SIZE);
         await uploadFileChunk(chunk, chunkId, file.name);
-        console.log("% % Chunk#"+chunkId+" upload request complete!");
+        console.log("% % Chunk "+chunkId+" of "+chunkCount+" upload request complete!");
     }
 }
 
@@ -43,7 +53,8 @@ async function uploadIndividualFile(file)
 //vv sends a file chunk as an upload request to the server
 async function uploadFileChunk(fileChunk, chunkId, fileName)
 {
-    const response = await fetch(localServerUrl + uploadUrl, {
+
+    const response = await fetch(uploadUrl, {
         method: "POST",
         headers: {
             "content-type": "application/octet-stream",
@@ -54,14 +65,14 @@ async function uploadFileChunk(fileChunk, chunkId, fileName)
         body: fileChunk
     });
 
-    if (!response.ok)
-    {
-        console.log("Something went wrong with chunk upload!");
-    }
-    else
-    {
-        console.log("Chunk upload response: ",response);
-    }
+    // if (!response.ok)
+    // {
+    //     console.log("Something went wrong with chunk upload!");
+    // }
+    // else
+    // {
+    //     console.log("Chunk upload response: ",response);
+    // }
 
 }
 

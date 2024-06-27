@@ -171,15 +171,31 @@ async function simpleUpload(req, res)
     const fileName = req.headers["file-name"];
     const chunkId = req.headers["chunk-id"];
     const filePath = process.env.MAIL_DELIVERY_LOCATION+fileName
+    try 
+    {
+        req.on("data", chunk => {
+            console.log('PROGRESS: recieved data for chunk',chunkId+" of ",fileName);
+            fs.appendFileSync(filePath, chunk);
+        });        
+        
+        req.on("end", () => {
+            console.log("Finished receiving chunk", chunkId+" of ", fileName);
+            res.status(200).send('Chunk received successfully');
+        });
 
-    req.on("data", chunk => {
-        console.log('Recieved data for chunk',chunkId+" of file",fileName);
-        fs.appendFileSync(filePath, chunk);
-    });
+        req.on("error", err => {
+            console.error('Error receiving chunk', chunkId, 'of file', fileName, err);
+            res.status(500).send('Error receiving chunk');
+        });
 
-    res.status(200);
+    }
+    catch
+    {
+        console.error('Error handling file upload for', fileName, error);
+        res.status(500).send('Internal Server Error');
+    }
 
-    res.end;
+    // res.end;
 
     //OLD vvv busboy implementation!
     // console.log('SIMPLE UPLOAD CALLED! HI AARON!!');
