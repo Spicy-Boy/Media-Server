@@ -411,6 +411,13 @@ header {
     max-width: 150px;
 }
 
+.desktop-invisible {
+    display: inline;
+}
+.mobile-invisible {
+    display: none;
+}
+
 /* --- tablet >_< view --- */
 
 @media (min-width: 800px) {
@@ -489,6 +496,13 @@ header {
 /* ` ` [  ] DESKTOP x VIEW [  ] ` ` */
 
 @media (min-width: 1000px) {
+    .desktop-invisible {
+        display: none;
+    }
+    .mobile-invisible {
+        display: inline;
+    }
+
     body {
         background-image: none;
     }
@@ -670,6 +684,8 @@ header {
     /* align-self: flex-end; */
     margin-top: auto;
 }
+
+
 
 
 
