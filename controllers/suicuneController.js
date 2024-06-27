@@ -173,11 +173,11 @@ async function simpleUpload(req, res)
     const filePath = process.env.MAIL_DELIVERY_LOCATION+fileName
 
     req.on("data", chunk => {
-        console.log('Recieved chunk',chunkId+" for file",fileName);
+        console.log('Recieved data for chunk',chunkId+" of file",fileName);
         fs.appendFileSync(filePath, chunk);
     });
 
-    res.status(200).json({chunkId: chunkId});
+    res.status(200);
 
     res.end;
 
