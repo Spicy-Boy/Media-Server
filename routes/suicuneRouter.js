@@ -40,5 +40,4 @@ vv
 */
 router.post("/simpleUpload", redirectLogin, simpleUpload);
 
-
 module.exports = router;

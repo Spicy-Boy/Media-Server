@@ -165,47 +165,62 @@ function manageUpload(req, res)
     req.pipe(busBoy);
 }
 
-function simpleUpload(req, res)
+//used to use busboy, attempting simpler method now
+async function simpleUpload(req, res)
 {
-    console.log('SIMPLE UPLOAD CALLED! HI AARON!!');
-    const busBoy = busboy({headers: req.headers});
+    const fileName = req.headers["file-name"];
+    const chunkId = req.headers["chunk-id"];
+    const filePath = process.env.MAIL_DELIVERY_LOCATION+fileName
 
-    busBoy.on('error', e => {
-        console.error('Failed to read file',e);
-        res.sendStatus(500);
+    req.on("data", chunk => {
+        console.log('Recieved chunk',chunkId+" for file",fileName);
+        fs.appendFileSync(filePath, chunk);
     });
 
-    busBoy.on('end', e => {
-        res.sendStatus(200);
-    });
+    res.status(200).json({chunkId: chunkId});
 
-    //upon recieving the file, set save location
-    //begin write stream using fs
-    busBoy.on('file', (fieldname, file, filename) => {
+    res.end;
 
-        console.log("file:",filename);
-        //the .env location is the simple mailbox. More advanced routing will be implemented later
-        const filePath = process.env.MAIL_DELIVERY_LOCATION+filename.filename
-        console.log('Upload initiated at:',filePath);
+    //OLD vvv busboy implementation!
+    // console.log('SIMPLE UPLOAD CALLED! HI AARON!!');
+    // const busBoy = busboy({headers: req.headers});
 
-        const writeStream = fs.createWriteStream(filePath, {flags: 'a'})
-        // const writeStream = fs.appendFileSync(filePath, chunk)
+    // busBoy.on('error', e => {
+    //     console.error('Failed to read file',e);
+    //     res.sendStatus(500);
+    // });
 
-        file.pipe(writeStream);
+    // busBoy.on('end', e => {
+    //     res.sendStatus(200);
+    // });
 
-        //error handling for back end writing file
-        writeStream.on('error', (err) => {
-            console.error('Failed to write file:', err);
-            res.sendStatus(500);
-        });
+    // //upon recieving the file, set save location
+    // //begin write stream using fs
+    // busBoy.on('file', (fieldname, file, filename) => {
 
-        writeStream.on('finish', () => {
-            console.log('File successfully written:', filename);
-        });
+    //     console.log("file:",filename);
+    //     //the .env location is the simple mailbox. More advanced routing will be implemented later
+    //     const filePath = process.env.MAIL_DELIVERY_LOCATION+filename.filename
+    //     console.log('Upload initiated at:',filePath);
+
+    //     const writeStream = fs.createWriteStream(filePath, {flags: 'a'})
+    //     // const writeStream = fs.appendFileSync(filePath, chunk)
+
+    //     file.pipe(writeStream);
+
+    //     //error handling for back end writing file
+    //     writeStream.on('error', (err) => {
+    //         console.error('Failed to write file:', err);
+    //         res.sendStatus(500);
+    //     });
+
+    //     writeStream.on('finish', () => {
+    //         console.log('File successfully written:', filename);
+    //     });
         
-    });
+    // });
 
-    req.pipe(busBoy);
+    // req.pipe(busBoy);
 }
 
 module.exports = {

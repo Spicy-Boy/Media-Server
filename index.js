@@ -126,5 +126,3 @@ const server = app.listen(PORT, () => {
     connectToMongoDB();
 });
 
-server.setTimeout(3600000); //server will timeout requests longer than 1 hour (represented in milliseconds)
-

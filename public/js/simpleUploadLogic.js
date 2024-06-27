@@ -1,5 +1,6 @@
 //vv the backend route that handles writing the file
 //front end (this script) recieves file, sends request to back end, starts an upload connection via xmlhttprequest
+const localServerUrl = "http://localhost:8080"
 const uploadUrl = "/api/suicune/simpleUpload";
 
 const uploadButton = document.getElementById('upload-button');
@@ -23,47 +24,45 @@ function uploadFiles(files)
 //vv divides recieved file into chunks, sends chunks as individual requests
 async function uploadIndividualFile(file)
 {
-    const CHUNK_SIZE = 1000; //1000 bytes is almost a kb
+    const CHUNK_SIZE = 1000000; //1000000 bytes is a mb
 
-    const chunkCount = file.size/CHUNK_SIZE;
+    const chunkCount = Math.ceil(file.size/CHUNK_SIZE);
 
+    console.log('Initialized upload of '+file.name+' -- # of chunks = '+chunkCount+', file.size/CHUNK_SIZE = '+file.size/CHUNK_SIZE);
     //loop through all chunks based on calculated chunk counts (plus an extra loop for any remainder bytes)
-    for (let chunkId = 0; chunkId < chunkCount + 1 /* +1 for remainder bytes */; chunkId++)
+    for (let chunkId = 0; chunkId < chunkCount; chunkId++)
     {
         //a chunk is a string of bytes sliced based on chunkId position
         const chunk = file.slice(chunkId*CHUNK_SIZE, chunkId*CHUNK_SIZE+CHUNK_SIZE);
-        await uploadFileChunk(file, chunk);
+        await uploadFileChunk(chunk, chunkId, file.name);
+        console.log("% % Chunk#"+chunkId+" upload request complete!");
     }
 }
 
+//previously used XMLHTTP request... trying it with fetch now. See github for old method
 //vv sends a file chunk as an upload request to the server
-async function uploadFileChunk(file, fileChunk)
+async function uploadFileChunk(fileChunk, chunkId, fileName)
 {
-    const formData = new FormData();
-    formData.append('file', file);
-    formData.append('chunk', fileChunk);
-    
-    //create a xmlhttprequest to asynch manage data from active uploads
-    const req = new XMLHttpRequest();
-
-    req.open('POST', uploadUrl, true); //true means asynchronous
-    // req.setRequestHeader("Content-Length", file.size);
-
-    req.upload.addEventListener('progress', (event) => {
-        onProgress(event, file);
-    });
-    req.addEventListener('error', (event) => {
-        onError(event, file);
-    });
-    req.addEventListener('load', (event) => {
-        onComplete(event, file);
-    });
-    req.addEventListener('abort', (event) => {
-        onCanceled(event, file);
+    const response = await fetch(localServerUrl + uploadUrl, {
+        method: "POST",
+        headers: {
+            "content-type": "application/octet-stream",
+            "content-length": fileChunk.length,
+            "file-name": fileName,
+            "chunk-id": chunkId
+        },
+        body: fileChunk
     });
 
-    //send the xmlhttprequest to the server
-    req.send(formData);
+    if (!response.ok)
+    {
+        console.log("Something went wrong with chunk upload!");
+    }
+    else
+    {
+        console.log("Chunk upload response: ",response);
+    }
+
 }
 
 function createUploadElements()
@@ -73,7 +72,7 @@ function createUploadElements()
 
 function onProgress(e, file)
 {
-    console.log(`Upload Progress: uploaded ${e.loaded}/${e.total} of ${file.name}`);
+    console.log(`Uploaded Chunk ${e.loaded}/${e.total} of ${file.name}`);
     // console.log('PROGRESS EVENT!',file);
 
 }
