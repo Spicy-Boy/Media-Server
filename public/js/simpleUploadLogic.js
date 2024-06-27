@@ -24,19 +24,19 @@ function uploadFiles(files)
 //vv divides recieved file into chunks, sends chunks as individual requests
 async function uploadIndividualFile(file)
 {
-    // let CHUNK_SIZE = 0;
-    // //1 gb = 1073741824 bytes
-    // if (file.size < 1073741824)
-    // {
-    //     CHUNK_SIZE = 107374182.4; // 0.10 gb in bytes
-    // }
-    // else
-    // {
-    //     CHUNK_SIZE = 268435456; // 0.25 gb in bytes
-    // }
+    let CHUNK_SIZE = 0;
+    //1 gb = 1073741824 bytes
+    if (file.size < 1073741824)
+    {
+        CHUNK_SIZE = 107374182.4; // 0.10 gb in bytes
+    }
+    else
+    {
+        CHUNK_SIZE = 268435456; // 0.25 gb in bytes
+    }
 
     //vv TESTING bigger chunk sizes
-    let CHUNK_SIZE = 1073741824; //1gb = 1073741824 bytes
+    // let CHUNK_SIZE = 1073741824; //1gb = 1073741824 bytes
 
     const chunkCount = Math.ceil(file.size/CHUNK_SIZE);
 
@@ -48,14 +48,14 @@ async function uploadIndividualFile(file)
         const chunkNumber = chunkId+1;
         //a chunk is a string of bytes sliced based on chunkId position
         const chunk = file.slice(chunkId*CHUNK_SIZE, chunkId*CHUNK_SIZE+CHUNK_SIZE);
-        await uploadFileChunk(chunk, chunkId, file.name);
+        await uploadFileChunk(chunk, chunkId, chunkCount, file.name);
         console.log("% % Chunk "+chunkNumber+" of "+chunkCount+" upload request complete!");
     }
 }
 
 //previously used XMLHTTP request... trying it with fetch now. See github for old method
 //vv sends a file chunk as an upload request to the server
-async function uploadFileChunk(fileChunk, chunkId, fileName)
+async function uploadFileChunk(fileChunk, chunkId, chunkCount, fileName)
 {
     const response = await fetch(uploadUrl, {
         method: "POST",
@@ -63,7 +63,8 @@ async function uploadFileChunk(fileChunk, chunkId, fileName)
             "content-type": "application/octet-stream",
             "content-length": fileChunk.length,
             "file-name": fileName,
-            "chunk-id": chunkId
+            "chunk-id": chunkId,
+            "chunk-count": chunkCount
         },
         body: fileChunk
     });
