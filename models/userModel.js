@@ -13,7 +13,12 @@ const userSchema = new mongoose.Schema(
         },
         files: [
             {
-                
+                fileId: {
+                    type: Schema.Types.ObjectId,
+                    ref: 'uploadedFile'
+                },
+                name: String,
+                size: Number //in bytes
             }
         ]
 

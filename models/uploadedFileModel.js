@@ -7,18 +7,24 @@ const uploadedFileSchema = new mongoose.SchemaType({
         type: Number,
         default: -1
     },
-    fileName: {
+    name: {
         type: String,
         required: true
     },
-    fileLocation: { //local url of uploaded file
-
+    location: String,
+    size: { //in bytes
+        type: Number,
+        required: true
     },
-    uploader: {
-        type: String
+    uploader: { //the uploader is referenced by their object id in the DB
+        type: Schema.Types.ObjectId,
+        ref: 'User'
     },
+    uploaderString: String, //just in case lol
     uploadedAt: {
         type: Date,
         default: Date.now
     }
 });
+
+const UploadedFile = mongoose.model('UploadedFile', uploadedFileSchema);
