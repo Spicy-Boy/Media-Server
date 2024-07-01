@@ -439,6 +439,7 @@ header {
 #upload-and-list-wrapper{
     display: flex;
     flex-direction: column; 
+    text-align: center;
 }
 #upload-and-list-wrapper h4{
     padding: 5px;

@@ -26,6 +26,21 @@ async function renderLoginPage(req, res)
     }
 }
 
+async function renderUserIndexPage(req, res)
+{
+    try {
+        res.render("userPortal");
+    } catch (error) {
+        let errorObj = {
+            message: "userIndexPage failed",
+            payload: error
+        }
+        console.error(errorObj);
+        res.json("SORRY! Something went wrong loading the userIndexPage.");
+    }
+}
+
+// vvv FILE UPLOADING mostly testing junk routes
 async function renderSuicuneDeliveryPage(req, res)
 {
     try {
@@ -74,5 +89,6 @@ module.exports = {
     renderLoginPage,
     renderSuicuneDeliveryPage,
     renderSuicuneDeliveryPageBusboy,
-    renderSuicuneDeliveryPageSimpleBusboy
+    renderSuicuneDeliveryPageSimpleBusboy,
+    renderUserIndexPage
 }

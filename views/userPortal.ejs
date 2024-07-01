@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Uploads</title>
+
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- vvv font awesome for useful icons like search glass -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body class="user-index-body white">
+    <%- include("./partials/userIndexHeader") %>
+
+    <div id="upload-and-list-wrapper">
+
+        <!-- vv contains suicune delivery service -->
+        <div class="uploader-container">
+
+            <h4>Suicune Mail Service</h4>
+
+            <form class="suicune-form suicune-width" enctype="multipart/form-data" method="post">
+                <img src="/images/245.png">
+                <div id="upload-button">
+                    <label for="file">File:</label>
+                    <input id="file" name="uploaded_file" type="file" multiple>
+                </div>
+                <br>
+                <input type="submit" value="Upload">
+                <br>
+            </form>
+
+            <div id="active-uploads">
+                
+            </div>
+        </div>
+
+        <!-- vv contains all user's uploaded files -->
+        <div class="upload-list-container">
+            <table id="list">
+                <thead>
+                    <th class="upload-list-name-column">Name</th>
+                    <th class="upload-list-link-column">Perm🔗</th>
+                    <th class="upload-list-size-column">Size</th>
+                    <th class="upload-list-date-column">Date</th>
+                </thead>
+
+                <tbody>
+                <!-- EJS HERE -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <%- include("./partials/userIndexFooter") %>
+
+</body>
+</html>

@@ -10,12 +10,17 @@ const {
     renderLoginPage,
     renderSuicuneDeliveryPage,
     renderSuicuneDeliveryPageBusboy,
-    renderSuicuneDeliveryPageSimpleBusboy
+    renderSuicuneDeliveryPageSimpleBusboy,
+    renderUserIndexPage
 } = require("../controllers/viewController");
 
 router.get("/", redirectLogin, renderHomePage);
 
 router.get("/login", redirectIfLoggedIn, renderLoginPage);
+
+/* USER PORTAL/USER INDEX */
+// vv /u/ stands for user, :username is the username parameter for each individual user's index page
+router.get("/u/:username", redirectLogin, renderUserIndexPage);
 
 // OLD MAIL ROUTE vv using multer (deprecated)
 // router.get("/mail", redirectLogin, renderSuicuneDeliveryPage);
