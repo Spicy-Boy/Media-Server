@@ -166,18 +166,18 @@ background: #ccc;
 .recent-uploads-header {
     text-align: center;
 }
-table {
+.recent-uploads table {
     font-family: arial, sans-serif;
     border-collapse: collapse;
     /* width: 100%; */
     margin: 0 auto 0 auto;
 }
-td, th {
+.recent-uploads td, th {
     border: 1px solid #dddddd;
     text-align: left;
     padding: 8px;
 }
-tr:nth-child(even) {
+.recent-uploads tr:nth-child(even) {
     background-color: #151515;
 }
 
@@ -431,7 +431,7 @@ header {
 
 /* USER PORTAL / user-index page styles! */
 .user-index-body {
-      background-color: #151515;  
+      background-color: #151515; 
 }
 .user-index-header{
     text-align: center;
@@ -445,7 +445,7 @@ header {
     margin: 0;
 }
 .uploader-container {
-    background-color: red;
+    /* background-color: red; */
 
     display: flex;
     flex-direction: column;
@@ -453,12 +453,24 @@ header {
     /* TEST COLOR ^^ */
 }
 .suicune-width {
-    max-width: 95%;
+    max-width: 250px;
 }
 
 .upload-list-container {
-    background-color: blue;
+    /* background-color: blue; */
     /* TEST COLOR ^^ */
+    font-family: monospace, sans-serif; 
+    width: 100%;
+}
+#list {
+    border-collapse: collapse;
+    /* border: none; */
+}
+#list th {
+    border: none;
+}
+#list td {
+    border: none;
 }
 
 /* ^^^ USER PORTAL / user-index page styles! */
@@ -480,7 +492,8 @@ header {
     }
 
     .suicune-width {
-        max-width: 200px;
+        max-width: 250px;
+        width: 80%;
     }
     /* ^^^ USER PORTAL / user-index page styles! */
 

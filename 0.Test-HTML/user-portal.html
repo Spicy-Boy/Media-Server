@@ -28,7 +28,7 @@
 
             <h4>Suicune Mail Service</h4>
 
-            <form class="suicune-form suicune-width width-300px-desktop" enctype="multipart/form-data" method="post">
+            <form class="suicune-form suicune-width" enctype="multipart/form-data" method="post">
                 <img src="./images/245.png">
                 <div id="upload-button">
                     <label for="file">File:</label>
@@ -45,7 +45,13 @@
         </div>
         <!-- vv contains all user's uploaded files -->
         <div class="upload-list-container">
-            j
+            <table id="list">
+                <thead>
+                    <th style="width: 50%">Name</th>
+                    <th style="width: 25%">Size</th>
+                    <th style="width: 25%">Date</th>
+                </thead>
+            </table>
         </div>
     </div>
     
