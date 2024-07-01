@@ -470,6 +470,21 @@ header {
     /* border: none; */
     width: 100%;
 }
+#list a {
+    color: #0070e0;
+}
+#list a:visited {
+    color: #0070e0;
+}
+#list a:hover {
+    color: red;
+} 
+.upload-list-name-column a {
+    text-decoration: none;
+}
+.upload-list-name-column a:hover {
+    text-decoration: underline;
+}
 #list th {
     border: none;
     /* padding: 0; */
@@ -484,6 +499,10 @@ header {
 /* vv tr = table row */
 #list tbody tr {
     border-bottom: rgb(49, 49, 49) 1px solid;
+}
+/* every other row is a dif color vv */
+#list tr:nth-child(even) {
+    background-color: #292929;
 }
 #list tbody td {
     padding-bottom: 3px;
@@ -501,6 +520,23 @@ header {
 .upload-list-date-column {
     display: none;
     width: 15%;
+}
+
+footer {
+    /* display: flex; */
+    width: 100%;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+footer a {
+    color: #0070e0;
+}
+footer a:hover {
+    color: red;
+} 
+footer a:visited {
+    color: #0070e0;
 }
 
 /* ^^^ USER PORTAL / user-index page styles! */
