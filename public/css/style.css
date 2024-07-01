@@ -461,16 +461,46 @@ header {
     /* TEST COLOR ^^ */
     font-family: monospace, sans-serif; 
     width: 100%;
+
+    margin: 0 auto 0 auto;
+    max-width: 100%;
 }
 #list {
     border-collapse: collapse;
     /* border: none; */
+    width: 100%;
 }
 #list th {
     border: none;
+    /* padding: 0; */
+    padding-left: 0;
 }
 #list td {
     border: none;
+}
+#list tbody {
+    text-align: left;
+}
+/* vv tr = table row */
+#list tbody tr {
+    border-bottom: rgb(49, 49, 49) 1px solid;
+}
+#list tbody td {
+    padding-bottom: 3px;
+}
+.upload-list-name-column {
+    width: 55%;
+}
+.upload-list-link-column {
+    width: 2%;
+    
+}
+.upload-list-size-column {
+    width: 15%;
+}
+.upload-list-date-column {
+    display: none;
+    width: 15%;
 }
 
 /* ^^^ USER PORTAL / user-index page styles! */
@@ -489,6 +519,22 @@ header {
     }
     .upload-list-container {
         width: 65%;
+        border-left: 2px solid rgb(112, 112, 112);
+        padding-left: 20px;
+        padding-right: 5px;
+    }
+    .upload-list-name-column {
+        width: 55%;
+    }
+    .upload-list-link-column {
+        width: 10%;
+    }
+    .upload-list-size-column {
+        width: 12.5%;
+    }
+    .upload-list-date-column {
+        width: 12.5%;
+        display: table-cell;
     }
 
     .suicune-width {
