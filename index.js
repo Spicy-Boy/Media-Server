@@ -22,13 +22,18 @@ app.use(express.static(path.join(__dirname, "public")));
 const MongoDBStore = require('connect-mongodb-session')(session);
 const mongoSessionStore = new MongoDBStore({
     uri: process.env.MONGODB_URI,
-    collection: 'forum-sessions'
+    collection: 'media-sessions'
 });
 mongoSessionStore.on('error', function(error) {
     console.error("MongoDB Store error!",error);
 });
 
-/* LOGGING to console and file */
+/**LOGGING ~ ~ ~ */
+// TODO: 
+//
+// Simplify to Route / IP / Time of day / User Session
+// Make NOTE if file downloaded or uploaded
+/* BEGIN LOGGING to console and file */
 let dateAtStartup = new Date;
 let month = dateAtStartup.getMonth() + 1;
 let day = dateAtStartup.getDate();
@@ -76,6 +81,7 @@ app.use(logger("combined", {
 }));
 // morgan.token('ip', (req) => req.ip || req.connection.remoteAddress);
 app.use(logger("dev"));
+/* END LOGGING */
 
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());

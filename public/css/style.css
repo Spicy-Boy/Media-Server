@@ -91,17 +91,27 @@ nav li div:hover {
 }
 
 .user-controls {
-    position: absolute;
-    top: 10px;
-    right: 12px;
+    /* position: absolute;
+    top: 10px; */
+    /* right: 12px; */
+
+    display: flex;
+    flex-direction: row;
+
+    justify-content: space-between;
     
+    padding-left: 20px;
+    padding-right: 20px;
 }
 .user-controls-link {
     color: purple;
 }
+.user-controls-link:hover {
+    color: red;
+}
 
 /* Media catalog styles */
-
+/* basically, the home page for each media type :) */
 .media-catalog-wrapper {
     max-width: 1000px;
     /* height: 100vh; */
@@ -148,7 +158,6 @@ background: #ccc;
     padding: 3px;
     margin: 0;
 }
-
 
 /* table for presenting  */
 .recent-uploads {
@@ -405,6 +414,8 @@ header {
     background-color: rgb(255, 235, 199);
     padding: 10px;
 
+    color: black;
+
     border: 4px groove;
 }
 #file {
@@ -418,9 +429,60 @@ header {
     display: none;
 }
 
+/* USER PORTAL / user-index page styles! */
+.user-index-body {
+      background-color: #151515;  
+}
+.user-index-header{
+    text-align: center;
+}
+#upload-and-list-wrapper{
+    display: flex;
+    flex-direction: column; 
+}
+#upload-and-list-wrapper h4{
+    padding: 5px;
+    margin: 0;
+}
+.uploader-container {
+    background-color: red;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* TEST COLOR ^^ */
+}
+.suicune-width {
+    max-width: 95%;
+}
+
+.upload-list-container {
+    background-color: blue;
+    /* TEST COLOR ^^ */
+}
+
+/* ^^^ USER PORTAL / user-index page styles! */
+
 /* --- tablet >_< view --- */
 
 @media (min-width: 800px) {
+
+    /* USER PORTAL / user-index page styles! */
+    #upload-and-list-wrapper{
+        display: flex;
+        flex-direction: row;
+    }
+    .uploader-container {
+        width: 35%;
+    }
+    .upload-list-container {
+        width: 65%;
+    }
+
+    .suicune-width {
+        max-width: 200px;
+    }
+    /* ^^^ USER PORTAL / user-index page styles! */
 
     /* generic page header */
 
@@ -648,6 +710,15 @@ header {
 
 /* UTILITY! Pure functionality in easy class form */
 
+/* COLORS!! */
+.white {
+    color: white;
+}
+
+.background-151515 {
+    background-color: #151515;
+}
+/* COLORS ^^^^ */
 .tac {
     text-align: center;
 }
@@ -685,6 +756,18 @@ header {
     margin-top: auto;
 }
 
+.pixel-crisp {
+    image-rendering: pixelated;
+    image-rendering: -moz-crisp-edges;
+    image-rendering: crisp-edges;
+}
+
+.padding-5px {
+    padding: 5px;
+}
+.width-200px {
+    width: 200px;
+}
 
 
 

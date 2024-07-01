@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Uploads</title>
+
+    <link rel="stylesheet" href="../public/css/style.css">
+    <!-- vvv font awesome for useful icons like search glass -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body class="user-index-body white">
+    <div class="user-index-header">
+        <br>
+        <div class="user-controls">
+            <div>
+                Hello User
+            </div>
+            <div>
+                [ <a class="user-controls-link white" href="/api/user/logout">Logout</a> ]
+            </div>
+        </div>
+        <br>
+    </header>
+    <div id="upload-and-list-wrapper">
+        <!-- vv contains suicune delivery service -->
+        <div class="uploader-container">
+
+            <h4>Suicune Mail Service</h4>
+
+            <form class="suicune-form suicune-width width-300px-desktop" enctype="multipart/form-data" method="post">
+                <img src="./images/245.png">
+                <div id="upload-button">
+                    <label for="file">File:</label>
+                    <input id="file" name="uploaded_file" type="file" multiple>
+                </div>
+                <br>
+                <input type="submit" value="Upload">
+                <br>
+            </form>
+
+            <div id="active-uploads">
+                
+            </div>
+        </div>
+        <!-- vv contains all user's uploaded files -->
+        <div class="upload-list-container">
+            j
+        </div>
+    </div>
+    
+</body>
+</html>
