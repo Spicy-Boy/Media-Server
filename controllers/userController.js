@@ -43,6 +43,39 @@ async function loginUser(req, res)
     }
 }
 
+//attaches activeUser to the session
+async function attachUserObjectToSession(req, res, next)
+{
+    try 
+    {
+        if (req.session && req.session.userId) 
+        {
+            req.session.activeUser = await User.findOne({_id: req.session.userId});
+
+            //yeah, I know session variables are stored server side...
+            // vv changes the password into an empty string just in case
+            req.session.activeUser.password = "";
+        }
+        else 
+        {
+            // THIS is so important-- if there is no active user (even if it is just null), then page crashes when ejs tries to build it!
+            //so this variable MUST be null at least
+            req.session.activeUser = null;
+        }
+
+        res.locals.activeUser = req.session.activeUser;
+        return next();
+    } catch (error) {
+        let errorObj = {
+            message: "attachUserObjectToSession middleware failed",
+            payload: error
+        }
+
+        console.error(errorObj);
+        res.send("Failed to link user and session! Let the admin know...");
+    }
+}
+
 async function logoutUser(req, res)
 {
     try
@@ -68,5 +101,6 @@ async function logoutUser(req, res)
 
 module.exports = {
     loginUser,
-    logoutUser
+    logoutUser,
+    attachUserObjectToSession
 }

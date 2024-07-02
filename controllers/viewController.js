@@ -1,3 +1,5 @@
+const User = require('../models/userModel');
+
 async function renderHomePage(req, res)
 {
     try {
@@ -29,7 +31,19 @@ async function renderLoginPage(req, res)
 async function renderUserIndexPage(req, res)
 {
     try {
-        res.render("userPortal");
+        const {username} = req.params;
+
+        const targetUser = await User.findOne({ username });
+
+        if (targetUser)
+        {
+            targetUser.password = ""; //for safety, idk if this matters
+            res.render("userPortal", {targetUser});
+        }
+        else
+        {
+            res.send("<center><h1>USERNAME "+username+" COULD NOT BE FOUND</h1></center>")
+        }
     } catch (error) {
         let errorObj = {
             message: "userIndexPage failed",

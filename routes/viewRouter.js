@@ -2,7 +2,7 @@ const router = require("express").Router();
 
 const {
     redirectLogin,
-    redirectIfLoggedIn
+    redirectIfLoggedIn,
  } = require("../middlewares/authMiddleware");
 
 const {
@@ -14,13 +14,17 @@ const {
     renderUserIndexPage
 } = require("../controllers/viewController");
 
+const {
+    attachUserObjectToSession
+} = require("../controllers/userController");
+
 router.get("/", redirectLogin, renderHomePage);
 
 router.get("/login", redirectIfLoggedIn, renderLoginPage);
 
 /* USER PORTAL/USER INDEX */
 // vv /u/ stands for user, :username is the username parameter for each individual user's index page
-router.get("/u/:username", redirectLogin, renderUserIndexPage);
+router.get("/u/:username", redirectLogin, attachUserObjectToSession, renderUserIndexPage);
 
 // OLD MAIL ROUTE vv using multer (deprecated)
 // router.get("/mail", redirectLogin, renderSuicuneDeliveryPage);
