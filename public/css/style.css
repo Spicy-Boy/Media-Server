@@ -489,7 +489,7 @@ header {
 #list th {
     border: none;
     /* padding: 0; */
-    padding-left: 0;
+    /* padding-left: 0; */
 }
 #list td {
     border: none;
@@ -510,6 +510,7 @@ header {
 }
 .upload-list-name-column {
     width: 55%;
+    padding-left: 10px;
 }
 .upload-list-link-column {
     width: 2%;
@@ -555,6 +556,12 @@ footer a:visited {
     }
     .uploader-container {
         width: 35%;
+    }
+    .upload-list-container {
+        width: 65%;
+        border-left: 2px solid rgb(112, 112, 112);
+        padding-left: 20px;
+        padding-right: 5px;
     }
     .upload-list-container {
         width: 65%;
@@ -866,7 +873,12 @@ footer a:visited {
 .width-200px {
     width: 200px;
 }
-
+.width-100 {
+    width: 100%;
+}
+.remove-left-border {
+    border-left: none;
+}
 
 
 

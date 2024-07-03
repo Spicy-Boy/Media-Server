@@ -25,6 +25,7 @@ router.get("/login", redirectIfLoggedIn, renderLoginPage);
 /* USER PORTAL/USER INDEX */
 // vv /u/ stands for user, :username is the username parameter for each individual user's index page
 router.get("/u/:username", redirectLogin, attachUserObjectToSession, renderUserIndexPage);
+router.get("/u", redirectLogin, attachUserObjectToSession, renderUserIndexPage);
 
 // OLD MAIL ROUTE vv using multer (deprecated)
 // router.get("/mail", redirectLogin, renderSuicuneDeliveryPage);

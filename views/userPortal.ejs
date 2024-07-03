@@ -10,13 +10,30 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 <body class="user-index-body white">
-    <h1><%=activeUser.username%></h1>
-    <h1><%=targetUser.username%></h1>
+
+    <%
+    let isThisActiveUserPage = false;
+    if (activeUser.username == targetUser.username)
+    {
+        isThisActiveUserPage = true;
+    }
+    %>
+
     <%- include("./partials/userIndexHeader") %>
 
+    <%
+    if (!isThisActiveUserPage)
+    {
+    %>
+    <h3 class="tac">Viewing <%=targetUser.username%>'s Page</h3>
+    <%
+    }
+    %>
     <div id="upload-and-list-wrapper">
 
         <!-- vv contains suicune delivery service -->
+        <!-- is conditionally rendered if viewing your own page, can't access from other user pages -->
+        <%if (isThisActiveUserPage) {%>
         <div class="uploader-container">
 
             <h4>Suicune Mail Service</h4>
@@ -36,9 +53,14 @@
                 
             </div>
         </div>
-
+        <%}%>
         <!-- vv contains all user's uploaded files -->
+        <!-- Conditionally render as a 100% width if looking at another user's page -->
+        <%if (isThisActiveUserPage) {%>
         <div class="upload-list-container">
+        <%}else{%>
+        <div class="upload-list-container width-100 remove-left-border">
+        <%}%>
             <table id="list">
                 <thead>
                     <th class="upload-list-name-column">Name</th>

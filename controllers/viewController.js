@@ -33,7 +33,16 @@ async function renderUserIndexPage(req, res)
     try {
         const {username} = req.params;
 
-        const targetUser = await User.findOne({ username });
+        let targetUser;
+
+        if (!req.params.username) //if simple /u route with no specific user parameter
+        {
+            targetUser = req.session.activeUser;
+        }
+        else
+        {
+            targetUser = await User.findOne({ username });
+        }
 
         if (targetUser)
         {
