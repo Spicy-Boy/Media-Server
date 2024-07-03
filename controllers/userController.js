@@ -25,7 +25,20 @@ async function loginUser(req, res)
             //this means, if the _id is discovered, a user could impersonate a valid session!
 
             // res.redirect('/');
-            res.redirect(process.env.REDIRECT_AFTER_LOGIN);
+            
+            let redirectTo;
+            if (req.session.returnTo)
+            {
+                //if user was trying to go somewhere else, they will be redirected back upon successful auth
+                redirectTo = req.session.returnTo;
+            }
+            else
+            {
+                //the default redirection location is set in .env
+                redirectTo = process.env.REDIRECT_AFTER_LOGIN
+            }
+
+            res.redirect(redirectTo);
         } else {
             res.json({
                 message: "function excecuted properly",

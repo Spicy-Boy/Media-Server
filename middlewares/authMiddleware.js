@@ -6,6 +6,9 @@ const redirectLogin = (req, res, next) => {
     {
         console.log('Auth failed!');
         // req.session.loginMessage = "Validate your login, scrubby";
+        console.log(req.originalUrl);
+        req.session.returnTo = req.originalUrl;
+
         res.redirect('/login');
     }
     else 
