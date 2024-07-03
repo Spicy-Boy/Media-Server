@@ -1,14 +1,15 @@
 //vv the backend route that handles writing the file
 //front end (this script) recieves file, sends request to back end, starts an upload connection via xmlhttprequest
 // const localServerUrl = "http://localhost:8080"
-const uploadUrl = "/api/suicune/simpleUpload";
+const uploadUrl = "/api/files/upload";
 
 const uploadButton = document.getElementById('upload-button');
+const fileInput = document.getElementById('file');
 
-uploadButton.addEventListener("change", (event) => {
-    console.log('--event:', event.target.files);
-
-    uploadFiles(event.target.files);
+uploadButton.addEventListener("click", (event) => {
+    event.preventDefault();
+    // console.log(fileInput.files);
+    uploadFiles(fileInput.files);
 });
 
 function uploadFiles(files)
@@ -16,7 +17,8 @@ function uploadFiles(files)
     for (const file of files)
     {
         console.log('About to upload', file.name);
-        uploadIndividualFile(file);
+        // TEMP COMMENTED OUTvvv
+        // uploadIndividualFile(file);
     }
 }
 

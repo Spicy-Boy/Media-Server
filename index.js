@@ -117,8 +117,11 @@ app.use("/", viewRouter);
 const userRouter = require("./routes/userRouter");
 app.use("/api/user", userRouter)
 
-const suicuneRouter = require("./routes/suicuneRouter");
-app.use("/api/suicune", suicuneRouter);
+const fileRouter = require("./routes/fileRouter");
+app.use("/api/file", fileRouter);
+
+// const suicuneRouter = require("./routes/suicuneRouter");
+// app.use("/api/suicune", suicuneRouter);
 
 /* && _ && */
 

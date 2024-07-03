@@ -40,12 +40,12 @@
 
             <form class="suicune-form suicune-width" enctype="multipart/form-data" method="post">
                 <img src="/images/245.png">
-                <div id="upload-button">
+                <div id="upload-files">
                     <label for="file">File:</label>
                     <input id="file" name="uploaded_file" type="file" multiple>
                 </div>
                 <br>
-                <input type="submit" value="Upload">
+                <input type="submit" value="Upload" id="upload-button">
                 <br>
             </form>
 
@@ -70,7 +70,7 @@
                 </thead>
 
                 <tbody>
-                <!-- EJS HERE -->
+                
                 </tbody>
             </table>
         </div>
@@ -78,5 +78,8 @@
 
     <%- include("./partials/userIndexFooter") %>
 
+    <%if (isThisActiveUserPage) {%>
+    <script src="./js/simpleUploadLogic.js"></script>
+    <%}%>
 </body>
 </html>
