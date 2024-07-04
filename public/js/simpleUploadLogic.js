@@ -1,10 +1,13 @@
 //vv the backend route that handles writing the file
 //front end (this script) recieves file, sends request to back end, starts an upload connection via xmlhttprequest
 // const localServerUrl = "http://localhost:8080"
-const uploadUrl = "/api/files/upload";
+const uploadUrl = "/api/file/upload";
 
 const uploadButton = document.getElementById('upload-button');
 const fileInput = document.getElementById('file');
+
+// vv new divs to contain upload info (like progress bar and status) are
+const uploadContainer = document.getElementById('active-uploads');
 
 uploadButton.addEventListener("click", (event) => {
     event.preventDefault();
@@ -14,11 +17,14 @@ uploadButton.addEventListener("click", (event) => {
 
 function uploadFiles(files)
 {
+    let fileNo = 0;
     for (const file of files)
     {
         console.log('About to upload', file.name);
         // TEMP COMMENTED OUTvvv
-        // uploadIndividualFile(file);
+        createUploadElement(fileNo, file.name);
+        uploadIndividualFile(file);
+        fileNo++;
     }
 }
 
@@ -73,26 +79,37 @@ async function uploadFileChunk(fileChunk, chunkId, chunkCount, fileName)
 
 }
 
-function createUploadElements()
+function createUploadElement(fileNo, fileName)
 {
-
+    const uploadDiv = document.createElement("div");
+    uploadDiv.id = "file-"+fileNo;
+    uploadDiv.className = "individual-upload";
+    uploadDiv.innerHTML = `<span id="fileName-${fileNo}">${fileName}
+    <hr>
+    <div class="text-align-left">
+    <span class="smaller-upload-text">&nbsp;Status:</span> <span id="fileStatus-${fileNo}">Uploading</span>
+    <br>
+    <span class="smaller-upload-text">&nbsp;Progress:</span> <span id="filePercentage-${fileNo}">0%</span>
+    </div>`;
+    uploadContainer.appendChild(uploadDiv);
 }
 
-function onProgress(e, file)
-{
-    console.log(`Uploaded Chunk ${e.loaded}/${e.total} of ${file.name}`);
-    // console.log('PROGRESS EVENT!',file);
+//vv old XMLHTTP request info vv
+// function onProgress(e, file)
+// {
+//     console.log(`Uploaded Chunk ${e.loaded}/${e.total} of ${file.name}`);
+//     // console.log('PROGRESS EVENT!',file);
 
-}
-function onError(e, file)
-{
-    console.log(`!!! - UPLOAD ERROR: ${file.name}`);
-}
-function onComplete(e, file)
-{
-    console.log(`UPLOAD COMPLETE: ${file.name}`);
-}
-function onCanceled(e, file)
-{
-    console.log(`!!! - UPLOAD CANCELED: ${file.name}`);
-}
+// }
+// function onError(e, file)
+// {
+//     console.log(`!!! - UPLOAD ERROR: ${file.name}`);
+// }
+// function onComplete(e, file)
+// {
+//     console.log(`UPLOAD COMPLETE: ${file.name}`);
+// }
+// function onCanceled(e, file)
+// {
+//     console.log(`!!! - UPLOAD CANCELED: ${file.name}`);
+// }

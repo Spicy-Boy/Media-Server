@@ -8,6 +8,7 @@ const {
     uploadInChunks
 } = require("../controllers/fileController");
 
+// /api/file/upload
 router.post("/upload", redirectLogin, uploadInChunks);
 
 module.exports = router;

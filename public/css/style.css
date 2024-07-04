@@ -454,7 +454,34 @@ header {
     /* TEST COLOR ^^ */
 }
 .suicune-width {
+    width: 60%;
     max-width: 250px;
+    min-width: 205px;
+}
+.individual-upload {
+    background-color: #363636;
+    /* max-height: 100px; */
+    /* max-width: 250px; */
+    width: 200px;
+    margin-top: 3px;
+    margin-bottom: 3px;
+    border: #b3b2b2 2px inset;
+
+    padding-bottom: 3px;
+
+    overflow-wrap: break-word;
+    
+}
+.smaller-upload-text {
+    size: 10px;
+    color: rgb(160, 160, 160);
+}
+.individual-upload h6 {
+    margin: 0;
+    padding: 0;
+}
+.text-align-left {
+    text-align: left;
 }
 
 .upload-list-container {
