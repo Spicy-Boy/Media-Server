@@ -20,11 +20,15 @@ function uploadFiles(files)
     let fileNo = 0;
     for (const file of files)
     {
-        console.log('About to upload', file.name);
-        // TEMP COMMENTED OUTvvv
-        createUploadElement(fileNo, file.name);
-        uploadIndividualFile(file);
+        file.fileNo = fileNo;
         fileNo++;
+        
+    }
+    for (const file of files)
+    {
+        console.log('About to upload', file.name);
+        createUploadElement(file.fileNo, file.name);
+        uploadIndividualFile(file);
     }
 }
 
@@ -56,15 +60,16 @@ async function uploadIndividualFile(file)
         const chunkNumber = chunkId+1;
         //a chunk is a string of bytes sliced based on chunkId position
         const chunk = file.slice(chunkId*CHUNK_SIZE, chunkId*CHUNK_SIZE+CHUNK_SIZE);
-        await uploadFileChunk(chunk, chunkId, chunkCount, file.name);
+        await uploadFileChunk(chunk, chunkId, chunkCount, file.name, file.fileNo);
         console.log("% % Chunk "+chunkNumber+" of "+chunkCount+" upload request complete!");
     }
 }
 
 //previously used XMLHTTP request... trying it with fetch now. See github for old method
 //vv sends a file chunk as an upload request to the server
-async function uploadFileChunk(fileChunk, chunkId, chunkCount, fileName)
+async function uploadFileChunk(fileChunk, chunkId, chunkCount, fileName, fileNo)
 {
+    //vv attempt to send chunk to back end, recieve response telling how it went ;p
     const response = await fetch(uploadUrl, {
         method: "POST",
         headers: {
@@ -77,6 +82,39 @@ async function uploadFileChunk(fileChunk, chunkId, chunkCount, fileName)
         body: fileChunk
     });
 
+    updateUploadElement(fileNo, chunkId, chunkCount, response);
+
+}
+
+function updateUploadElement(fileNo, chunkId, chunkCount, response)
+{
+    //the span vv that contains %
+    const uploadPercent = document.getElementById('filePercentage-'+fileNo+'');
+
+    //the span vv that contains status message
+    const uploadStatus = document.getElementById('fileStatus-'+fileNo+'');
+
+    let uploadInfo = response.json();
+    console.log(uploadInfo);
+
+    const percent = Math.round((chunkId+1) *100 / chunkCount);
+
+    if (response.status == 200 && uploadInfo.uploadComplete) //chunk recieved success
+    {
+
+        uploadPercent.textContent = "100%";
+        uploadStatus.textContent = uploadInfo.message;
+    }
+    else if (response.status == 200) //whole file (supposedly) complete
+    {
+        uploadPercent.textContent = percent+"%";
+        uploadStatus.textContent = uploadInfo.message;
+    }
+    else 
+    {
+        uploadPercent.textContent = percent+"%";
+        uploadStatus.textContent = "FAILED";
+    }
 }
 
 function createUploadElement(fileNo, fileName)

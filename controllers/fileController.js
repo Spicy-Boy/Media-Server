@@ -16,13 +16,29 @@ async function uploadInChunks(req, res)
     try 
     {
         req.on("data", chunk => {
-            console.log('PROGRESS: recieved data for chunk',chunkId+"/"+chunkCount+" in",fileName);
+            console.log('PROGRESS: recieved data for chunk',(Number(chunkId)+1)+"/"+chunkCount+" in",fileName);
             fs.appendFileSync(filePath, chunk);
         });        
         
         req.on("end", () => {
-            console.log("Finished receiving chunk", chunkId+" of ", fileName);
-            res.status(200).send('Chunk received successfully');
+            console.log("Finished receiving chunk", chunkId+" of", fileName);
+            // console.log((chunkId+1)+'/'+chunkCount);
+            if (Number(chunkId)+1 == chunkCount)
+            {
+                res.uploadComplete = true;
+                res.status(200).json({
+                    message: 'Processing',
+                    uploadComplete: true
+                });
+ 
+            }
+            else {
+                res.uploadComplete = false;
+                res.status(200).json({
+                    message: 'Uploading',
+                    uploadComplete: false
+                });
+            }
         });
 
         req.on("error", err => {
