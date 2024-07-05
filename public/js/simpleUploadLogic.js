@@ -1,6 +1,10 @@
 //vv the backend route that handles writing the file
 //front end (this script) recieves file, sends request to back end, starts an upload connection via xmlhttprequest
 // const localServerUrl = "http://localhost:8080"
+let fileNo = 0;
+
+const fileTrackerArray = [];
+
 const uploadUrl = "/api/file/upload";
 
 const uploadButton = document.getElementById('upload-button');
@@ -15,20 +19,24 @@ uploadButton.addEventListener("click", (event) => {
     uploadFiles(fileInput.files);
 });
 
-function uploadFiles(files)
+async function uploadFiles(files)
 {
-    let fileNo = 0;
     for (const file of files)
     {
         file.fileNo = fileNo;
+        fileTrackerArray[fileNo] = {
+            fileName: file.name,
+            fileSize: file.size,
+            isCanceled: false
+        }
+        createUploadElement(file.fileNo, file.name);
         fileNo++;
         
     }
     for (const file of files)
     {
         console.log('About to upload', file.name);
-        createUploadElement(file.fileNo, file.name);
-        uploadIndividualFile(file);
+        await uploadIndividualFile(file);
     }
 }
 
@@ -57,10 +65,39 @@ async function uploadIndividualFile(file)
     //loop through all chunks based on calculated chunk counts (plus an extra loop for any remainder bytes)
     for (let chunkId = 0; chunkId < chunkCount; chunkId++)
     {
+        //OLD cancelation method vv
+    // if (fileTrackerArray[file.fileNo].isCanceled)
+    // {
+    //     console.log('CANCEL DETECTED');
+    //     updateUploadElement(file.fileNo, chunkId, chunkCount, {message: "CANCELED", uploadComplete: false}, 500);
+    //     // INSERT METHOD HERE FOR CANCELING/DELETING FILE ON BACK END!
+    //     return;
+    // }
+
         const chunkNumber = chunkId+1;
         //a chunk is a string of bytes sliced based on chunkId position
         const chunk = file.slice(chunkId*CHUNK_SIZE, chunkId*CHUNK_SIZE+CHUNK_SIZE);
-        await uploadFileChunk(chunk, chunkId, chunkCount, file.name, file.fileNo);
+        try 
+        {
+            await uploadFileChunk(chunk, chunkId, chunkCount, file.name, file.fileNo);
+        }
+        catch (error)
+        {
+            console.error(error);
+            
+            if (error.name === 'AbortError')
+            {
+                updateUploadElement(file.fileNo, chunkId, chunkCount, {message: "CANCELED", uploadComplete: false}, 500);
+                // INSERT METHOD HERE FOR CANCELING/DELETING FILE ON BACK END!
+            }
+            else 
+            {
+                updateUploadElement(file.fileNo, chunkId, chunkCount, {message: "FAILED", uploadComplete: false}, 500);
+                // INSERT METHOD HERE FOR CANCELING/DELETING FILE ON BACK END!
+            }
+            return;
+        }
+
         console.log("% % Chunk "+chunkNumber+" of "+chunkCount+" upload request complete!");
     }
 }
@@ -70,6 +107,20 @@ async function uploadIndividualFile(file)
 async function uploadFileChunk(fileChunk, chunkId, chunkCount, fileName, fileNo)
 {
     //vv attempt to send chunk to back end, recieve response telling how it went ;p
+    const controller = new AbortController();
+    const signal = controller.signal;
+
+    const cancelButton = document.getElementById("cancel"+fileNo);
+    cancelButton.addEventListener("click", function () {
+        // console.log(this);
+        // vv extract the fileNo from the id of the cancel button
+        const fileNumber = this.id.substring("cancel".length);
+
+        fileTrackerArray[Number(fileNumber)].isCanceled = true;
+
+        controller.abort();
+    });
+
     const response = await fetch(uploadUrl, {
         method: "POST",
         headers: {
@@ -79,14 +130,17 @@ async function uploadFileChunk(fileChunk, chunkId, chunkCount, fileName, fileNo)
             "chunk-id": chunkId,
             "chunk-count": chunkCount
         },
-        body: fileChunk
+        body: fileChunk,
+        signal: signal
     });
 
-    updateUploadElement(fileNo, chunkId, chunkCount, response);
+    //convert the response to json to extract res status message and completeness boolean
+    let uploadInfo = await response.json();
 
+    updateUploadElement(fileNo, chunkId, chunkCount, uploadInfo, response.status);
 }
 
-function updateUploadElement(fileNo, chunkId, chunkCount, response)
+function updateUploadElement(fileNo, chunkId, chunkCount, uploadInfo, status)
 {
     //the span vv that contains %
     const uploadPercent = document.getElementById('filePercentage-'+fileNo+'');
@@ -94,26 +148,23 @@ function updateUploadElement(fileNo, chunkId, chunkCount, response)
     //the span vv that contains status message
     const uploadStatus = document.getElementById('fileStatus-'+fileNo+'');
 
-    let uploadInfo = response.json();
-    console.log(uploadInfo);
+    const percent = Math.ceil((chunkId+1) / chunkCount * 100);
 
-    const percent = Math.round((chunkId+1) *100 / chunkCount);
-
-    if (response.status == 200 && uploadInfo.uploadComplete) //chunk recieved success
+    if (status == 200 && uploadInfo.uploadComplete) //chunk recieved success
     {
-
         uploadPercent.textContent = "100%";
         uploadStatus.textContent = uploadInfo.message;
     }
-    else if (response.status == 200) //whole file (supposedly) complete
+    else if (status == 200) //whole file (supposedly) complete
     {
         uploadPercent.textContent = percent+"%";
         uploadStatus.textContent = uploadInfo.message;
     }
     else 
     {
-        uploadPercent.textContent = percent+"%";
-        uploadStatus.textContent = "FAILED";
+        uploadPercent.textContent = "XX%";
+        uploadStatus.textContent = uploadInfo.message || "FAILED";
+        // INSERT METHOD HERE FOR CANCELING/DELETING FILE ON BACK END!
     }
 }
 
@@ -130,9 +181,28 @@ function createUploadElement(fileNo, fileName)
     <span class="smaller-upload-text">&nbsp;Progress:</span> <span id="filePercentage-${fileNo}">0%</span>
     </div>`;
     uploadContainer.appendChild(uploadDiv);
+    
+    const additionalDetailsDiv = document.createElement("div");
+    additionalDetailsDiv.className = "text-align-left";
+    additionalDetailsDiv.innerHTML = "&nbsp;"
+    additionalDetailsDiv.style.marginTop = "4px";
+    uploadDiv.appendChild(additionalDetailsDiv);
+
+    const cancelButton = document.createElement("button");
+    cancelButton.id = "cancel"+fileNo;
+    cancelButton.textContent = "Cancel";
+    additionalDetailsDiv.appendChild(cancelButton);
+
+    // cancelButton.addEventListener("click", function () {
+    //     // console.log(this);
+    //     // vv extract the fileNo from the id of the cancel button
+    //     const fileNumber = this.id.substring("cancel".length);
+
+    //     fileTrackerArray[Number(fileNumber)].isCanceled = true;
+    // });
 }
 
-//vv old XMLHTTP request info vv
+//vv old XMLHTTP request event function vv
 // function onProgress(e, file)
 // {
 //     console.log(`Uploaded Chunk ${e.loaded}/${e.total} of ${file.name}`);

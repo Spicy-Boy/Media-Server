@@ -12,7 +12,22 @@ async function uploadInChunks(req, res)
     const fileName = req.headers["file-name"];
     const chunkId = req.headers["chunk-id"];
     const chunkCount = req.headers["chunk-count"];
-    const filePath = process.env.MAIL_DELIVERY_LOCATION+fileName
+    const username = req.session.activeUser.username;
+
+    //user files are saved in a directory based on session username
+    let filePath = process.env.MAIL_DELIVERY_LOCATION+"/"+username+"_files";
+
+    // create local directory for user if it hasn't already been created
+    if (!fs.existsSync(filePath)) {
+        fs.mkdir(filePath, (err) => {
+          if (err) {
+            return console.error(err);
+          }
+          console.log("New user directory for "+req.session.username+" created successfully!");
+        });
+      }
+
+    filePath = process.env.MAIL_DELIVERY_LOCATION+"/"+username+"_files/"+fileName
     try 
     {
         req.on("data", chunk => {
@@ -25,15 +40,13 @@ async function uploadInChunks(req, res)
             // console.log((chunkId+1)+'/'+chunkCount);
             if (Number(chunkId)+1 == chunkCount)
             {
-                res.uploadComplete = true;
+                console.log("Upload of "+fileName+" complete");
                 res.status(200).json({
                     message: 'Processing',
                     uploadComplete: true
                 });
- 
             }
             else {
-                res.uploadComplete = false;
                 res.status(200).json({
                     message: 'Uploading',
                     uploadComplete: false
