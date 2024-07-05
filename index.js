@@ -30,10 +30,12 @@ mongoSessionStore.on('error', function(error) {
 
 /**LOGGING ~ ~ ~ */
 // TODO: 
-//
 // Simplify to Route / IP / Time of day / User Session
 // Make NOTE if file downloaded or uploaded
+
 /* BEGIN LOGGING to console and file */
+
+/*
 let dateAtStartup = new Date;
 let month = dateAtStartup.getMonth() + 1;
 let day = dateAtStartup.getDate();
@@ -81,6 +83,8 @@ app.use(logger("combined", {
 }));
 // morgan.token('ip', (req) => req.ip || req.connection.remoteAddress);
 app.use(logger("dev"));
+*/
+
 /* END LOGGING */
 
 app.use(express.urlencoded({ extended: false }));
