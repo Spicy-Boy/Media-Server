@@ -107,11 +107,51 @@ async function renderSuicuneDeliveryPageSimpleBusboy(req, res)
     }
 }
 
+async function renderIndividualFilePage (req, res)
+{
+    {
+        try {
+            const {username} = req.params;
+    
+            let targetUser;
+    
+            if (!req.params.username) //if simple /u route with no specific user parameter
+            {
+                targetUser = req.session.activeUser;
+            }
+            else
+            {
+                targetUser = await User.findOne({ username });
+            }
+
+            const file = targetUser.files.find( file => file.fileId === req.params.fileId);
+    
+            if (targetUser && file)
+            {
+                targetUser.password = ""; //for safety, idk if this matters
+                res.render("individualPersonalFilePage", {targetUser, file});
+            }
+            else
+            {
+                res.send("<center><h1>USERNAME OR FILE ID COULD NOT BE FOUND</h1></center>")
+            }
+        } catch (error) {
+            let errorObj = {
+                message: "individualPersonalFilePage failed",
+                payload: error
+            }
+            console.error(errorObj);
+            res.json("SORRY! Something went wrong loading the individualPersonalFilePage.");
+        }
+    }
+}
+
 module.exports = {
     renderHomePage,
     renderLoginPage,
     renderSuicuneDeliveryPage,
     renderSuicuneDeliveryPageBusboy,
     renderSuicuneDeliveryPageSimpleBusboy,
-    renderUserIndexPage
+    renderUserIndexPage,
+    renderIndividualFilePage
 }

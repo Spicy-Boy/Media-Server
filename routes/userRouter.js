@@ -11,6 +11,6 @@ const authMiddleware = require('../middlewares/authMiddleware');
 // localhost:PORT/api/user/login
 router.post('/login', loginUser);
 
-router.post('/logout', logoutUser);
+router.get('/logout', logoutUser);
 
 module.exports = router

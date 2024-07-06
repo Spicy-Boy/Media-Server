@@ -935,6 +935,9 @@ footer a:visited {
 .remove-left-border {
     border-left: none;
 }
+.underlined-text {
+    text-decoration: underline;
+}
 
 
 

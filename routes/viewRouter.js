@@ -11,19 +11,24 @@ const {
     renderSuicuneDeliveryPage,
     renderSuicuneDeliveryPageBusboy,
     renderSuicuneDeliveryPageSimpleBusboy,
-    renderUserIndexPage
+    renderUserIndexPage,
+    renderIndividualFilePage
 } = require("../controllers/viewController");
 
 const {
     attachUserObjectToSession
 } = require("../controllers/userController");
 
-router.get("/", redirectLogin, renderHomePage);
+//homepage isn't done yet! vv TODO
+// router.get("/", redirectLogin, renderHomePage);
+router.get("/", redirectLogin, attachUserObjectToSession, renderUserIndexPage);
 
 router.get("/login", redirectIfLoggedIn, renderLoginPage);
 
 /* USER PORTAL/USER INDEX */
 // vv /u/ stands for user, :username is the username parameter for each individual user's index page
+// :fielId is the unique file uuid assigned to each file
+router.get("/u/:username/:fileId", redirectLogin, attachUserObjectToSession, renderIndividualFilePage);
 router.get("/u/:username", redirectLogin, attachUserObjectToSession, renderUserIndexPage);
 // vv if no :username parameter, send to session page
 router.get("/u", redirectLogin, attachUserObjectToSession, renderUserIndexPage);

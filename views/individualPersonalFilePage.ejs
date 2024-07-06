@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Uploads</title>
+
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- vvv font awesome for useful icons like search glass -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <%
+    // because apprently dumb stupid ejs can't read scripts -_-
+    function calculateFileSize(bytes)
+    {
+        if (bytes >= 1073741824) //1 gb = 1073741824 bytes
+        {
+            return (bytes / 1073741824).toFixed(2) + " GB";
+        }
+        else if (bytes >= 1048576) //1 mb in bytes
+        {
+            return (bytes / 1048576).toFixed(2) + " MB";
+        }
+        else if (bytes >= 1024) //1 kb in bytes
+        { 
+            return (bytes / 1024).toFixed(2) + " KB"; 
+        }
+        else if (bytes > 1)
+        { 
+            return bytes + " bytes"; 
+        }
+        else if (bytes == 1)
+        { 
+            return bytes + " byte"; 
+        }
+        else {
+            return "???";
+        }
+    }
+    %>
+
+</head>
+<body class="user-index-body white">
+    <%- include("./partials/userIndexHeader") %>
+
+    <h1><%=file.name%></h1>
+
+    <%- include("./partials/userIndexFooter") %>
+</body>
+</html>

@@ -100,7 +100,6 @@ async function createPersonalDatabaseEntry(req, res)
 
 async function downloadFile(req, res)
 {
-    console.log("HI ARRON FROM DOWNLOADFILE");
     //contruct the path based on the request parameters
     const targetUsername = req.params.username;
     const fileId = req.params.fileId;
@@ -121,7 +120,7 @@ async function downloadFile(req, res)
             {
                 console.error('Error downloading file..', error);
                 if (!res.headersSent) {
-                    res.status(500).send('An error occurred while downloading the file.');
+                    res.status(500).send('An error occurred while downloading the requested file... does it still exist? Contact admin for support.');
                 }
             }
         });

@@ -5,13 +5,11 @@ for (let i = 0; i < downloadLinks.length; i++) {
 
     link.addEventListener("click", (event) => {
         event.preventDefault();
-        console.log("DOWNLOAD CLICKED!",link);
 
         const username = link.dataset.username;
 
-        fetch(`/api/file/download/${username}/${link.id}`, {
-            method: "GET",
-        });
+        //vv this needs to happen for the download to work... not sure why!
+        window.open(`/api/file/download/${username}/${link.id}`);
     });
 }
 
