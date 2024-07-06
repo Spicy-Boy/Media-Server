@@ -29,7 +29,7 @@ async function uploadFiles(files)
             fileSize: file.size,
             isCanceled: false
         }
-        createUploadElement(file.fileNo, file.name);
+        createUploadElement(file.fileNo, file.name, file.size);
         fileNo++;
         
     }
@@ -100,6 +100,8 @@ async function uploadIndividualFile(file)
 
         console.log("% % Chunk "+chunkNumber+" of "+chunkCount+" upload request complete!");
     }
+
+    
 }
 
 //previously used XMLHTTP request... trying it with fetch now. See github for old method
@@ -168,7 +170,7 @@ function updateUploadElement(fileNo, chunkId, chunkCount, uploadInfo, status)
     }
 }
 
-function createUploadElement(fileNo, fileName)
+function createUploadElement(fileNo, fileName, fileSize)
 {
     const uploadDiv = document.createElement("div");
     uploadDiv.id = "file-"+fileNo;
@@ -176,7 +178,9 @@ function createUploadElement(fileNo, fileName)
     uploadDiv.innerHTML = `<span id="fileName-${fileNo}">${fileName}
     <hr>
     <div class="text-align-left">
-    <span class="smaller-upload-text">&nbsp;Status:</span> <span id="fileStatus-${fileNo}">Uploading</span>
+    <span class="smaller-upload-text">&nbsp;Size:</span> <span id="fileSize-${fileNo}">${calculateFileSize(fileSize)}</span>
+    <br>
+    <span class="smaller-upload-text">&nbsp;Status:</span> <span id="fileStatus-${fileNo}">Waiting..</span>
     <br>
     <span class="smaller-upload-text">&nbsp;Progress:</span> <span id="filePercentage-${fileNo}">0%</span>
     </div>`;
