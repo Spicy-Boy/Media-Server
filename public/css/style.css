@@ -175,7 +175,9 @@ background: #ccc;
 .recent-uploads td, th {
     border: 1px solid #dddddd;
     text-align: left;
-    padding: 8px;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    padding-right: 8px;
 }
 .recent-uploads tr:nth-child(even) {
     background-color: #151515;
@@ -536,14 +538,27 @@ header {
     padding-bottom: 3px;
 }
 .upload-list-name-column {
-    width: 55%;
-    padding-left: 10px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+
+    word-wrap: break-word; /* Ensures words break when necessary */
+    word-break: break-word; /* Specifies how words should break */
+    overflow-wrap: break-word; /* Prevents overflow when a long word is too long to fit */
+
+    text-align: center;
+  
+}
+.mobile-file-details {
+    /* color: red; */
 }
 .upload-list-link-column {
+    display: none;
     width: 2%;
     
 }
 .upload-list-size-column {
+    display: none;
     width: 15%;
 }
 .upload-list-date-column {
@@ -598,11 +613,18 @@ footer a:visited {
     }
     .upload-list-name-column {
         width: 55%;
+        text-align: left;
+        padding-top: 5px;
+        padding-bottom: 5px;
+
+        padding-left: 10px;
     }
     .upload-list-link-column {
+        display: table-cell;
         width: 10%;
     }
     .upload-list-size-column {
+        display: table-cell;
         width: 12.5%;
     }
     .upload-list-date-column {
@@ -683,6 +705,13 @@ footer a:visited {
     
         box-shadow: -10px 0 10px rgba(0, 0, 0, 0.5), 10px 0 10px rgba(0, 0, 0, 0.5); /* Drop shadow to left and right */
 
+    }
+
+    .desktop-invisible {
+        display: none;
+    }
+    .mobile-invisible {
+        display: inline;
     }
     /* anna portrait sprite is 48 px */
 }

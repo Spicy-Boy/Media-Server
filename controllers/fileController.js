@@ -98,7 +98,13 @@ async function createPersonalDatabaseEntry(req, res)
     }
 }
 
+async function downloadFile(req, res)
+{
+
+}
+
 module.exports = {
     uploadInChunks,
-    createPersonalDatabaseEntry
+    createPersonalDatabaseEntry,
+    downloadFile
 };

@@ -115,18 +115,22 @@
                     <%targetUser.files.forEach( (file, index) => {%>
                         <tr>
                             <td class="upload-list-name-column">
+                                <div class="mobile-file-details desktop-invisible" style="padding-top: 15px;">   
+                                </div>
                                 <a href="#"><%=file.name%></a>
+                                <div class="mobile-file-details desktop-invisible" style="padding-top: 15px;">
+                                    <span>🔗<a href="#">LINK</a> ~ Size: <%=calculateFileSize(file.size)%></span>
+                                </div>
                             </td>
                             <td class="upload-list-link-column">
                                 <a href="#">LINK</a>
                             </td>
                             <td class="upload-list-size-column">
                             <%=calculateFileSize(file.size)%>
-                            <%console.log(file.size);%>
                             </td>
                             <td class="upload-list-date-column">
                             <%
-                                // date object is set here, date and time:
+                                //format date into proper format
                                 const dateUploaded = file.date;
                                 let month = dateUploaded.getMonth() + 1;
                                 let day = dateUploaded.getDate();
