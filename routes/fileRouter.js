@@ -5,10 +5,12 @@ const { //import auth
 } = require("../middlewares/authMiddleware");
 
 const {
-    uploadInChunks
+    uploadInChunks,
+    createPersonalDatabaseEntry
 } = require("../controllers/fileController");
 
 // /api/file/upload
 router.post("/upload", redirectLogin, uploadInChunks);
+router.post("/createEntry", redirectLogin, createPersonalDatabaseEntry);
 
 module.exports = router;

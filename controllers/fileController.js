@@ -1,4 +1,5 @@
 const fs = require("fs");
+const User = require("../models/userModel");
 
 function createPersonalFilePath (username)
 {
@@ -23,7 +24,7 @@ async function uploadInChunks(req, res)
           if (err) {
             return console.error(err);
           }
-          console.log("New user directory for "+req.session.username+" created successfully!");
+          console.log("New user directory for "+username+" created successfully!");
         });
       }
 
@@ -61,11 +62,43 @@ async function uploadInChunks(req, res)
     }
     catch
     {
-        console.error('Error handling file upload for', fileName, error);
+        console.error('Error handling file upload for',fileName,error);
+        res.status(500).send('Internal Server Error');
+    }
+}
+
+async function createPersonalDatabaseEntry(req, res)
+{
+    try
+    {
+        const fileName = req.headers["file-name"];
+        const fileSize = req.headers["file-size"];
+
+        console.log('Creating database entry for',fileName);
+
+        const username = req.session.activeUser.username;
+
+        const targetUser = await User.findOne({username: username});
+
+        let newEntry = {
+            name: fileName,
+            size: fileSize,
+            location: process.env.MAIL_DELIVERY_LOCATION+"/"+username+"_files/"+fileName //file location is saved just in case the .env mail delivery location changes. This keeps a record of where the file was uploaded originally to aid in future recovery efforts
+        }
+
+        targetUser.files.push(newEntry);
+        await targetUser.save();
+
+        res.status(200).send("SUCCESS! Created a database entry");
+    }
+    catch(error)
+    {
+        console.error('Error handling database entry creation..',error);
         res.status(500).send('Internal Server Error');
     }
 }
 
 module.exports = {
-    uploadInChunks
+    uploadInChunks,
+    createPersonalDatabaseEntry
 };

@@ -6,6 +6,7 @@ let fileNo = 0;
 const fileTrackerArray = [];
 
 const uploadUrl = "/api/file/upload";
+const createEntryUrl = "/api/file/createEntry"
 
 const uploadButton = document.getElementById('upload-button');
 const fileInput = document.getElementById('file');
@@ -65,15 +66,6 @@ async function uploadIndividualFile(file)
     //loop through all chunks based on calculated chunk counts (plus an extra loop for any remainder bytes)
     for (let chunkId = 0; chunkId < chunkCount; chunkId++)
     {
-        //OLD cancelation method vv
-    // if (fileTrackerArray[file.fileNo].isCanceled)
-    // {
-    //     console.log('CANCEL DETECTED');
-    //     updateUploadElement(file.fileNo, chunkId, chunkCount, {message: "CANCELED", uploadComplete: false}, 500);
-    //     // INSERT METHOD HERE FOR CANCELING/DELETING FILE ON BACK END!
-    //     return;
-    // }
-
         const chunkNumber = chunkId+1;
         //a chunk is a string of bytes sliced based on chunkId position
         const chunk = file.slice(chunkId*CHUNK_SIZE, chunkId*CHUNK_SIZE+CHUNK_SIZE);
@@ -99,6 +91,37 @@ async function uploadIndividualFile(file)
         }
 
         console.log("% % Chunk "+chunkNumber+" of "+chunkCount+" upload request complete!");
+    }
+
+    //now add a db entry to the user's collection for file upload
+    try
+    {
+        console.log('Creating database entry for new upload..');
+        const response = await fetch(createEntryUrl, {
+            method: "POST",
+            headers: {
+                "file-name": file.name,
+                "file-size": file.size
+            }
+        });
+
+        if (response.status == 200)
+        {
+            updateUploadElement(file.fileNo, chunkId, chunkCount, {message: "COMPLETE!", uploadComplete: true}, response.status);
+        }
+        else
+        {
+            updateUploadElement(file.fileNo, chunkId, chunkCount, {message: "?! DB Failure, CALL ADMIN!", uploadComplete: false}, 500);
+        }
+
+
+    }
+    catch (error)
+    {
+        console.error(error);
+
+        updateUploadElement(file.fileNo, chunkId, chunkCount, {message: "DB Failure, CALL ADMIN", uploadComplete: false}, 500);
+        // INSERT METHOD HERE FOR NOTIFYING ADMIN OF FILE DB DESYNC
     }
 
     
