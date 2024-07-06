@@ -100,7 +100,36 @@ async function createPersonalDatabaseEntry(req, res)
 
 async function downloadFile(req, res)
 {
+    console.log("HI ARRON FROM DOWNLOADFILE");
+    //contruct the path based on the request parameters
+    const targetUsername = req.params.username;
+    const fileId = req.params.fileId;
 
+    try {
+        const targetUser = await User.findOne({username: targetUsername});
+
+        targetFile = targetUser.files.find( file => file.fileId === fileId);
+
+        if (!targetFile) {
+            return res.status(404).send('File not found.');
+        }
+
+        let fileLocation = process.env.MAIL_DELIVERY_LOCATION+"/"+targetUsername+"_files/"+targetFile.name;
+
+        res.download(fileLocation, targetFile.name, (error) => {
+            if (error)
+            {
+                console.error('Error downloading file..', error);
+                if (!res.headersSent) {
+                    res.status(500).send('An error occurred while downloading the file.');
+                }
+            }
+        });
+    }
+    catch (error) {
+        console.error(error);
+        res.status(500).send("An error occured while trying to find the file for download..");
+    }
 }
 
 module.exports = {

@@ -6,11 +6,13 @@ const { //import auth
 
 const {
     uploadInChunks,
-    createPersonalDatabaseEntry
+    createPersonalDatabaseEntry,
+    downloadFile
 } = require("../controllers/fileController");
 
 // /api/file/upload
 router.post("/upload", redirectLogin, uploadInChunks);
 router.post("/createEntry", redirectLogin, createPersonalDatabaseEntry);
+router.get("/download/:username/:fileId", redirectLogin, downloadFile);
 
 module.exports = router;

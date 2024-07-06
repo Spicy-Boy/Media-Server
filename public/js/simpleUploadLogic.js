@@ -107,11 +107,11 @@ async function uploadIndividualFile(file)
 
         if (response.status == 200)
         {
-            updateUploadElement(file.fileNo, chunkId, chunkCount, {message: "COMPLETE!", uploadComplete: true}, response.status);
+            updateUploadElement(file.fileNo, 1, 1, {message: "COMPLETE!", uploadComplete: true}, response.status);
         }
         else
         {
-            updateUploadElement(file.fileNo, chunkId, chunkCount, {message: "?! DB Failure, CALL ADMIN!", uploadComplete: false}, 500);
+            updateUploadElement(file.fileNo, 1, 1, {message: "?! DB Failure, CALL ADMIN!", uploadComplete: false}, 500);
         }
 
 
@@ -124,7 +124,7 @@ async function uploadIndividualFile(file)
         // INSERT METHOD HERE FOR NOTIFYING ADMIN OF FILE DB DESYNC
     }
 
-    
+
 }
 
 //previously used XMLHTTP request... trying it with fetch now. See github for old method

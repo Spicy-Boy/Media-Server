@@ -82,16 +82,7 @@
             </form>
 
             <div id="active-uploads">
-                <!-- EXAMPLE
-                <div class="individual-upload" id="YEPPERS">
-                    <span class="filename">FILENAMEAPPADUADUWUADHADUHADH33232png3232342233242</span>
-                    <div class="text-align-left">
-                        <span class="smaller-upload-text">&nbsp;Status:</span> <span>Uploading</span>
-                        <br>
-                        <span class="smaller-upload-text">&nbsp;Progress:</span> <span>45%</span>
-                    </div>
-                </div>
-                -->
+
             </div>
         </div>
         <%}%>
@@ -117,7 +108,7 @@
                             <td class="upload-list-name-column">
                                 <div class="mobile-file-details desktop-invisible" style="padding-top: 15px;">   
                                 </div>
-                                <a href="#"><%=file.name%></a>
+                                <a href="#" class="file-name-link" id="<%=file.fileId%>" data-username="<%=targetUser.username%>"><%=file.name%></a>
                                 <div class="mobile-file-details desktop-invisible" style="padding-top: 15px;">
                                     <span>🔗<a href="#">LINK</a> ~ Size: <%=calculateFileSize(file.size)%></span>
                                 </div>
@@ -154,5 +145,6 @@
     <%if (isThisActiveUserPage) {%>
     <script src="./js/simpleUploadLogic.js"></script>
     <%}%>
+    <script src="./js/createDownloadLinks.js"></script>
 </body>
 </html>
