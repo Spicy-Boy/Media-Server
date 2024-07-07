@@ -41,7 +41,9 @@
 
 </head>
 <body class="user-index-body white">
-    <%- include("./partials/userIndexHeader") %>
+    <%if (activeUser) {%>
+        <%- include("./partials/userIndexHeader")%>
+    <%}%>
 
     <div class="tac ">
         <h2 class="word-wrapping"><%=file.name%></h2>
@@ -55,7 +57,7 @@
     </div>
 
     <!-- User controls for deleting or making the post public are locked to uploader or ADMIN -->
-    <%if (targetUser.username == activeUser.username) {%>
+    <%if (activeUser && targetUser.username == activeUser.username) {%>
         <br>
         <br>
         <div class="user-controls">

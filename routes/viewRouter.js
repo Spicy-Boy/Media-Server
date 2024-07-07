@@ -3,6 +3,7 @@ const router = require("express").Router();
 const {
     redirectLogin,
     redirectIfLoggedIn,
+    redirectLoginConditionally
  } = require("../middlewares/authMiddleware");
 
 const {
@@ -28,7 +29,7 @@ router.get("/login", redirectIfLoggedIn, renderLoginPage);
 /* USER PORTAL/USER INDEX */
 // vv /u/ stands for user, :username is the username parameter for each individual user's index page
 // :fielId is the unique file uuid assigned to each file
-router.get("/u/:username/:fileId", redirectLogin, attachUserObjectToSession, renderIndividualFilePage);
+router.get("/u/:username/:fileId", redirectLoginConditionally/* IF FILE IS PUBLIC ACCESS, STRANGER ON THE INTERNET CAN STILL PASS AUTH */, attachUserObjectToSession, renderIndividualFilePage);
 router.get("/u/:username", redirectLogin, attachUserObjectToSession, renderUserIndexPage);
 // vv if no :username parameter, send to session page
 router.get("/u", redirectLogin, attachUserObjectToSession, renderUserIndexPage);
