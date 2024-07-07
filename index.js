@@ -77,13 +77,13 @@ fs.open(logPath, 'wx', (err, fd) => {
         });
     });
 });
-
-app.use(logger("combined", {
-    stream: fs.createWriteStream(logPath, {flags: 'a'})
-}));
+*/
+// app.use(logger("combined", {
+//     stream: fs.createWriteStream(logPath, {flags: 'a'})
+// }));
 // morgan.token('ip', (req) => req.ip || req.connection.remoteAddress);
 app.use(logger("dev"));
-*/
+
 
 /* END LOGGING */
 

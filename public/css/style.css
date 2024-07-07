@@ -549,13 +549,12 @@ header {
     text-align: center;
   
 }
-.mobile-file-details {
-    /* color: red; */
-}
+/* .mobile-file-details {
+    color: red;
+} */
 .upload-list-link-column {
     display: none;
     width: 2%;
-    
 }
 .upload-list-size-column {
     display: none;
@@ -584,6 +583,7 @@ footer a:hover {
 footer a:visited {
     color: #0070e0;
 }
+
 
 /* ^^^ USER PORTAL / user-index page styles! */
 
@@ -875,9 +875,18 @@ footer a:visited {
 .white {
     color: white;
 }
+.blue {
+    color: #0000EE;
+}
+.red {
+    color: red;
+}
 
 .background-151515 {
     background-color: #151515;
+}
+.background-202020 {
+    background-color: #202020;
 }
 /* COLORS ^^^^ */
 .tac {
@@ -937,6 +946,12 @@ footer a:visited {
 }
 .underlined-text {
     text-decoration: underline;
+}
+
+.word-wrapping {
+    word-wrap: break-word; /* Ensures words break when necessary */
+    word-break: break-word; /* Specifies how words should break */
+    overflow-wrap: break-word; /* Prevents overflow when a long word is too long to fit */
 }
 
 

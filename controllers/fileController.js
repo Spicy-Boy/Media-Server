@@ -131,8 +131,50 @@ async function downloadFile(req, res)
     }
 }
 
+//checks if the file id set in req parameter exists in active user's files. If so, pop it out! Permanently deletes the file data from the database
+async function deleteFile(req, res)
+{
+    try 
+    {
+        const fileId = req.params.fileId;
+
+        const dbUser = await User.findOne({username: req.session.activeUser.username});
+        
+        targetFile = dbUser.files.find( file => file.fileId === fileId);
+
+        if (targetFile)
+        {
+            const indexToDelete = dbUser.files.indexOf(targetFile);
+            dbUser.files.splice(indexToDelete, 1);
+
+            console.log("Deleting "+targetFile.name+" from "+dbUser.username+"'s file list...");
+
+            await dbUser.save();
+            res.redirect("/u");
+        }
+        else 
+        {
+            res.send(`<center><h1 style="color: red">YOU DO NOT HAVE PERMISSION TO DO THAT</h1></center>`)
+        }
+    }
+    catch (error)
+    {
+        console.error(error);
+        res.status(500).send("Something went wrong during deletion");
+    }
+
+}
+
+//checks if the file id set in req parameter exists in active user's files. Is so, change the isPublic variable to the opposite of its current value
+async function toggleVisibility(req, res)
+{
+
+}
+
 module.exports = {
     uploadInChunks,
     createPersonalDatabaseEntry,
-    downloadFile
+    downloadFile,
+    deleteFile,
+    toggleVisibility
 };

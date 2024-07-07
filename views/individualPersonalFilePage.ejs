@@ -43,7 +43,38 @@
 <body class="user-index-body white">
     <%- include("./partials/userIndexHeader") %>
 
-    <h1><%=file.name%></h1>
+    <div class="tac ">
+        <h2 class="word-wrapping"><%=file.name%></h2>
+        <br>
+        <h1><a class="user-controls-link blue" href="/api/file/download/<%=targetUser.username%>/<%=file.fileId%>">DOWNLOAD!</a></h1>
+        <br>
+        <h3>Uploaded by <%=targetUser.username%></h3>
+        <h3><%=file.date%></h3>
+        <h3>Size: <%=calculateFileSize(file.size)%></h3>
+
+    </div>
+
+    <!-- User controls for deleting or making the post public are locked to uploader or ADMIN -->
+    <%if (targetUser.username == activeUser.username) {%>
+        <br>
+        <br>
+        <div class="user-controls">
+            <form method="post" action="/api/file/delete/<%=file.fileId%>">
+                <input type="submit" value="DELETE FILE">
+            </form>
+    
+            <form method="post" action="/api/file/toggleVisibility/<%=file.fileId%>">
+                <input type="submit" value="TOGGLE VISIBILITY">
+                <%if (file.isPublic){%>
+                    ~ ~ Current Visibility: Open to the entire internet!!!
+                <%}else{%>
+                    ~ ~ Current Visibility: Registered Users Only
+                <%}%>
+                <span></span>
+            </form>
+        </div>
+
+    <%}%>
 
     <%- include("./partials/userIndexFooter") %>
 </body>

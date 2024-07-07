@@ -7,12 +7,17 @@ const { //import auth
 const {
     uploadInChunks,
     createPersonalDatabaseEntry,
-    downloadFile
+    downloadFile,
+    deleteFile,
+    toggleVisibility
 } = require("../controllers/fileController");
 
 // /api/file/upload
 router.post("/upload", redirectLogin, uploadInChunks);
 router.post("/createEntry", redirectLogin, createPersonalDatabaseEntry);
 router.get("/download/:username/:fileId", redirectLogin, downloadFile);
+
+router.post("/delete/:fileId", redirectLogin, deleteFile);
+router.post("/toggleVisibility/:fileId", redirectLogin, toggleVisibility);
 
 module.exports = router;
