@@ -37,7 +37,7 @@ router.get("/u", redirectLogin, attachUserObjectToSession, renderUserIndexPage);
 // OLD MAIL ROUTE vv using multer (deprecated)
 // router.get("/mail", redirectLogin, renderSuicuneDeliveryPage);
 // vv NEW mail route using an xmlhttprequest frontend and busboy writestream backend
-router.get("/mail", redirectLogin, renderSuicuneDeliveryPageSimpleBusboy)
+// router.get("/mail", redirectLogin, renderSuicuneDeliveryPageSimpleBusboy)
 //^^ using the simpleUploadLogic rewrite
 
 //vv DEPRECATED UPLOAD ROUTE using the beforeSemicolon test
