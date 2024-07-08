@@ -7,6 +7,35 @@ function createPersonalFilePath (username)
     // let filepath = "C:\\mailbox\\upload\\"+username+";
 }
 
+//asynchronous file writing method that has some retry potential
+async function writeFileWithRetry(filePath, chunk, retries, retryDelay)
+{
+    return new Promise((resolve, reject) => {
+        const tryWrite = (retries) => {
+            try
+            {
+                fs.appendFileSync(filePath, chunk);
+                resolve();
+            } 
+            catch (error)
+            {
+                if (error.code === 'EBUSY' && retries > 0)
+                {
+                    console.error("File upload felt busy; retrying in "+retryDelay+" ms..",error);
+                    retries--;
+                    setTimeout(()=>{tryWrite(retries - 1)}, retryDelay);
+                }
+                else
+                {
+                    reject(error);
+                }
+            }
+        }
+
+        tryWrite(retries);
+    });
+}
+
 async function uploadInChunks(req, res)
 {
 
@@ -14,6 +43,12 @@ async function uploadInChunks(req, res)
     const chunkId = req.headers["chunk-id"];
     const chunkCount = req.headers["chunk-count"];
     const username = req.session.activeUser.username;
+
+
+    //to combat errors, we give a chunk 10 chances to upload successfully before failing it
+    let retrying = true;
+    let retries = 10;
+    const retryDelay = 1000;
 
     //user files are saved in a directory based on session username
     let filePath = process.env.MAIL_DELIVERY_LOCATION+"/"+username+"_files";
@@ -31,9 +66,18 @@ async function uploadInChunks(req, res)
     filePath = process.env.MAIL_DELIVERY_LOCATION+"/"+username+"_files/"+fileName
     try 
     {
-        req.on("data", chunk => {
+        req.on("data", async (chunk) => {
             console.log('PROGRESS: recieved data for chunk',(Number(chunkId)+1)+"/"+chunkCount+" in",fileName);
-            fs.appendFileSync(filePath, chunk);
+            
+            try
+            {
+                await writeFileWithRetry(filePath, chunk, retries, retryDelay);
+            }
+            catch (error)
+            {
+                console.error('Failed to write chunk',(Number(chunkId)+1)+"/"+chunkCount+" of",fileName, error);
+                res.status(500).send("Chunk upload got too busy, aborting!");
+            }
         });        
         
         req.on("end", () => {
@@ -60,7 +104,7 @@ async function uploadInChunks(req, res)
             res.status(500).send('Error receiving chunk');
         });
     }
-    catch
+    catch (error)
     {
         console.error('Error handling file upload for',fileName,error);
         res.status(500).send('Internal Server Error');
