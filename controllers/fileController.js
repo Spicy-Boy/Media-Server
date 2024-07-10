@@ -64,6 +64,10 @@ async function uploadInChunks(req, res)
       }
 
     filePath = process.env.MAIL_DELIVERY_LOCATION+"/"+username+"_files/"+fileName
+
+    // DELETE vv the file if it already exists. This prevents issues with appending.
+    
+
     try 
     {
         req.on("data", async (chunk) => {
