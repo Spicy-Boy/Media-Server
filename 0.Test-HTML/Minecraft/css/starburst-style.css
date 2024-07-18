@@ -173,10 +173,28 @@ h2 {
   text-shadow: 5px 5px 0 rgba(0, 0, 0, 0.2);
 }
 
+.comic-sans {
+  font-family: "Comic Sans MS", "Comic Sans", cursive;
+}
+
 .prize-pool {
   /* font-family: Impact; */
   font-family: 'Times New Roman', serif;
   /* color: orange; */
+
+  padding-bottom: 35px;
+}
+.prize-pool-placements {
+  /* margin-left: 15px; */
+  margin: 0 auto 0 auto;
+  padding: 15px;
+  width: 220px;
+
+  border-radius: 5px;
+
+  background-color: #b13038;
+  color: black;
+  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5)
 }
 .prize-pool-placements h3{
   display: flex;
@@ -185,7 +203,11 @@ h2 {
 }
 .fixed-width-placement {
   color: yellow;
-  color: rgb(149, 0, 255);
+  color: rgb(0, 255, 170);
+}
+
+.padding-bottom-SUMMER {
+  padding-bottom: 11px;
 }
 
 .rainbow {
@@ -214,8 +236,16 @@ h2 {
     font-size: 75%;
   }
 
+  .padding-bottom-SUMMER {
+    padding-bottom: 0px;
+  }
+
 }
 
 .tac {
   text-align: center;
+}
+
+.remove-shadow {
+  text-shadow: none;
 }
