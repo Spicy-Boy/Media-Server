@@ -8,6 +8,7 @@ const redirectLogin = (req, res, next) => {
         console.log('Auth failed!');
         // req.session.loginMessage = "Validate your login, scrubby";
         console.log(req.originalUrl);
+        //attaches the place they are being redirected from to the session. So, if they log in, they can be redirected BACK to where they were originally trying to go! vv
         req.session.returnTo = req.originalUrl;
 
         res.redirect('/login');

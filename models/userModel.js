@@ -27,7 +27,7 @@ const userSchema = new mongoose.Schema(
                 //file location is saved just in case the .env mail delivery location changes. This keeps a record of where the file was uploaded originally to aid in future recovery efforts
                 date: {
                     type: Date,
-                    default: Date.now()
+                    default: Date.now
                 },
                 isPublic: {
                     type: Boolean,
@@ -45,4 +45,4 @@ const userSchema = new mongoose.Schema(
 
 const User = mongoose.model('User', userSchema)
 
-module.exports = User
+module.exports = User;

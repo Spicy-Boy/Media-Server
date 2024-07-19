@@ -8,6 +8,7 @@ function createPersonalFilePath (username)
 }
 
 //asynchronous file writing method that has some retry potential
+//gpt showed me how to make a promise ;p
 async function writeFileWithRetry(filePath, chunk, retries, retryDelay)
 {
     return new Promise((resolve, reject) => {
@@ -65,6 +66,12 @@ async function uploadInChunks(req, res)
 
     filePath = process.env.MAIL_DELIVERY_LOCATION+"/"+username+"_files/"+fileName
 
+    // tester vv
+    // if (fs.existsSync(filePath))
+    // {
+    //     console.log('FILE EXISTS ALREADY IN MAILBOX');
+    // }
+
     // DELETE vv the file if it already exists. Overwrites! This prevents issues with appending data to existing file.
     if (fs.existsSync(filePath) && chunkId == 0)
     {
@@ -73,22 +80,39 @@ async function uploadInChunks(req, res)
             if (error)
             {
                 console.error("File deletion from disc failed! Not saving changes to database.",error);
-                return res.status(500).send(`Internal overwrite failure`);
+                return res.status(500).send(`Internal overwrite failure 1. CALL ADMIN!`);
+            }
+            else
+            {
+                console.log('Successfully removed '+fileName+" from disc as part of overwrite!");
             }
         });
 
         //DELETE FILE ON DB so it doesn't create 2 db entries with same file name
-        const fileId = req.params.fileId;
-        const dbUser = await User.findOne({username: req.session.activeUser.username});
-        targetFile = dbUser.files.find( file => file.fileId === fileId);
-
-        if (targetFile)
+        try 
         {
-            const indexToDelete = dbUser.files.indexOf(targetFile);
-            dbUser.files.splice(indexToDelete, 1);
+            const dbUser = await User.findOne({username: req.session.activeUser.username});
 
-            console.log("Deleting "+targetFile.name+" from "+dbUser.username+"'s file list...");
+            //searches for file in user's db entry by its file name.. maybe not the best ;p
+            targetFile = dbUser.files.find( file => file.name === fileName);
+            console.log(targetFile);
+
+            if (targetFile)
+            {
+                const indexToDelete = dbUser.files.indexOf(targetFile);
+                dbUser.files.splice(indexToDelete, 1);
+
+                console.log("Deleting "+targetFile.name+" from "+dbUser.username+"'s db file list!");
+
+                await dbUser.save();
+            }
         }
+        catch (error)
+        {
+            console.log('Error occured while attempting to delete DB entry for preexisting file name...',error);
+            return res.status(500).send(`Internal overwrite failure 2. CALL ADMIN!`);
+        }
+
     }
 
     try 
