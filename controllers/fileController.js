@@ -61,12 +61,35 @@ async function uploadInChunks(req, res)
           }
           console.log("New user directory for "+username+" created successfully!");
         });
-      }
+    }
 
     filePath = process.env.MAIL_DELIVERY_LOCATION+"/"+username+"_files/"+fileName
 
-    // DELETE vv the file if it already exists. This prevents issues with appending.
-    
+    // DELETE vv the file if it already exists. Overwrites! This prevents issues with appending data to existing file.
+    if (fs.existsSync(filePath) && chunkId == 0)
+    {
+        console.log('File name '+fileName+' already exists in mailbox, deleting...');
+        fs.unlink(filePath, (error) => {
+            if (error)
+            {
+                console.error("File deletion from disc failed! Not saving changes to database.",error);
+                return res.status(500).send(`Internal overwrite failure`);
+            }
+        });
+
+        //DELETE FILE ON DB so it doesn't create 2 db entries with same file name
+        const fileId = req.params.fileId;
+        const dbUser = await User.findOne({username: req.session.activeUser.username});
+        targetFile = dbUser.files.find( file => file.fileId === fileId);
+
+        if (targetFile)
+        {
+            const indexToDelete = dbUser.files.indexOf(targetFile);
+            dbUser.files.splice(indexToDelete, 1);
+
+            console.log("Deleting "+targetFile.name+" from "+dbUser.username+"'s file list...");
+        }
+    }
 
     try 
     {
@@ -196,6 +219,14 @@ async function deleteFile(req, res)
             dbUser.files.splice(indexToDelete, 1);
 
             console.log("Deleting "+targetFile.name+" from "+dbUser.username+"'s file list...");
+            //literally vv deletes the file from disc
+            fs.unlink(targetFile.location, (error) => {
+                if (error)
+                {
+                    console.error("File deletion from disc failed! Not saving changes to database.",error);
+                    return res.send(`<center><h1 style="color: yellow">Deletion failed... please try again later!</h1></center>`);
+                }
+            });
 
             await dbUser.save();
             res.redirect("/u");
