@@ -88,7 +88,7 @@ async function uploadInChunks(req, res)
             }
         });
 
-        //DELETE FILE ON DB so it doesn't create 2 db entries with same file name
+        //DELETE FILE ON DB TOO so it doesn't create 2 db entries with same file name
         try 
         {
             const dbUser = await User.findOne({username: req.session.activeUser.username});
