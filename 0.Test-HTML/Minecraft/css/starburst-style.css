@@ -258,6 +258,13 @@ h2 {
   padding: 0;
 }
 
+.h2-black h2{
+  color: black;
+}
+.h2-black h4{
+  color: black;
+}
+
 .post-thumbnail {
   max-width: 125px;
   max-height: 125px;
