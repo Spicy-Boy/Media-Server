@@ -188,7 +188,7 @@ h2 {
   /* margin-left: 15px; */
   margin: 0 auto 0 auto;
   padding: 15px;
-  width: 220px;
+  width: 320px;
 
   border-radius: 5px;
 
@@ -196,6 +196,15 @@ h2 {
   color: black;
   box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5)
 }
+.prize-pool-placements p {
+  margin-top: 0;
+  color: white;
+}
+/* .rules-box {
+  width: 100%;
+  padding-left: 50px;
+  padding-right: 50px;
+} */
 .prize-pool-placements h3{
   display: flex;
   flex-direction: row;
@@ -224,7 +233,40 @@ h2 {
   color: black;
 }
 
+.donation {
+  background-color: #b13038;
+
+  margin: 0 auto 0 auto;
+  padding: 15px;
+
+  border-radius: 5px;
+
+  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5)
+}
+.donation p {
+  margin: 0;
+  padding: 0;
+}
+
+/* .rules-label {
+  font-size: 60px;
+  margin-top: 30px;
+} */
+
 /* :) */
+
+@media (min-width: 801px) {
+  .rules-label {
+    font-size: 50px;
+  }
+  .padding-non-mobile {
+    padding-bottom: 15px;
+  }
+  .prize-pool-placements h3{
+    font-size: 50px;
+    padding-bottom: 20px;
+  }
+}
 
 /* SMALL SCREEN STYLE! Mobile etc */
 @media (max-width: 800px) {
@@ -232,12 +274,32 @@ h2 {
     background-color: blue;
   } */
 
+  .prize-pool-placements {
+    width: 220px;
+  }
+
   .full-banner h1 {
     font-size: 75%;
+    /* padding-bottom: 15px; */
   }
 
   .padding-bottom-SUMMER {
     padding-bottom: 0px;
+  }
+
+  .remove-shadow-mobile {
+    text-shadow: none;
+  }
+
+  .banner-img {
+    width: 60px;
+    height: 60px;
+  }
+
+  .rules-label {
+    padding: 0;
+    margin-bottom: 10px;
+    margin-top: 4px;
   }
 
 }
