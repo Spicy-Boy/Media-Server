@@ -233,19 +233,40 @@ h2 {
   color: black;
 }
 
+.donation-box {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+
+  /* margin: 0 auto 0 auto; */
+}
+
 .donation {
   background-color: #b13038;
 
-  margin: 0 auto 0 auto;
+  margin: 15px 5px 8px 5px;
   padding: 15px;
 
   border-radius: 5px;
 
-  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5)
+  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
+  max-width: 400px;
 }
 .donation p {
   margin: 0;
   padding: 0;
+}
+
+.post-thumbnail {
+  max-width: 125px;
+  max-height: 125px;
+  float: left;
+  margin-right: 10px;
+  margin-bottom: 2px;
+}
+.post-message {
+  font-size: 12pt;
 }
 
 /* .rules-label {
