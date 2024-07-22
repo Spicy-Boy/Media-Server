@@ -65,8 +65,33 @@ const redirectIfLoggedIn = (req, res, next) => {
     }
 }
 
+async function adminAuth (req, res, next) 
+{
+    try 
+    {
+        userInQuestion = await User.findOne({_id: req.session.userId});
+        // console.log(userInQuestion);
+        console.log(userInQuestion.isAdmin);
+        if (userInQuestion.isAdmin)
+        {
+            //admin authorized ;p
+            return next();
+        }
+        else
+        {
+            res.send(`<center><h1 style="color: red">:)</h1></center>`);
+        }
+    }
+    catch (error)
+    {
+        console.error("Something went wrong with admin auth!", error);
+        res.send("<center><h1>:'(</h1></center>");
+    }
+}
+
 module.exports = {
     redirectLogin,
     redirectIfLoggedIn,
-    redirectLoginConditionally
+    redirectLoginConditionally,
+    adminAuth
 };

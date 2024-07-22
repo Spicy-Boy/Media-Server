@@ -146,6 +146,20 @@ async function renderIndividualFilePage (req, res)
     }
 }
 
+async function renderAdminFunPanel(req, res)
+{
+    try {
+        res.render("adminFunPanel");
+    } catch (error) {
+        let errorObj = {
+            message: "renderAdminFunPanel failed",
+            payload: error
+        }
+        console.error(errorObj);
+        res.json("SORRY! Something went wrong loading the adminFunPanel.");
+    }
+}
+
 module.exports = {
     renderHomePage,
     renderLoginPage,
@@ -153,5 +167,6 @@ module.exports = {
     renderSuicuneDeliveryPageBusboy,
     renderSuicuneDeliveryPageSimpleBusboy,
     renderUserIndexPage,
-    renderIndividualFilePage
+    renderIndividualFilePage,
+    renderAdminFunPanel
 }

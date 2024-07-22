@@ -3,7 +3,8 @@ const router = require("express").Router();
 const {
     redirectLogin,
     redirectIfLoggedIn,
-    redirectLoginConditionally
+    redirectLoginConditionally,
+    adminAuth
  } = require("../middlewares/authMiddleware");
 
 const {
@@ -13,7 +14,8 @@ const {
     renderSuicuneDeliveryPageBusboy,
     renderSuicuneDeliveryPageSimpleBusboy,
     renderUserIndexPage,
-    renderIndividualFilePage
+    renderIndividualFilePage,
+    renderAdminFunPanel
 } = require("../controllers/viewController");
 
 const {
@@ -33,6 +35,8 @@ router.get("/u/:username/:fileId", redirectLoginConditionally/* IF FILE IS PUBLI
 router.get("/u/:username", redirectLogin, attachUserObjectToSession, renderUserIndexPage);
 // vv if no :username parameter, send to session page
 router.get("/u", redirectLogin, attachUserObjectToSession, renderUserIndexPage);
+
+router.get("/cavern", redirectLogin, adminAuth, renderAdminFunPanel);
 
 // OLD MAIL ROUTE vv using multer (deprecated)
 // router.get("/mail", redirectLogin, renderSuicuneDeliveryPage);

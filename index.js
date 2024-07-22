@@ -118,6 +118,10 @@ app.use(session(
 const viewRouter = require("./routes/viewRouter");
 app.use("/", viewRouter);
 
+//vv API for the BTW Speedrunning Competition donation portal
+const donationRouter = require("./routes/donationRouter");
+app.use("/api/donations", donationRouter);
+
 const userRouter = require("./routes/userRouter");
 app.use("/api/user", userRouter)
 
