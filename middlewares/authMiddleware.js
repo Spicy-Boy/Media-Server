@@ -69,9 +69,8 @@ async function adminAuth (req, res, next)
 {
     try 
     {
-        userInQuestion = await User.findOne({_id: req.session.userId});
-        // console.log(userInQuestion);
-        console.log(userInQuestion.isAdmin);
+        const userInQuestion = await User.findOne({_id: req.session.userId});
+        
         if (userInQuestion.isAdmin)
         {
             //admin authorized ;p

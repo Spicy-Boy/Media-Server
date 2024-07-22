@@ -892,6 +892,9 @@ footer a:visited {
 .tac {
     text-align: center;
 }
+.tal {
+    text-align: left;
+}
 
 .flex-row {
     display: flex;

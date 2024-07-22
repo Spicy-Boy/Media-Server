@@ -7,13 +7,16 @@ async function createNewDonation(req, res)
         let newDonation = {
             name: req.body.name,
             amount: req.body.amount,
-            img: req.file.filename,
             message: req.body.message
         }
 
-        const imgMetadata = await sharp(req.file.path).metadata();
-        newPost.imgWidth = imgMetadata.width;
-        newPost.imgHeight = imgMetadata.height;
+        if (req.file)
+        {
+            const imgMetadata = await sharp(req.file.path).metadata();
+            newDonation.imgWidth = imgMetadata.width;
+            newDonation.imgHeight = imgMetadata.height;
+            newDonation.img = req.file.filename;
+        }
 
         await Donation.create(newDonation);
         res.send("<h1>Donation created!</h1>");

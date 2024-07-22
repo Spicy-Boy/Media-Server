@@ -24,7 +24,7 @@
     <center><p>Are you supposed to be in here?</p></center>
     <div class="panel-container">
 
-        <div style="border: solid coral 2px">
+        <div class="tac" style="border: solid coral 2px">
             <form enctype="multipart/form-data" method="post"  action="/api/donations/createNewDonation">
                 <img class="pixel-crisp" src="./images/54.jpg">
                 <div id="upload-button">
@@ -32,21 +32,23 @@
                     <input id="file" name="uploaded_file" type="file" multiple>
                 </div>
                 <br>
-                <div class="form-group">
-                    <label for="name">Name</label>
-                    <input type="text" id="name" name="name" placeholder="Anonymous" value="Anonymous">
+                <div class="tal">
+                    <div class="form-group">
+                        <label for="name">Name</label>
+                        <input type="text" id="name" name="name" placeholder="Anonymous" value="Anonymous">
+                    </div>
+                    <br>
+                    <div class="form-group">
+                        <label for="content">Message</label>
+                        <textarea id="message" name="message" rows="2" cols="50"></textarea>
+                    </div>
+                    <br>
+                    <div class="form-group">
+                        <label for="content">Amount</label>
+                        <input type="number" id="amount" name="amount">
+                    </div>
+                    <br>
                 </div>
-                <br>
-                <div class="form-group">
-                    <label for="content">Message</label>
-                    <textarea id="message" name="message" rows="2" cols="50"></textarea>
-                </div>
-                <br>
-                <div class="form-group">
-                    <label for="content">Amount</label>
-                    <input type="number" id="amount" name="amount">
-                </div>
-                <br>
                 <input type="submit" value="SUBMIT DONATION">
                 <br>
             </form>
