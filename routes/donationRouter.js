@@ -11,7 +11,7 @@ const {
     adminAuth
  } = require("../middlewares/authMiddleware");
 
-router.post("/createNewDonation", redirectLogin, adminAuth, upload.single('file'), createNewDonation);
+router.post("/createNewDonation", redirectLogin, adminAuth, upload.single('uploaded_file'), createNewDonation);
 
 router.get("/getDonations", getDonations);
 

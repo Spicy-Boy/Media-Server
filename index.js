@@ -6,6 +6,10 @@ const path = require("path");
 const methodOverride = require("method-override");
 const fs = require("fs");
 
+//allow vv api to be accessible from sites that don't share a domain/port
+const cors = require("cors");
+app.use(cors());
+
 //LOGIN and SESSION Middleware including Session Storage on Mongo database
 const session = require('express-session');
 require('dotenv').config();
