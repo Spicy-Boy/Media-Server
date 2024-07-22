@@ -1,12 +1,13 @@
 console.log('Fetching donations from api.......');
 
+const route = "/api/donations/getDonations";
+const base = "http://localhost:8080";
+
 async function fetchDonations()
 {
-    const route = "http://localhost:8080/api/donations/getDonations";
-
     try 
     {
-        const response = await fetch(route);
+        const response = await fetch(base+route);
 
         if (!response.ok)
         {
@@ -62,7 +63,7 @@ async function createDonationCards(donations)
 
         const pTwo = document.createElement('p');
         //set up date properly
-        const dateUploaded = donation.created;
+        const dateUploaded = new Date(donation.created);
         let month = dateUploaded.getMonth() + 1;
         let day = dateUploaded.getDate();
         let year = dateUploaded.getFullYear();
@@ -74,11 +75,34 @@ async function createDonationCards(donations)
         if (donation.img)
         {
             const imageLink = document.createElement('a');
-            a.setAttrivute('data-img-width', donation.imgWidth);
+            imageLink.className = "image-enlargement";
+            imageLink.setAttribute('data-img-width', donation.imgWidth);
+            imageLink.setAttribute('data-img-height', donation.imgWidth);
+            imageLink.href = "#";
+
+            const imgElement = document.createElement('img');
+            imgElement.src = base+"/images/donation-images/"+donation.img;
+            imgElement.className = "post-thumbnail";
+            
+            imageLink.append(imgElement);
+            donationCard.append(imageLink);
         }
 
+        pThree = document.createElement('p');
+        pThree.className = "post-message";
+        pThree.textContent = donation.message;
+        donationCard.append(pThree);
+
+        donationBox.append(donationCard);
 
     });
+
+    const enlargeImageScript = document.createElement("script");
+    enlargeImageScript.src = "js/enlargeImage.js";
+    enlargeImageScript.onload = () => {
+        console.log('Executing enlargeImage script');
+    }
+    document.head.appendChild(enlargeImageScript);
 }
 
 fetchDonations();

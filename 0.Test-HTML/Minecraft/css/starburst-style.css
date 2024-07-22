@@ -232,7 +232,7 @@ h2 {
   color: black;
 }
 
-.donation-box {
+#donation-box {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;

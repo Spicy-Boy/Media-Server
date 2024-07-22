@@ -3,6 +3,8 @@
 
 let clickableImages = document.querySelectorAll(".image-enlargement");
 
+console.log(clickableImages);
+
 clickableImages.forEach((link) => {
     let isDefaultSize = true;
 
