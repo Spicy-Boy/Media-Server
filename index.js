@@ -1,4 +1,5 @@
 //module initialization vv
+const https = require('https');
 const express = require("express");
 const app = express();
 const logger = require("morgan");
@@ -140,9 +141,40 @@ app.use("/api/file", fileRouter);
 //mongodb connection
 const connectToMongoDB = require('./db/mongodb');
 
-const PORT = 8080;
+const PORT = 8080; //TESTING PORT!
+// const PORT = 6969;
+// const PORT = 443;
+// const httpPORT = 80;
+
+/* ONLINE MODE WITH HTTPS! vv */
+// const httpsOptions = {
+//     cert: fs.readFileSync("ssl/fullchain.pem"),
+//     key: fs.readFileSync("ssl/privkey.pem")
+// }
+
+// // http redirect vvv sends users to https site
+// httpApp = express();
+// const http = require('http');
+// httpApp.get("*", function(req, res, next) { //single route to redirect
+//     res.redirect("https://" + req.headers.host + req.path);
+// });
+// http.createServer(httpApp).listen(httpPORT, function() { //listens to redirect
+//     console.log("Http redirect listening on port",httpPORT);
+// });
+
+// const server = https.createServer(httpsOptions, app);
+// server.listen(PORT, () => {
+//     console.log(`Server listening on port ${PORT}`);
+
+//     connectToMongoDB();
+// });
+/* ONLINE MODE WITH HTTPS! ^^ */
+
+// vv TESTING RUN
 const server = app.listen(PORT, () => {
     console.log(`Server listening on port ${PORT}`);
+    console.log('RUNNING IN TESTING MODE!');
+    console.log('NOT ONLINE!');
 
     connectToMongoDB();
 });
