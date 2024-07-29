@@ -65,6 +65,19 @@ async function uploadIndividualFile(file)
     console.log(`Initialized upload of ${file.name} -- chunks: ${chunkCount}, file.size/CHUNK_SIZE: ${file.size/CHUNK_SIZE}, CHUNK_SIZE: ${CHUNK_SIZE} bytes`);
     const uploadStatus = document.getElementById('fileStatus-'+file.fileNo+'');
     uploadStatus.innerText = "Uploading";
+    //vv SET THE PAGE TO CONFIRM BEFORE UNLOAD! vv
+    if (file.fileNo == 0)
+    {
+        window.addEventListener('beforeunload', function (event) {
+            // Cancel the event
+            event.preventDefault();
+            // Chrome requires returnValue to be set
+            event.returnValue = '';
+            // The message shown in the dialog is browser-specific
+            return 'Are you sure? Active uploads will be deleted!';
+        });
+    }
+
     //loop through all chunks based on calculated chunk counts (plus an extra loop for any remainder bytes)
     for (let chunkId = 0; chunkId < chunkCount; chunkId++)
     {
@@ -180,7 +193,7 @@ function updateUploadElement(fileNo, chunkId, chunkCount, uploadInfo, status)
     if (status == 200 && uploadInfo.uploadComplete) //chunk recieved success
     {
         uploadPercent.textContent = "100%";
-        uploadStatus.textContent = uploadInfo.message;
+        uploadStatus.innerHTML = `<span style="color: green">`+uploadInfo.message+"</span>";
     }
     else if (status == 200) //whole file (supposedly) complete
     {
