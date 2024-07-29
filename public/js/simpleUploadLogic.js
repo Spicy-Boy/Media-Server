@@ -63,6 +63,8 @@ async function uploadIndividualFile(file)
 
     // console.log(Initialized upload of '+file.name+' -- '+chunkCount+" chunks, "file.size/CHUNK_SIZE = '+file.size/CHUNK_SIZE);
     console.log(`Initialized upload of ${file.name} -- chunks: ${chunkCount}, file.size/CHUNK_SIZE: ${file.size/CHUNK_SIZE}, CHUNK_SIZE: ${CHUNK_SIZE} bytes`);
+    const uploadStatus = document.getElementById('fileStatus-'+file.fileNo+'');
+    uploadStatus.innerText = "Uploading";
     //loop through all chunks based on calculated chunk counts (plus an extra loop for any remainder bytes)
     for (let chunkId = 0; chunkId < chunkCount; chunkId++)
     {
