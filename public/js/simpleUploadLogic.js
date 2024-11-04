@@ -69,11 +69,9 @@ async function uploadIndividualFile(file)
     if (file.fileNo == 0)
     {
         window.addEventListener('beforeunload', function (event) {
-            // Cancel the event
             event.preventDefault();
             // Chrome requires returnValue to be set
             event.returnValue = '';
-            // The message shown in the dialog is browser-specific
             return 'Are you sure? Active uploads will be deleted!';
         });
     }
