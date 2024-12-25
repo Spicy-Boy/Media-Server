@@ -149,7 +149,10 @@ async function renderIndividualFilePage (req, res)
 async function renderAdminFunPanel(req, res)
 {
     try {
-        res.render("adminFunPanel");
+        const allUsers = await User.find({});
+        console.log(allUsers);
+        res.render("adminFunPanel", {allUsers});
+
     } catch (error) {
         let errorObj = {
             message: "renderAdminFunPanel failed",

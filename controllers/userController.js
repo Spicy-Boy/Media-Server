@@ -50,7 +50,7 @@ async function loginUser(req, res)
 
             res.redirect(redirectTo);
         } else {
-            
+
             return res.redirect("/login?loginerror=true");
             // return res.json({
             //     message: "function excecuted properly",
@@ -125,8 +125,26 @@ async function logoutUser(req, res)
 }
 
 async function createNewUser(req, res)
-{
+{   
+    try {
+        //plain means plaintext.. you want to encrypt before saving a password anywhere!
+        let passwordPlain = req.body.password;
+        let username = req.body.username;
+        
+        const encryptedPassword = await argon2.hash(passwordPlain);
 
+        let newUser = {
+            username: username,
+            password: encryptedPassword
+        }
+        await User.create(newUser);
+        
+        res.redirect("/cavern");
+    }
+    catch (error)
+    {
+        res.send("Yo createNewUser broke!!!");
+    }
 }
 
 module.exports = {
