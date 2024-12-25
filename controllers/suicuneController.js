@@ -9,7 +9,8 @@ const { v4: uuidv4 } = require('uuid');
 async function uploadOneFile(req, res)
 {
     console.log(req.file);
-    res.redirect("/mail");
+    // res.redirect("/mail");
+    res.redirect("/bb");
 }
 
 async function uploadWithBusboy(req, res)

@@ -228,6 +228,11 @@ background: #ccc;
 }
 
 /* LOGIN PAGE */
+
+#login-error-message {
+    color: rgb(110, 0, 0);
+}
+
 .literal-space-filler {
     min-height: 35vh;
 

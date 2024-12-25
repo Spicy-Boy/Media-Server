@@ -12,7 +12,17 @@ async function loginUser(req, res)
         const {username, password} = req.body;
 
         //find the target user based on entered username
-        let foundUser = await User.findOne({username});
+        // let foundUser = await User.findOne({username});
+        const foundUser = await User.findOne({
+            //a little regular expression from chatgpt vvv :) 
+            //makes query case insensitive
+            username: { $regex: new RegExp(`^${username}$`, "i") },
+        });
+
+        if (!foundUser)
+        {
+            return res.redirect("/login?loginerror=true");
+        }
 
         //verify the password is correct
         const isCorrectPassword = await argon2.verify(foundUser.password, password);
@@ -40,10 +50,12 @@ async function loginUser(req, res)
 
             res.redirect(redirectTo);
         } else {
-            res.json({
-                message: "function excecuted properly",
-                payload: "Password could not be verified.. :) TRY AGAIN"
-            });
+            
+            return res.redirect("/login?loginerror=true");
+            // return res.json({
+            //     message: "function excecuted properly",
+            //     payload: "Password could not be verified.. :) TRY AGAIN"
+            // });
         }
 
     } catch (error) {
@@ -52,7 +64,7 @@ async function loginUser(req, res)
             payload: error
         }
         console.error(errorObj);
-        res.send("LOGIN FAILED :) TRY AGAIN");
+        res.send("LOGIN FUNCTION FAILED :) TRY AGAIN (contact admin if you see this, you really shouldn't be seeing this...");
     }
 }
 
@@ -112,8 +124,14 @@ async function logoutUser(req, res)
     }
 }
 
+async function createNewUser(req, res)
+{
+
+}
+
 module.exports = {
     loginUser,
     logoutUser,
-    attachUserObjectToSession
+    attachUserObjectToSession,
+    createNewUser
 }
