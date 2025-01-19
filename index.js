@@ -120,6 +120,7 @@ app.use(session(
 // <%}%>
 
 /* ~ R O U T E S ~ */
+// (routes) //
 const viewRouter = require("./routes/viewRouter");
 app.use("/", viewRouter);
 
