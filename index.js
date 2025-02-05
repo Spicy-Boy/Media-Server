@@ -134,6 +134,16 @@ app.use("/api/user", userRouter)
 const fileRouter = require("./routes/fileRouter");
 app.use("/api/file", fileRouter);
 
+const geminiRouter = require("express").Router();
+const {
+    callGeminiAPI
+} = require("./controllers/geminiController");
+const { //import auth
+    redirectLogin
+} = require("./middlewares/authMiddleware");
+geminiRouter.post("/sendQuery", callGeminiAPI);
+app.use("/api/gemini", geminiRouter);
+
 // const suicuneRouter = require("./routes/suicuneRouter");
 // app.use("/api/suicune", suicuneRouter);
 

@@ -14,8 +14,6 @@ submitButton.addEventListener("click", (e) => {
     
     if (!waiting && textBox.textContent != null)
     {
-        // waiting = true; //lock user out of submitting queries
-
         const newMessageDiv = document.createElement('div');
         newMessageDiv.textContent = textBox.value;
         newMessageDiv.classList.add("user-submission");
@@ -24,9 +22,10 @@ submitButton.addEventListener("click", (e) => {
         // vv ensures scrollbox snaps to new messages when submitted
         messageBox.scrollTop = messageBox.scrollHeight;
 
+        let userQuery = textBox.value;
         textBox.value = "";
 
-        waiting = true;
+        waiting = true; //lock user out of submitting queries
 
         //the robot message is the response from AI
         const newRobotMessageDiv = document.createElement("div");
@@ -36,6 +35,8 @@ submitButton.addEventListener("click", (e) => {
         //vv while waiting for the server to come up with an answer to the user's query, show a loading animation!
         intervalId = setInterval(() => {
         animateRobotThinking(newRobotMessageDiv)}, 600);
+
+        callAPI(userQuery, newRobotMessageDiv);
         
         // // //TEST vvv Without an api plugged in
         // setTimeout(() => {
@@ -46,6 +47,33 @@ submitButton.addEventListener("click", (e) => {
 
     }
 });
+
+async function callAPI(userQuery, newRobotMessageDiv)
+{
+    const robotMsgStart = "🖥️: "
+
+     console.log('userQuery: ',userQuery);
+
+    const apiKey = [TRIMMED HAHAHAHA]
+
+    const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            "prompt": {
+                "text": userQuery
+            }
+        })
+    });
+
+    const data = await response.json();
+    console.log('API Response', data);
+
+    waiting = false;
+    newRobotMessageDiv.textContent = robotMsgStart +""+ (data.text || "Error getting response... try again later!");
+}
 
 let frameIndex = 0;
 const loadingFrames = ["🖥️: o..", "🖥️: .o.", "🖥️: ..o", "🖥️: ..."];
@@ -63,7 +91,7 @@ function animateRobotThinking(newRobotMessageDiv)
 
     //tester vv
     // console.log('new frame, ',frameIndex, newRobotMessageDiv.textContent);
-    
+
     newRobotMessageDiv.textContent = loadingFrames[frameIndex];
     frameIndex++;
     if (frameIndex > 3)
