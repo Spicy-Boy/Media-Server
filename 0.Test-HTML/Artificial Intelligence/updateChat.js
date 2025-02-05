@@ -3,6 +3,7 @@
 console.log("hi");
 
 let waiting = false; //prevents spamming button :)
+let intervalId;
 
 const messageBox = document.getElementById('responses-and-submissions-container');
 
@@ -24,32 +25,51 @@ submitButton.addEventListener("click", (e) => {
         messageBox.scrollTop = messageBox.scrollHeight;
 
         textBox.value = "";
+
+        waiting = true;
+
+        //the robot message is the response from AI
+        const newRobotMessageDiv = document.createElement("div");
+        newRobotMessageDiv.textContent = "🖥️: ...";
+        messageBox.appendChild(newRobotMessageDiv);
+
+        //vv while waiting for the server to come up with an answer to the user's query, show a loading animation!
+        intervalId = setInterval(() => {
+        animateRobotThinking(newRobotMessageDiv)}, 600);
+        
+        // // //TEST vvv Without an api plugged in
+        // setTimeout(() => {
+        //     waiting = false;
+        // // :D
+        //     newRobotMessageDiv.textContent = "🖥️: shut up idiot";
+        // }, 5000);
+
     }
-
-    //the robot message is the response from AI
-    newRobotMessageDiv = document.createElement("div");
-    newRobotMessageDiv.textContent = "🖥️: ...";
-    messageBox.appendChild(newRobotMessageDiv);
-
-    //vv while waiting for the server to come up with an answer to the user's query, show a loading animation!
-    intervalId = setInterval(animateRobotThinking, 600);
-    
-    //clearInterval(intervalId); //stops the animation cold
-    //intervalId = null;
 });
 
 let frameIndex = 0;
 const loadingFrames = ["🖥️: o..", "🖥️: .o.", "🖥️: ..o", "🖥️: ..."];
 
 
-function animateRobotThinking()
+function animateRobotThinking(newRobotMessageDiv)
 {
-    console.log('new frame, ',frameIndex,newRobotMessageDiv.textContent);
+    
+    if (!waiting)
+    {
+        clearInterval(intervalId); //stops the animation cold
+        intervalId = null;
+        return;
+    }
+
+    //tester vv
+    // console.log('new frame, ',frameIndex, newRobotMessageDiv.textContent);
+    
     newRobotMessageDiv.textContent = loadingFrames[frameIndex];
     frameIndex++;
     if (frameIndex > 3)
     {
         frameIndex = 0;
     }
+
 }
 
