@@ -30,6 +30,7 @@ submitButton.addEventListener("click", (e) => {
         //the robot message is the response from AI
         const newRobotMessageDiv = document.createElement("div");
         newRobotMessageDiv.textContent = "🖥️: ...";
+        newRobotMessageDiv.classList.add("ai-response");
         messageBox.appendChild(newRobotMessageDiv);
 
         //vv while waiting for the server to come up with an answer to the user's query, show a loading animation!
@@ -52,28 +53,45 @@ async function callAPI(userQuery, newRobotMessageDiv)
 {
     const robotMsgStart = "🖥️: "
 
-     console.log('userQuery: ',userQuery);
+     console.log('User submitted: ',userQuery);
 
-    const apiKey = [TRIMMED HAHAHAHA]
+    const apiKey = "";
 
-    const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`, {
-        method: "POST",
+    const response = await fetch("https://api.deepseek.com/chat/completions", {
+        method: 'POST',
         headers: {
-            "Content-Type": "application/json"
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${apiKey}`,
         },
-        body: JSON.stringify({
-            "prompt": {
-                "text": userQuery
-            }
-        })
+        body: JSON.stringify ({
+            model: "deepseek-chat",
+            messages: [
+              {role: "system", content: "You are lazy and easily angered. You don't like your job as a virtual assistant. You end all your messages with uwu"},
+              {role: "user", content: userQuery}
+            ],
+            stream: false
+        }), 
     });
 
     const data = await response.json();
-    console.log('API Response', data);
+    console.log('API Response: ', data);
 
     waiting = false;
-    newRobotMessageDiv.textContent = robotMsgStart +""+ (data.text || "Error getting response... try again later!");
+    newRobotMessageDiv.textContent = robotMsgStart +""+ (data.choices[0].message.content || "Error getting response... try again later!");
 }
+
+    // //supposedly gemini structure vvv not sure LMAO
+    // const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`, {
+    //     method: "POST",
+    //     headers: {
+    //         "Content-Type": "application/json"
+    //     },
+    //     body: JSON.stringify({
+    //         "prompt": {
+    //             "text": userQuery
+    //         }
+    //     })
+    // });
 
 let frameIndex = 0;
 const loadingFrames = ["🖥️: o..", "🖥️: .o.", "🖥️: ..o", "🖥️: ..."];
