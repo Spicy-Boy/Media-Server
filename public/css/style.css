@@ -159,6 +159,11 @@ background: #ccc;
     margin: 0;
 }
 
+#legal-notice {
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
 /* table for presenting  */
 .recent-uploads {
     margin-bottom: 15px;
@@ -561,6 +566,9 @@ header {
 /* .mobile-file-details {
     color: red;
 } */
+#name-column-label {
+    display: none;
+}
 .upload-list-link-column {
     display: none;
     width: 2%;
@@ -593,12 +601,23 @@ footer a:visited {
     color: #0070e0;
 }
 
+.mobile-file-sorting-taskbar {
+    margin-top: 10px;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    background-color: red;
+}
+
+.goaway { /*dont even ask LMAO... this is a secret cheat*/
+    display: none;
+}
 
 /* ^^^ USER PORTAL / user-index page styles! */
 
 /* --- tablet >_< view --- */
 
 @media (min-width: 800px) {
+
 
     /* USER PORTAL / user-index page styles! */
     #upload-and-list-wrapper{
@@ -627,6 +646,10 @@ footer a:visited {
         padding-bottom: 5px;
 
         padding-left: 10px;
+    }
+    #name-column-label {
+        display: table-cell;
+        width: 10%;
     }
     .upload-list-link-column {
         display: table-cell;
@@ -723,6 +746,10 @@ footer a:visited {
         display: inline;
     }
     /* anna portrait sprite is 48 px */
+
+    .goaway {
+        display: flex;
+    }
 }
 
 /* ` ` [  ] DESKTOP x VIEW [  ] ` ` */

@@ -17,19 +17,33 @@
 
     <div id="responses-and-submissions-container">
         <!-- user submissions will be dynamically added with js -->
-        <!-- <div class="user-submission"> 
-            hiii
-        </div> -->
+        <div class="user-submission"> 
+            hiii It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).
+        </div>
+
+        <div class="user-submission"> 
+            hiii It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).
+        </div>
 
         <!-- ai responses will be dynamically added with js -->
         <!-- <div class="ai-response">
             🖥️: hello!
         </div> -->
 
+                <!-- <div class="user-submission"> 
+            hiii
+        </div> -->
+
     </div>
     
     <hr>
-    <br>
+    <!-- <br> -->
+    <div id="utility-bar" class="flex-right-justify margin-auto" style="max-width: 500px">
+        <button id="scrollToBottom">
+            ↓
+        </button>
+    </div>
+    
     <div class="flex-centered">
         <form id="query-submission-form" action="" method="post">
 
@@ -46,8 +60,23 @@
     </div>
 
 
+
+
     <script src="updateChat.js"></script>
 
+    <script>
+        let chatWindow = document.getElementById('responses-and-submissions-container');
+
+        let scrollToBottomButton = document.getElementById('scrollToBottom').addEventListener('click', function() {
+            scrollToBottomOfDiv(chatWindow);
+        });
+
+        function scrollToBottomOfDiv(div) //a DOM element!
+        {
+            div.scrollTop = div.scrollHeight;
+        }
+
+    </script>
 </body>
 
 </html>

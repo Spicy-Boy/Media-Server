@@ -139,9 +139,10 @@ const {
     callGeminiAPI
 } = require("./controllers/geminiController");
 const { //import auth
-    redirectLogin
+    redirectLogin,
+    adminAuth
 } = require("./middlewares/authMiddleware");
-geminiRouter.post("/sendQuery", callGeminiAPI);
+geminiRouter.post("/sendQuery", redirectLogin, adminAuth, callGeminiAPI);
 app.use("/api/gemini", geminiRouter);
 
 // const suicuneRouter = require("./routes/suicuneRouter");

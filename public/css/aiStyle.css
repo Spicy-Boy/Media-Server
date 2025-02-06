@@ -48,9 +48,18 @@ body {
     color: white;
 }
 
+.margin-auto {
+    margin-left: auto;
+    margin-right: auto;
+}
+
 .flex-centered {
     display: flex;
     justify-content: center;
+}
+.flex-right-justify {
+    display: flex;
+    justify-content: right;
 }
 
 .flex-direction-column {
@@ -66,4 +75,14 @@ body {
 }
 .margin-top-20px {
     margin-top: 20px;
+}
+
+#scrollToBottom {
+    background-color: black;
+    color: white;
+    font-size: 150%;
+    outline: none;
+    border: none;
+    padding-left: 10px;
+    padding-right: 10px;
 }

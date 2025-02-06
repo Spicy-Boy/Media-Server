@@ -19,8 +19,7 @@ submitButton.addEventListener("click", (e) => {
         newMessageDiv.classList.add("user-submission");
         
         messageBox.appendChild(newMessageDiv);
-        // vv ensures scrollbox snaps to new messages when submitted
-        messageBox.scrollTop = messageBox.scrollHeight;
+
 
         let userQuery = textBox.value;
         textBox.value = "";
@@ -37,7 +36,9 @@ submitButton.addEventListener("click", (e) => {
         intervalId = setInterval(() => {
         animateRobotThinking(newRobotMessageDiv)}, 600);
 
-        callAPI(userQuery, newRobotMessageDiv);
+        callAPI(userQuery, newRobotMessageDiv, messageBox);
+        // vv ensures scrollbox snaps to new messages when submitted
+        
         
         // // //TEST vvv Without an api plugged in
         // setTimeout(() => {
@@ -49,7 +50,7 @@ submitButton.addEventListener("click", (e) => {
     }
 });
 
-async function callAPI(userQuery, newRobotMessageDiv)
+async function callAPI(userQuery, newRobotMessageDiv, messageBox)
 {
     const robotMsgStart = "🖥️: "
 
@@ -66,7 +67,7 @@ async function callAPI(userQuery, newRobotMessageDiv)
         body: JSON.stringify ({
             model: "deepseek-chat",
             messages: [
-              {role: "system", content: "You are lazy and easily angered. You don't like your job as a virtual assistant. You end all your messages with uwu"},
+              {role: "system", content: "You are lazy and combative. You aren't nice. All your responses must be less than 100 words."},
               {role: "user", content: userQuery}
             ],
             stream: false
@@ -78,6 +79,7 @@ async function callAPI(userQuery, newRobotMessageDiv)
 
     waiting = false;
     newRobotMessageDiv.textContent = robotMsgStart +""+ (data.choices[0].message.content || "Error getting response... try again later!");
+    messageBox.scrollTop = messageBox.scrollHeight;
 }
 
     // //supposedly gemini structure vvv not sure LMAO

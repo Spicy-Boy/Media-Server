@@ -92,24 +92,34 @@
             </div>
 
             <div class="background-202020">
-                <p>NOTICE: This upload service is still under development and errors may occur. The connection is not encrypted. Your uploads are not private. If you post illegal pornography, you will be reported to the authorities immediately.</p>    
+                <p id="legal-notice">NOTICE: This upload service is still under development and errors may occur. Your uploads are not private. If you post illegal pornography, you will be reported to the authorities immediately. Upload at your own risk.</p>    
             </div>
         </div>
         <%}%>
         <!-- vv contains all user's uploaded files -->
         <!-- Conditionally render as a 100% width if looking at another user's page -->
+        
+        <div class="desktop-invisible mobile-file-sorting-taskbar">
+                    hi
+        <%// %>                
+        </div>
+            
         <%if (isThisActiveUserPage) {%>
         <div class="upload-list-container">
         <%}else{%>
         <div class="upload-list-container width-100 remove-left-border">
         <%}%>
+
             <table id="list">
+
                 <thead>
-                    <th class="upload-list-name-column">Name</th>
+                    <th class="goaway upload-list-name-column">Name</th>
                     <th class="upload-list-link-column">Perm🔗</th>
                     <th class="upload-list-size-column">Size</th>
                     <th class="upload-list-date-column">Date</th>
                 </thead>
+
+
 
                 <tbody>
                 <%if (targetUser.files){%>
