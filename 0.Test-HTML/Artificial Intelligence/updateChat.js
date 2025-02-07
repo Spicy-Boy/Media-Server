@@ -54,31 +54,29 @@ async function callAPI(userQuery, newRobotMessageDiv, messageBox)
 {
     const robotMsgStart = "🖥️: "
 
-     console.log('User submitted: ',userQuery);
+    console.log('User submitted: ', userQuery);
 
-    const apiKey = "";
+    try 
+    {
+        const response = await fetch("http://localhost:8080/api/ai/callDeepSeek", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ query: userQuery })
+        });
 
-    const response = await fetch("https://api.deepseek.com/chat/completions", {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${apiKey}`,
-        },
-        body: JSON.stringify ({
-            model: "deepseek-chat",
-            messages: [
-              {role: "system", content: "You are lazy and combative. You aren't nice. All your responses must be less than 100 words."},
-              {role: "user", content: userQuery}
-            ],
-            stream: false
-        }), 
-    });
+        const data = await response.json();
 
-    const data = await response.json();
-    console.log('API Response: ', data);
+        console.log('API Response: ', data);
+        
+        newRobotMessageDiv.textContent = robotMsgStart +""+ (data.choices?.[0]?.message?.content || "Error getting response... try again later!");
+    }
+    catch(error)
+    {
+        console.log("An error occured trying to fetch from AI API server:",error);
+    }
 
     waiting = false;
-    newRobotMessageDiv.textContent = robotMsgStart +""+ (data.choices[0].message.content || "Error getting response... try again later!");
+    
     messageBox.scrollTop = messageBox.scrollHeight;
 }
 

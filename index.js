@@ -129,21 +129,13 @@ const donationRouter = require("./routes/donationRouter");
 app.use("/api/donations", donationRouter);
 
 const userRouter = require("./routes/userRouter");
-app.use("/api/user", userRouter)
+app.use("/api/user", userRouter);
 
 const fileRouter = require("./routes/fileRouter");
 app.use("/api/file", fileRouter);
 
-const geminiRouter = require("express").Router();
-const {
-    callGeminiAPI
-} = require("./controllers/geminiController");
-const { //import auth
-    redirectLogin,
-    adminAuth
-} = require("./middlewares/authMiddleware");
-geminiRouter.post("/sendQuery", redirectLogin, adminAuth, callGeminiAPI);
-app.use("/api/gemini", geminiRouter);
+const aiRouter = require("./routes/aiRouter");
+app.use("/api/ai", aiRouter);
 
 // const suicuneRouter = require("./routes/suicuneRouter");
 // app.use("/api/suicune", suicuneRouter);
