@@ -10,7 +10,7 @@ const { //import auth
     adminAuth
 } = require("../middlewares/authMiddleware");
 
-router.post("/callDeepSeek", callDeepSeek);
-router.get("/test", testAi);
+router.post("/callDeepSeek", redirectLogin, callDeepSeek);
+router.get("/test", adminAuth, testAi);
 
 module.exports = router;
