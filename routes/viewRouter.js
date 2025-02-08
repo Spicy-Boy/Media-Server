@@ -1,4 +1,5 @@
 const router = require("express").Router();
+const path = require("path");
 
 const {
     redirectLogin,
@@ -37,6 +38,10 @@ router.get("/u/:username", redirectLogin, attachUserObjectToSession, renderUserI
 router.get("/u", redirectLogin, attachUserObjectToSession, renderUserIndexPage);
 
 router.get("/cavern", redirectLogin, adminAuth, renderAdminFunPanel);
+
+router.get("/ai", redirectLogin, (req, res) => {
+    res.sendFile(path.join(__dirname, "../public/html/aiQueryPage.html"));
+});
 
 // OLD MAIL ROUTE vv using multer (deprecated)
 // router.get("/mail", redirectLogin, renderSuicuneDeliveryPage);

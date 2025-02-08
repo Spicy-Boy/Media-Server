@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>China AI</title>
+
+    <link rel="stylesheet" type="text/css" href="/css/aiStyle.css">
+
+</head>
+
+<body class="text-white">
+    <div class="flex-centered">
+        <h1>CHINA AI</h1>
+    </div>
+    <hr>
+
+    <div id="responses-and-submissions-container">
+        <!-- user submissions will be dynamically added with js -->
+        <!-- <div class="user-submission"> 
+            hiii
+        </div> -->
+
+        <!-- ai responses will be dynamically added with js -->
+        <!-- <div class="ai-response">
+            🖥️: hello!
+        </div> -->
+
+    </div>
+    
+    <hr>
+    <!-- <br> -->
+    <div id="utility-bar" class="flex-right-justify margin-auto" style="max-width: 500px">
+        <button id="scrollToBottom">
+            ↓
+        </button>
+    </div>
+    
+    <div class="flex-centered">
+        <form id="query-submission-form" action="" method="post">
+
+            <div class="margin-bottom-5px">
+                <label for="content">Query:</label>
+            </div>
+            
+            <textarea id="content" name="content" rows="4" cols="50"></textarea>
+            
+            <div class="margin-top-20px">
+                <input id="submitQueryButton" class="bigger-button" type="button" value="Submit">
+            </div>
+        </form>
+    </div>
+
+    <script src="../js/updateChat.js"></script>
+
+    <script>
+        let chatWindow = document.getElementById('responses-and-submissions-container');
+
+        let scrollToBottomButton = document.getElementById('scrollToBottom').addEventListener('click', function() {
+            scrollToBottomOfDiv(chatWindow);
+        });
+
+        function scrollToBottomOfDiv(div) //a DOM element!
+        {
+            div.scrollTop = div.scrollHeight;
+        }
+
+    </script>
+</body>
+
+</html>
