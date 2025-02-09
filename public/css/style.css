@@ -507,6 +507,7 @@ header {
     text-align: left;
     margin-top: 5px;
     margin-bottom: 5px;
+    font-size: 14px;
 }
 .border-color-grey {
     border-color: rgb(70, 70, 70);
