@@ -500,6 +500,19 @@ header {
     text-align: left;
 }
 
+#news {
+    padding: 10px;
+}
+.news-article {
+    text-align: left;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+.border-color-grey {
+    border-color: rgb(70, 70, 70);
+    background-color: rgb(70, 70, 70);
+}
+
 .upload-list-container {
     /* background-color: blue; */
     /* TEST COLOR ^^ */
