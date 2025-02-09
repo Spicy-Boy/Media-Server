@@ -86,3 +86,19 @@ body {
     padding-left: 10px;
     padding-right: 10px;
 }
+
+@media (min-width: 800px) { /*Tablet view*/
+    #responses-and-submissions-container {        
+        
+        max-width: 725px;
+    
+    }
+
+    .ai-response {
+        max-width: 450px;
+    }
+    .user-submission {
+        max-width: 400px;
+    }
+}
+

@@ -114,8 +114,10 @@
         <!-- Conditionally render as a 100% width if looking at another user's page -->
         
         <div class="desktop-invisible mobile-file-sorting-taskbar">
-        Sort by: name date size
-        <%// %>                
+        Sort by:
+        <a id="sortByNameMobile" href="">Alphabetical</a>
+        <a id="sortByDateMobile" href="">Date</a>
+        <a id="sortBySizeMobile" href="">Size</a>                  
         </div>
             
         <%if (isThisActiveUserPage) {%>
@@ -133,12 +135,11 @@
                     <th class="upload-list-date-column">Date</th>
                 </thead>
 
-
-
                 <tbody>
                 <%if (targetUser.files){%>
-                    <%targetUser.files.forEach( (file, index) => {%>
-                        <tr>
+                    <%targetUser.files.reverse().forEach( (file, index) => {%>
+                        <%// vvv this is top level of each individual upload%>
+                        <tr data-filename="<%=file.name%>" data-filesize="<%=file.size%>" data-filedate="<%=file.date%>"> 
                             <td class="upload-list-name-column">
                                 <div class="mobile-file-details desktop-invisible" style="padding-top: 15px;">   
                                 </div>
@@ -180,5 +181,7 @@
     <script src="/js/simpleUploadLogic.js"></script>
     <%}%>
     <script src="/js/createDownloadLinks.js"></script>
+
+    <script src="/js/sortUploads.js"></script>
 </body>
 </html>
