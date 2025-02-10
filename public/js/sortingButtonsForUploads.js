@@ -60,4 +60,18 @@ sortBySizeButton.addEventListener("click", (event)=>{
 
 //date sorting (upload date) vvv desktop and mobile
 let toggleDateSortOldest = true;
-const sortByDateButton = document.getElementById('sortBySize');
+const sortByDateButton = document.getElementById('sortByDate');
+sortByDateButton.addEventListener("click", (event)=>{
+    event.preventDefault();
+
+    if (toggleDateSortOldest)
+    {
+        sortTableDateOldest();
+        toggleDateSortOldest = false;
+    }
+    else
+    {
+        sortTableDateYoungest();
+        toggleDateSortOldest = true;
+    }
+});
