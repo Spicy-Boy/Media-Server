@@ -129,10 +129,10 @@
             <table id="list">
 
                 <thead>
-                    <th class="goaway upload-list-name-column">Name</th>
-                    <th class="upload-list-link-column">Perm🔗</th>
-                    <th class="upload-list-size-column">Size</th>
-                    <th class="upload-list-date-column">Date</th>
+                    <th class="goaway upload-list-name-column link-as-button"><a href="" id="sortByName">Name</a></th>
+                    <th class="upload-list-link-column ">Perma🔗</th>
+                    <th class="upload-list-size-column link-as-button"><a href="" id="sortBySize">Size</a></th>
+                    <th class="upload-list-date-column link-as-button"><a href="" id="sortByDate">Date</a></th>
                 </thead>
 
                 <tbody>
@@ -173,7 +173,7 @@
             </table>
         </div>
     </div>
-
+    </div>
     <%- include("./partials/userIndexFooter") %>
 
     <script src="/js/calculateFileSize.js"></script>
@@ -183,5 +183,8 @@
     <script src="/js/createDownloadLinks.js"></script>
 
     <script src="/js/sortUploads.js"></script>
-</body>
+    
+    <script src="/js/sortingButtonsForUploads.js"></script>
+    
+    </body>
 </html>

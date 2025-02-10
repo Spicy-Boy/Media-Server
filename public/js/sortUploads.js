@@ -73,6 +73,8 @@ function sortTableSmallestFirst()
     // vv header needs to be removed so it doesn't get caught up in the sorting
     const headerRow = rows.shift();
 
+    
+
 }
 
 // sortTableAlphabetically();

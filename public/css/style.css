@@ -596,6 +596,14 @@ header {
     width: 15%;
 }
 
+.link-as-button a{
+    color: white !important;
+    text-decoration: underline;
+}
+.link-as-button a:hover{
+    color: red !important;
+}
+
 footer {
     /* display: flex; */
     width: 100%;
