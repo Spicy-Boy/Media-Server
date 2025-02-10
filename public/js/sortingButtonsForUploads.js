@@ -42,6 +42,21 @@ sortByNameMobileButton.addEventListener("click", (event)=>{
 let toggleSizeSortLargest = true;
 const sortBySizeButton = document.getElementById('sortBySize');
 
+sortBySizeButton.addEventListener("click", (event)=>{
+    event.preventDefault();
+
+    if (toggleSizeSortLargest)
+    {
+        sortTableLargestFirst();
+        toggleSizeSortLargest = false;
+    }
+    else
+    {
+        sortTableSmallestFirst();
+        toggleSizeSortLargest = true;
+    }
+});
+
 
 //date sorting (upload date) vvv desktop and mobile
 let toggleDateSortOldest = true;
