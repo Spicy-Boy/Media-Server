@@ -57,11 +57,45 @@ sortBySizeButton.addEventListener("click", (event)=>{
     }
 });
 
+const sortBySizeMobileButton = document.getElementById('sortBySizeMobile');
+
+sortBySizeMobileButton.addEventListener("click", (event)=>{
+    event.preventDefault();
+
+    if (toggleSizeSortLargest)
+    {
+        sortTableLargestFirst();
+        toggleSizeSortLargest = false;
+    }
+    else
+    {
+        sortTableSmallestFirst();
+        toggleSizeSortLargest = true;
+    }
+});
+
+
 
 //date sorting (upload date) vvv desktop and mobile
 let toggleDateSortOldest = true;
 const sortByDateButton = document.getElementById('sortByDate');
 sortByDateButton.addEventListener("click", (event)=>{
+    event.preventDefault();
+
+    if (toggleDateSortOldest)
+    {
+        sortTableDateOldest();
+        toggleDateSortOldest = false;
+    }
+    else
+    {
+        sortTableDateYoungest();
+        toggleDateSortOldest = true;
+    }
+});
+
+const sortByDateMobileButton = document.getElementById('sortByDateMobile');
+sortByDateMobileButton.addEventListener("click", (event)=>{
     event.preventDefault();
 
     if (toggleDateSortOldest)
