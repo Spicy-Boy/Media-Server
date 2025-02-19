@@ -511,6 +511,13 @@ header {
     margin-bottom: 5px;
     font-size: 14px;
 }
+
+.userPortal-utility-bar
+{
+    width: 95%;
+    background-color: #202020;
+}
+
 .border-color-grey {
     border-color: rgb(70, 70, 70);
     background-color: rgb(70, 70, 70);
@@ -975,10 +982,6 @@ footer a:visited {
     display: flex;
     flex-direction: column;
 }
-.flex-row {
-    display: flex;
-    flex-direction: row;
-}
 
 .flex-grow-1 {
     flex-grow: 1;
@@ -1036,6 +1039,8 @@ footer a:visited {
     background-color: black;
     text-align: center;
     width: 120px;
+
+    border-radius: 6px;
 
     /* vv makes it show up left of tooltip hover */
     top: -5px;
