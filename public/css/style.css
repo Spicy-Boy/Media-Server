@@ -975,6 +975,10 @@ footer a:visited {
     display: flex;
     flex-direction: column;
 }
+.flex-row {
+    display: flex;
+    flex-direction: row;
+}
 
 .flex-grow-1 {
     flex-grow: 1;
@@ -1015,6 +1019,30 @@ footer a:visited {
     word-wrap: break-word; /* Ensures words break when necessary */
     word-break: break-word; /* Specifies how words should break */
     overflow-wrap: break-word; /* Prevents overflow when a long word is too long to fit */
+}
+
+.tooltip-left {
+    position: relative;
+    display: inline-block;
+    border-bottom: 1px
+}
+.tooltip-left .tooltip-text {
+    visibility: hidden;
+    position: absolute;
+    z-index: 1;
+
+    padding: 5px;
+    color: #fff;
+    background-color: black;
+    text-align: center;
+    width: 120px;
+
+    /* vv makes it show up left of tooltip hover */
+    top: -5px;
+    right: 108%; 
+}
+.tooltip-left:hover .tooltip-text {
+    visibility: visible;
 }
 
 

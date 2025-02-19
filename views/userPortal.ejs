@@ -110,9 +110,18 @@
             </div>
         </div>
         <%}%>
-        <!-- vv contains all user's uploaded files -->
+        <!-- vv table contains all user's uploaded files -->
         <!-- Conditionally render as a 100% width if looking at another user's page -->
+
+        <%if (isThisActiveUserPage) { //the utility bar vvv, shows only on user's own page%>
+
+        <%} //UTILITY BAR ^^^ includes search, refresh, edit%>
         
+        <!-- includes search, refresh, edit -->
+        <div>
+            
+        </div>
+
         <div class="desktop-invisible mobile-file-sorting-taskbar">
         Sort by:
         <a id="sortByNameMobile" href="">Alphabetical</a>
@@ -140,23 +149,9 @@
                     <%targetUser.files.reverse().forEach( (file, index) => {%>
                         <%// vvv this is top level of each individual upload%>
                         <tr data-filename="<%=file.name%>" data-filesize="<%=file.size%>" data-filedate="<%=file.date%>"> 
-                            <td class="upload-list-name-column">
-                                <div class="mobile-file-details desktop-invisible" style="padding-top: 15px;">   
-                                </div>
-                                <a href="#" class="file-name-link" id="<%=file.fileId%>" data-username="<%=targetUser.username%>"><%=file.name%></a>
-                                <div class="mobile-file-details desktop-invisible" style="padding-top: 15px;">
-                                    <span>🔗<a href="/u/<%=targetUser.username%>/<%=file.fileId%>" style="text-decoration: underline">LINK</a> ~ Size: <%=calculateFileSize(file.size)%></span>
-                                </div>
-                            </td>
-                            <td class="upload-list-link-column">
-                                <a href="/u/<%=targetUser.username%>/<%=file.fileId%>">LINK</a>
-                            </td>
-                            <td class="upload-list-size-column">
-                            <%=calculateFileSize(file.size)%>
-                            </td>
-                            <td class="upload-list-date-column">
+
                             <%
-                                //format date into proper format
+                                //format date into proper format for use later
                                 const dateUploaded = file.date;
                                 let month = dateUploaded.getMonth() + 1;
                                 let day = dateUploaded.getDate();
@@ -164,8 +159,45 @@
 
                                 let calendarDate = `${month}/${day}/${year}`;
                             %>
-                            <%=calendarDate%>
+
+                            <td class="upload-list-name-column ">
+                                <div class="mobile-file-details desktop-invisible" style="padding-top: 15px;">   
+                                </div>
+                                <a href="#" class="file-name-link" id="<%=file.fileId%>" data-username="<%=targetUser.username%>"><%=file.name%></a>
+                                <div class="mobile-file-details desktop-invisible" style="padding-top: 15px;">
+                                    <span>
+                                        🔗<a href="/u/<%=targetUser.username%>/<%=file.fileId%>" style="text-decoration: underline">LINK</a> ~ Size: <%=calculateFileSize(file.size)%>
+                                        <%if (file.isPublic) {%>
+                                            👁️
+                                        <%}%>
+                                    </span>
+                                    <br>
+                                    <span style="font-size: 75%;">
+                                        Uploaded: <%=calendarDate%>
+                                    </span>
+                                </div>
+
                             </td>
+                            
+                            <td class="upload-list-link-column">
+                                <a href="/u/<%=targetUser.username%>/<%=file.fileId%>">LINK</a>
+                            </td>
+                            
+                            <td class="upload-list-size-column">
+                            <%=calculateFileSize(file.size)%>
+                            </td>
+                            
+                            
+                            <td class="upload-list-date-column">
+                            <%=calendarDate%>
+                            <%if (file.isPublic) {%>
+                                <div class="tooltip-left">
+                                    👁️
+                                    <span class="tooltip-text">File is visible to the internet!</span>
+                                </div>
+                            <%}%>
+                            </td>
+                            
                         </tr>
                     <%})%>
                 <%}%>
