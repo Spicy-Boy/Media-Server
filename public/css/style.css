@@ -514,8 +514,9 @@ header {
 
 .userPortal-utility-bar
 {
-    width: 95%;
+    width: 99%;
     background-color: #202020;
+    padding: 15px;
 }
 
 .border-color-grey {
