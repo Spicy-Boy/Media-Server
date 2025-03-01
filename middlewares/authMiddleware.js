@@ -65,6 +65,19 @@ const redirectIfLoggedIn = (req, res, next) => {
     }
 }
 
+async function validateLogin (req, res, next)
+{
+    if (req.session.userId)
+    {
+        res.sendStatus(403); //403 forbidden
+    }
+    else
+    {
+        return next();
+    }
+}
+
+//adminAuth checks a specific isAdmin variable inside the user object, nothing more
 async function adminAuth (req, res, next) 
 {
     try 
@@ -92,5 +105,6 @@ module.exports = {
     redirectLogin,
     redirectIfLoggedIn,
     redirectLoginConditionally,
+    validateLogin,
     adminAuth
 };

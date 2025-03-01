@@ -2,7 +2,8 @@ const router = require("express").Router();
 
 const { //import auth
     redirectLogin,
-    redirectLoginConditionally
+    redirectLoginConditionally,
+    validateLogin
 } = require("../middlewares/authMiddleware");
 
 const {

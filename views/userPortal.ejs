@@ -184,7 +184,7 @@
                             </td>
                             
                             <td class="upload-list-size-column">
-                            <%=calculateFileSize(file.size)%>
+                            <span class="fileSize"><%=file.size%></span>
                             </td>
                             
                             
@@ -209,10 +209,52 @@
     
     <%- include("./partials/userIndexFooter") %>
 
-    <script src="/js/calculateFileSize.js"></script>
+    <script>
+        function calculateFileSize(bytes)
+        {
+            if (bytes >= 1073741824) //1 gb = 1073741824 bytes
+            {
+                return (bytes / 1073741824).toFixed(2) + " GB";
+            }
+            else if (bytes >= 1048576) //1 mb in bytes
+            {
+                return (bytes / 1048576).toFixed(2) + " MB";
+            }
+            else if (bytes >= 1024) //1 kb in bytes
+            { 
+                return (bytes / 1024).toFixed(2) + " KB"; 
+            }
+            else if (bytes > 1)
+            { 
+                return bytes + " bytes"; 
+            }
+            else if (bytes == 1)
+            { 
+                return bytes + " byte"; 
+            }
+            else {
+                return "???";
+            }
+        }
+
+        let fileSizeSpans = Document.querySelectorAll(".fileSize").forEach(span => {
+            let basicSize = Number(span.innerText);
+            
+        })
+
+        // let fileSizeSpan = document.getElementById('fileSize');
+
+        // let basicSize = Number(fileSizeSpan.innerText);
+
+        // fileSizeSpan.innerText = calculateFileSize(basicSize);
+
+        console.log('Finished calculating file size!');
+    </script>
+
     <%if (isThisActiveUserPage) {%>
     <script src="/js/simpleUploadLogic.js"></script>
     <%}%>
+
     <script src="/js/createDownloadLinks.js"></script>
 
     <script src="/js/sortUploads.js"></script>

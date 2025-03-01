@@ -144,6 +144,3 @@ function sortTableDateYoungest()
 // FUTURE FUNCTIONS
 //sort by release date (just make release date a date object)
 //sort by author alphabetically
-
-// sortTableAlphabetically();
-// sortTableAlphabeticallyReversed();
