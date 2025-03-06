@@ -9,37 +9,6 @@
     <!-- vvv font awesome for useful icons like search glass -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
-    <%
-    // because apprently dumb stupid ejs can't read scripts -_-
-    function calculateFileSize(bytes)
-    {
-        if (bytes >= 1073741824) //1 gb = 1073741824 bytes
-        {
-            return (bytes / 1073741824).toFixed(2) + " GB";
-        }
-        else if (bytes >= 1048576) //1 mb in bytes
-        {
-            return (bytes / 1048576).toFixed(2) + " MB";
-        }
-        else if (bytes >= 1024) //1 kb in bytes
-        { 
-            return (bytes / 1024).toFixed(2) + " KB"; 
-        }
-        else if (bytes > 1)
-        { 
-            return bytes + " bytes"; 
-        }
-        else if (bytes == 1)
-        { 
-            return bytes + " byte"; 
-        }
-        else {
-            return "???";
-        }
-        
-    }
-    %>
-
 </head>
 <body class="user-index-body white">
 
@@ -115,10 +84,10 @@
         <!-- Conditionally render as a 100% width if looking at another user's page -->
 
         <div class="desktop-invisible mobile-file-sorting-taskbar">
-        Sort by:
-        <a id="sortByNameMobile" href="">Alphabetical</a>
-        <a id="sortByDateMobile" href="">Date</a>
-        <a id="sortBySizeMobile" href="">Size</a>                  
+            Sort by:
+            <a id="sortByNameMobile" href="">Alphabetical</a>
+            <a id="sortByDateMobile" href="">Date</a>
+            <a id="sortBySizeMobile" href="">Size</a>                  
         </div>
             
         <%if (isThisActiveUserPage) {%>
@@ -166,7 +135,7 @@
                                 <!-- vv mobile information invisible in desktop mode vv-->
                                 <div class="mobile-file-details desktop-invisible" style="padding-top: 15px;">
                                     <span>
-                                        🔗<a href="/u/<%=targetUser.username%>/<%=file.fileId%>" style="text-decoration: underline">LINK</a> ~ Size: <%=calculateFileSize(file.size)%>
+                                        🔗<a href="/u/<%=targetUser.username%>/<%=file.fileId%>" style="text-decoration: underline">LINK</a> ~ Size: <span class="fileSize"><%=file.size%></span>
                                         <%if (file.isPublic) {%>
                                             👁️
                                         <%}%>
@@ -237,9 +206,9 @@
             }
         }
 
-        let fileSizeSpans = Document.querySelectorAll(".fileSize").forEach(span => {
+        let fileSizeSpans = document.querySelectorAll(".fileSize").forEach(span => {
             let basicSize = Number(span.innerText);
-            
+            span.innerText = calculateFileSize(basicSize);
         })
 
         // let fileSizeSpan = document.getElementById('fileSize');
@@ -248,7 +217,7 @@
 
         // fileSizeSpan.innerText = calculateFileSize(basicSize);
 
-        console.log('Finished calculating file size!');
+        console.log('Finished calculating file sizes!');
     </script>
 
     <%if (isThisActiveUserPage) {%>

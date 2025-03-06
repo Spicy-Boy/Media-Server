@@ -665,14 +665,14 @@ footer a:visited {
         padding-left: 20px;
         padding-right: 5px;
     }
-    .upload-list-container {
+    /* .upload-list-container {
         width: 65%;
         border-left: 2px solid rgb(112, 112, 112);
         padding-left: 20px;
         padding-right: 5px;
-    }
+    } */
     .upload-list-name-column {
-        width: 55%;
+        width: 75%;
         text-align: left;
         padding-top: 5px;
         padding-bottom: 5px;
@@ -681,18 +681,18 @@ footer a:visited {
     }
     #name-column-label {
         display: table-cell;
-        width: 10%;
+        width: 15%;
     }
     .upload-list-link-column {
         display: table-cell;
-        width: 10%;
+        width: 13%;
     }
     .upload-list-size-column {
         display: table-cell;
-        width: 12.5%;
+        width: 15%;
     }
     .upload-list-date-column {
-        width: 12.5%;
+        width: 15%;
         display: table-cell;
     }
 
