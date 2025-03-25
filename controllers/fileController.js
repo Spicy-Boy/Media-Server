@@ -226,6 +226,39 @@ async function downloadFile(req, res)
     }
 }
 
+async function sendFile()
+{
+    //contruct the path based on the request parameters
+    const targetUsername = req.params.username;
+    const fileId = req.params.fileId;
+
+    try {
+        const targetUser = await User.findOne({username: targetUsername});
+
+        targetFile = targetUser.files.find( file => file.fileId === fileId);
+
+        if (!targetFile) {
+            return res.status(404).send('File not found.');
+        }
+
+        let fileLocation = process.env.MAIL_DELIVERY_LOCATION+"/"+targetUsername+"_files/"+targetFile.name;
+
+        res.sendFile(fileLocation, (error) => {            
+            if (error)
+            {
+                console.error('Error sending file..', error);
+                if (!res.headersSent) {
+                    res.status(500).send('An error occurred while sending the requested file... does it still exist? Contact admin for support.');
+                }
+            }
+        });
+    }
+    catch (error) {
+        console.error(error);
+        res.status(500).send("An error occured while trying to find the file for display..");
+    }
+}
+
 //checks if the file id set in req parameter exists in active user's files. If so, pop it out! Permanently deletes the file data from the database
 async function deleteFile(req, res)
 {
@@ -311,5 +344,6 @@ module.exports = {
     createPersonalDatabaseEntry,
     downloadFile,
     deleteFile,
-    toggleVisibility
+    toggleVisibility,
+    sendFile
 };

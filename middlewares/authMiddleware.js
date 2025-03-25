@@ -69,11 +69,11 @@ async function validateLogin (req, res, next)
 {
     if (req.session.userId)
     {
-        res.sendStatus(403); //403 forbidden
+        return next();
     }
     else
     {
-        return next();
+        res.sendStatus(403); //403 forbidden
     }
 }
 
@@ -97,7 +97,7 @@ async function adminAuth (req, res, next)
     catch (error)
     {
         console.error("Something went wrong with admin auth!", error);
-        res.send("<center><h1>:'(</h1></center>");
+        res.send("<center><h1>:'( call aaron</h1></center>");
     }
 }
 
