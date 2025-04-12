@@ -19,7 +19,8 @@ const {
 router.post("/upload", redirectLogin, uploadInChunks);
 router.post("/createEntry", redirectLogin, createPersonalDatabaseEntry);
 router.get("/download/:username/:fileId", redirectLoginConditionally, downloadFile);
-router.get("/sendFileToWebpage/:username/:fileId", validateLogin, sendFile);
+// router.get("/sendFileToWebpage/:username/:fileId", validateLogin, sendFile);
+router.get("/sendFileToWebpage/:username/:fileId", sendFile);
 
 router.post("/delete/:fileId", redirectLogin, deleteFile);
 router.post("/toggleVisibility/:fileId", redirectLogin, toggleVisibility);
