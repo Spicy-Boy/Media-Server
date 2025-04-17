@@ -226,8 +226,9 @@ async function downloadFile(req, res)
     }
 }
 
-async function sendFile()
+async function sendFile(req, res)
 {
+    console.log('sendFile called');
     //contruct the path based on the request parameters
     const targetUsername = req.params.username;
     const fileId = req.params.fileId;
