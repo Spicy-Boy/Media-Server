@@ -18,9 +18,19 @@
     <div class="tac ">
         <h2 class="word-wrapping"><%=file.name%></h2>
         <br>
+        <%
+            let lowercaseFileName = file.name.toLowerCase();
+            let isFileImage = lowercaseFileName.endsWith(".jpg") || lowercaseFileName.endsWith(".png") || lowercaseFileName.endsWith(".jpeg") || lowercaseFileName.endsWith(".gif") || lowercaseFileName.endsWith(".avif") || lowercaseFileName.endsWith(".webp");
+
+            if (activeUser && isFileImage) { //conditionally render images if user is logged in
+        %>
+        <img src="/api/file/sendFileToWebpage/<%=targetUser.username%>/<%=file.fileId%>" style="max-width: 25%;">
+        <br>
+        <%
+            }
+        %>
         <h1><a class="user-controls-link blue" href="/api/file/download/<%=targetUser.username%>/<%=file.fileId%>">DOWNLOAD!</a></h1>
         <br>
-        <img src="http://localhost:8080/api/file/sendFileToWebpage/admin/d90be26b-3644-4da9-b13e-ef8dc533b3c9">
         <br>
         <h3>Uploaded by <%=targetUser.username%></h3>
         <h3><%=file.date%></h3>
@@ -90,7 +100,4 @@
     console.log('Finished calculating file size!');
 </script>
 
-<script>
-    // fetch("http://localhost:8080/api/file/sendFileToWebpage/admin/d90be26b-3644-4da9-b13e-ef8dc533b3c9")
-</script>
 </html>
