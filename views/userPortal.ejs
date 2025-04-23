@@ -82,13 +82,6 @@
         <%}%>
         <!-- vv table contains all user's uploaded files -->
         <!-- Conditionally render as a 100% width if looking at another user's page -->
-
-        <div class="desktop-invisible mobile-file-sorting-taskbar">
-            Sort by:
-            <a id="sortByNameMobile" href="">Alphabetical</a>
-            <a id="sortByDateMobile" href="">Date</a>
-            <a id="sortBySizeMobile" href="">Size</a>                  
-        </div>
             
         <%if (isThisActiveUserPage) {%>
         <div class="upload-list-container">
@@ -101,6 +94,16 @@
                     <label for="search">🔍</label>
                     <input type="search" id="search-table">
                 </div>
+                <div class="refresh-uploads-button">
+                    🔄<span class="underlined">Refresh</span>
+                </div>
+            </div>
+
+            <div class="desktop-invisible mobile-file-sorting-taskbar">
+                Sort by:
+                <a id="sortByNameMobile" href="" class="link-visited-negate">Alphabetical</a>
+                <a id="sortByDateMobile" href="" class="link-visited-negate">Date</a>
+                <a id="sortBySizeMobile" href="" class="link-visited-negate">Size</a>                  
             </div>
 
             <table id="list">

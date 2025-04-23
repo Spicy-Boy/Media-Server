@@ -140,6 +140,19 @@ nav li div:hover {
 .search-container button:hover {
 background: #ccc;
 }
+.refresh-uploads-button {
+    margin-left: 15px;
+    font-size: 14px;
+    padding-left: 2px;
+    padding-right: 2px;
+    cursor: pointer;
+}
+.refresh-uploads-buttom:hover{
+    color: red;
+}
+.underlined {
+    text-decoration: underline;
+}
 
 /* dynamic changes between row or column depending on size of device */
 .flex-dynamic {
@@ -235,7 +248,8 @@ background: #ccc;
 /* LOGIN PAGE */
 
 #login-error-message {
-    color: rgb(110, 0, 0);
+    color: #000000;
+    background-color: rgba(255, 255, 255, 0.5);
 }
 
 .literal-space-filler {
@@ -439,7 +453,7 @@ header {
 }
 
 .desktop-invisible {
-    display: inline;
+    display: block;
 }
 .mobile-invisible {
     display: none;
@@ -637,7 +651,8 @@ footer a:visited {
     margin-top: 10px;
     padding-top: 15px;
     padding-bottom: 15px;
-    background-color: red;
+    background-color: rgb(59, 0, 0);
+    margin-bottom: 5px;
 }
 
 .goaway { /*dont even ask LMAO... this is a secret cheat*/
@@ -781,6 +796,11 @@ footer a:visited {
 
     .goaway {
         display: flex;
+    }
+
+    #login-error-message {
+        color: #ffffff;
+        background-color: transparent;
     }
 }
 
@@ -1051,6 +1071,9 @@ footer a:visited {
     visibility: visible;
 }
 
+.link-visited-negate:visited {
+    color: #0070e0;
+}
 
 
 

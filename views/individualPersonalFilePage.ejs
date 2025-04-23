@@ -19,16 +19,17 @@
         <h2 class="word-wrapping"><%=file.name%></h2>
         <br>
         <%
-            let lowercaseFileName = file.name.toLowerCase();
-            let isFileImage = lowercaseFileName.endsWith(".jpg") || lowercaseFileName.endsWith(".png") || lowercaseFileName.endsWith(".jpeg") || lowercaseFileName.endsWith(".gif") || lowercaseFileName.endsWith(".avif") || lowercaseFileName.endsWith(".webp");
+        let lowercaseFileName = file.name.toLowerCase();
+        let isFileImage = lowercaseFileName.endsWith(".jpg") || lowercaseFileName.endsWith(".png") || lowercaseFileName.endsWith(".jpeg") || lowercaseFileName.endsWith(".gif") || lowercaseFileName.endsWith(".avif") || lowercaseFileName.endsWith(".webp");
 
-            if (activeUser && isFileImage) { //conditionally render images if user is logged in
+        if (activeUser && isFileImage) { //conditionally render images if user is logged in
         %>
-        <img src="/api/file/sendFileToWebpage/<%=targetUser.username%>/<%=file.fileId%>" style="max-width: 25%;">
-        <br>
+            <img src="/api/file/sendFileToWebpage/<%=targetUser.username%>/<%=file.fileId%>" style="max-width: 25%;">
+            <br>
         <%
-            }
+        }
         %>
+        
         <h1><a class="user-controls-link blue" href="/api/file/download/<%=targetUser.username%>/<%=file.fileId%>">DOWNLOAD!</a></h1>
         <br>
         <br>

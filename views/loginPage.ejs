@@ -24,7 +24,7 @@
     <div class="literal-space-filler">
 
         <img src="./images/sprites/Nils_battle_animation.webp">
-        <div id="login-error-message"></div>
+
         <form action="/api/user/login" method="post">
 
             <div class="form-group">
@@ -42,6 +42,8 @@
             <input type="submit" value="Login" id="login-button">
 
         </form>
+
+        <div id="login-error-message"></div>
     </div>
 
 </body>
@@ -56,7 +58,7 @@
         let errorMsgDiv = document.getElementById("login-error-message");
         errorMsgDiv.style.marginTop = "5px";
         errorMsgDiv.style.marginBottom = "10px";
-        errorMsgDiv.innerHTML = "<center>(incorrect username or password)<br>:(</center>"
+        errorMsgDiv.innerHTML = "<center style='padding:15px'>wrong username or password<br>:(</center>"
     }
 
 </script>

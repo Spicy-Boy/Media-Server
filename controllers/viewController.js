@@ -128,7 +128,7 @@ async function renderIndividualFilePage (req, res)
     
             if (targetUser && file)
             {
-                targetUser.password = ""; //for safety, idk if this matters
+                targetUser.password = ""; //for safety, though it barely matters
                 res.render("individualPersonalFilePage", {targetUser, file});
             }
             else
