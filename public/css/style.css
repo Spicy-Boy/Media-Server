@@ -609,9 +609,9 @@ header {
     text-align: center;
   
 }
-/* .mobile-file-details {
-    color: red;
-} */
+.mobile-file-details {
+    padding-top: 5px;
+}
 #name-column-label {
     display: none;
 }
@@ -621,11 +621,12 @@ header {
 }
 .upload-list-size-column {
     display: none;
-    width: 15%;
+    width: 8%;
 }
 .upload-list-date-column {
     display: none;
-    width: 15%;
+    /* width: 15%; */
+    padding-left: 10px;
 }
 
 .link-as-button a{
@@ -662,6 +663,12 @@ footer a:visited {
     background-color: rgb(59, 0, 0);
     margin-bottom: 5px;
 }
+
+.flex-centered-mobile {
+    justify-content: center;
+}
+
+
 
 .goaway { /*dont even ask LMAO... this is a secret cheat*/
     display: none;
@@ -712,7 +719,7 @@ footer a:visited {
     }
     .upload-list-size-column {
         display: table-cell;
-        width: 15%;
+        /* width: 15%; */
     }
     .upload-list-date-column {
         width: 15%;
@@ -817,6 +824,10 @@ footer a:visited {
     {
 
 
+        justify-content: left;
+    }
+
+    .flex-centered-mobile {
         justify-content: left;
     }
 }
@@ -1060,6 +1071,10 @@ footer a:visited {
     word-wrap: break-word; /* Ensures words break when necessary */
     word-break: break-word; /* Specifies how words should break */
     overflow-wrap: break-word; /* Prevents overflow when a long word is too long to fit */
+}
+
+.font-weight-bold {
+    font-weight: bold;
 }
 
 .tooltip-left {

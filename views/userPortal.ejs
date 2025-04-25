@@ -89,28 +89,31 @@
         <div class="upload-list-container width-100 remove-left-border">
         <%}%>
             
-            <div class="userPortal-utility-bar flex-row">
-                <div class="search-container" id="search-uploads">
-                    <label for="search">🔍</label>
-                    <input type="search" id="search-table">
+            <div class="userPortal-utility-bar">
+                <div class="flex-row flex-centered-mobile">
+                    <div class="search-container" id="search-uploads">
+                        <label for="search">🔍</label>
+                        <input type="search" id="search-table">
+                    </div>
+                    <div class="refresh-uploads-button" id="refresh-uploads">
+                        🔄<span class="underlined">Refresh</span>
+                    </div>
                 </div>
-                <div class="refresh-uploads-button" id="refresh-uploads">
-                    🔄<span class="underlined">Refresh</span>
+                <div class="desktop-invisible mobile-file-sorting-taskbar">
+                    Sort by:
+                    <a id="sortByNameMobile" href="" class="link-visited-negate">Alphabetical</a>
+                    <a id="sortByDateMobile" href="" class="link-visited-negate">Date</a>
+                    <a id="sortBySizeMobile" href="" class="link-visited-negate">Size</a>
                 </div>
             </div>
 
-            <div class="desktop-invisible mobile-file-sorting-taskbar">
-                Sort by:
-                <a id="sortByNameMobile" href="" class="link-visited-negate">Alphabetical</a>
-                <a id="sortByDateMobile" href="" class="link-visited-negate">Date</a>
-                <a id="sortBySizeMobile" href="" class="link-visited-negate">Size</a>                  
-            </div>
+
 
             <table id="list">
 
                 <thead>
                     <th class="goaway upload-list-name-column link-as-button"><a href="" id="sortByName">Name</a></th>
-                    <th class="upload-list-link-column ">Perma🔗</th>
+                    <th class="upload-list-link-column ">Perm🔗</th>
                     <th class="upload-list-size-column link-as-button"><a href="" id="sortBySize">Size</a></th>
                     <th class="upload-list-date-column link-as-button"><a href="" id="sortByDate">Date</a></th>
                 </thead>
@@ -136,7 +139,7 @@
                                 <a href="#" class="file-name-link mobile-invisible" id="<%=file.fileId%>" data-username="<%=targetUser.username%>"><%=file.name%></a>
                                 
                                 <!-- vv mobile information invisible in desktop mode vv-->
-                                <div class="mobile-file-details desktop-invisible">
+                                <div class="mobile-file-details desktop-invisible font-weight-bold">
                                     <a href="#" class="file-name-link" id="<%=file.fileId%>" style="padding-top: 5px;" data-username="<%=targetUser.username%>"><%=file.name%></a>
                                 </div>
                                 <div class="mobile-file-details desktop-invisible" style="padding-top: 15px;">
