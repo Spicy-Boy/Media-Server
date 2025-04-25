@@ -146,8 +146,11 @@ background: #ccc;
     padding-left: 2px;
     padding-right: 2px;
     cursor: pointer;
+
+    display: flex;
+    align-items: center;
 }
-.refresh-uploads-buttom:hover{
+.refresh-uploads-button:hover{
     color: red;
 }
 .underlined {
@@ -529,8 +532,10 @@ header {
 .userPortal-utility-bar
 {
     width: 99%;
-    background-color: #202020;
+    background-color: #292929;
     padding: 15px;
+
+    justify-content: center;
 }
 
 .border-color-grey {
@@ -590,9 +595,12 @@ header {
     padding-bottom: 3px;
 }
 .upload-list-name-column {
-    width: 100%;
-    display: flex;
+    width: 35%;
+    /* display: flex; */
+    display: table-cell;
     flex-direction: column;
+
+    padding-right: 20px;
 
     word-wrap: break-word; /* Ensures words break when necessary */
     word-break: break-word; /* Specifies how words should break */
@@ -687,7 +695,7 @@ footer a:visited {
         padding-right: 5px;
     } */
     .upload-list-name-column {
-        width: 75%;
+        /* width: 50%; */
         text-align: left;
         padding-top: 5px;
         padding-bottom: 5px;
@@ -700,7 +708,7 @@ footer a:visited {
     }
     .upload-list-link-column {
         display: table-cell;
-        width: 13%;
+        /* width: 13%; */
     }
     .upload-list-size-column {
         display: table-cell;
@@ -709,6 +717,7 @@ footer a:visited {
     .upload-list-date-column {
         width: 15%;
         display: table-cell;
+        margin-right: 15px;
     }
 
     .suicune-width {
@@ -801,6 +810,14 @@ footer a:visited {
     #login-error-message {
         color: #ffffff;
         background-color: transparent;
+    }
+
+    /* Utility Bar Options */
+    .userPortal-utility-bar
+    {
+
+
+        justify-content: left;
     }
 }
 

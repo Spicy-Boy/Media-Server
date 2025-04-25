@@ -90,11 +90,11 @@
         <%}%>
             
             <div class="userPortal-utility-bar flex-row">
-                <div class="search-container">
+                <div class="search-container" id="search-uploads">
                     <label for="search">🔍</label>
                     <input type="search" id="search-table">
                 </div>
-                <div class="refresh-uploads-button">
+                <div class="refresh-uploads-button" id="refresh-uploads">
                     🔄<span class="underlined">Refresh</span>
                 </div>
             </div>
@@ -133,9 +133,12 @@
 
                             <td class="upload-list-name-column ">
 
-                                <a href="#" class="file-name-link" id="<%=file.fileId%>" data-username="<%=targetUser.username%>"><%=file.name%></a>
+                                <a href="#" class="file-name-link mobile-invisible" id="<%=file.fileId%>" data-username="<%=targetUser.username%>"><%=file.name%></a>
                                 
                                 <!-- vv mobile information invisible in desktop mode vv-->
+                                <div class="mobile-file-details desktop-invisible">
+                                    <a href="#" class="file-name-link" id="<%=file.fileId%>" style="padding-top: 5px;" data-username="<%=targetUser.username%>"><%=file.name%></a>
+                                </div>
                                 <div class="mobile-file-details desktop-invisible" style="padding-top: 15px;">
                                     <span>
                                         🔗<a href="/u/<%=targetUser.username%>/<%=file.fileId%>" style="text-decoration: underline">LINK</a> ~ Size: <span class="fileSize"><%=file.size%></span>
@@ -234,6 +237,8 @@
     <script src="/js/sortingButtonsForUploads.js"></script>
 
     <script src="/js/searchUserUploadsTable.js"></script>
+
+    <script src="/js/refreshUserUploadsTable.js"></script>
     
     </body>
 </html>
