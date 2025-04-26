@@ -226,9 +226,31 @@ async function downloadFile(req, res)
     }
 }
 
+//send the file portion of a user's db entry to requester
+async function sendSingleUsersFileList(req, res)
+{
+    const targetUsername = req.params.username;
+    try 
+    {
+        const targetUser = await User.findOne({username: targetUsername});
+
+        if (!targetUser)
+        {
+            return res.sendStatus(404).send("No such user found..");
+        }
+
+        return res.status(200).send(targetUser.files);
+    }
+    catch (error) {
+        console.error(error);
+        res.status(500).send("An error occured while trying to find the target user's files... contact admin for support!");
+    }
+}
+
+// vv sends a single file, usually an image for display through img src request
 async function sendFile(req, res)
 {
-    console.log('sendFile called');
+    // console.log('sendFile called');
     //contruct the path based on the request parameters
     const targetUsername = req.params.username;
     const fileId = req.params.fileId;
@@ -346,5 +368,6 @@ module.exports = {
     downloadFile,
     deleteFile,
     toggleVisibility,
-    sendFile
+    sendFile,
+    sendSingleUsersFileList
 };
