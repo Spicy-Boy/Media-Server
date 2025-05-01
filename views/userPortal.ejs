@@ -9,6 +9,10 @@
     <!-- vvv font awesome for useful icons like search glass -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
+    <script>
+        //these variables are created server-side for use with scripts
+        let pageUsername = "<%=targetUser.username%>";
+    </script>
 </head>
 <body class="user-index-body white">
 
@@ -134,7 +138,7 @@
                                 let calendarDate = `${month}/${day}/${year}`;
                             %>
 
-                            <td class="upload-list-name-column ">
+                            <td class="upload-list-name-column">
 
                                 <a href="#" class="file-name-link mobile-invisible" id="<%=file.fileId%>" data-username="<%=targetUser.username%>"><%=file.name%></a>
                                 
@@ -142,6 +146,7 @@
                                 <div class="mobile-file-details desktop-invisible font-weight-bold">
                                     <a href="#" class="file-name-link" id="<%=file.fileId%>" style="padding-top: 5px;" data-username="<%=targetUser.username%>"><%=file.name%></a>
                                 </div>
+
                                 <div class="mobile-file-details desktop-invisible" style="padding-top: 15px;">
                                     <span>
                                         🔗<a href="/u/<%=targetUser.username%>/<%=file.fileId%>" style="text-decoration: underline">LINK</a> ~ Size: <span class="fileSize"><%=file.size%></span>

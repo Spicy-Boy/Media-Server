@@ -236,7 +236,7 @@ async function sendSingleUsersFileList(req, res)
 
         if (!targetUser)
         {
-            return res.sendStatus(404).send("No such user found..");
+            return res.status(404).send("No such user found..");
         }
 
         return res.status(200).send(targetUser.files);
