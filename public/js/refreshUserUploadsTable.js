@@ -14,7 +14,7 @@ refreshButton.addEventListener("click", (event) => {
 });
 
 
-//vvv grabs a table element id, erases its contents, and re-queries the database 
+//vvv grabs a table element id, erases its contents, and re-queries the database. Use JS to recreate all elements of the list
 async function generateNewUploadList()
 {
     let listContainer = document.getElementById("list"); //in our case, a table element
@@ -34,7 +34,7 @@ async function generateNewUploadList()
         row.setAttribute("data-filesize", file.size);
         row.setAttribute("data-filedate", file.date);
 
-
+        //name column
         let nameColumn = document.createElement("td");
         nameColumn.classList.add("upload-list-name-column");
         
@@ -42,12 +42,22 @@ async function generateNewUploadList()
         nameLink.id = file.fileId;
         nameLink.href = "#";
         nameLink.textContent = file.name;
-        nameLink.setAttribute("data-username", file.name);
+        nameLink.setAttribute("data-username", pageUsername);
         nameLink.classList.add("file-name-link", "mobile-invisible");
         nameColumn.appendChild(nameLink);
 
+        //mobile name column AKA mobile file details
         let mobileLinkDiv = document.createElement('div');
+        mobileLinkDiv.classList.add("mobile-file-details","desktop-invisible", "font-eight-bold");
+
         let mobileNameLink = document.createElement('a');
+        mobileNameLink.href = "#";
+        mobileNameLink.classList.add("file-name-link");
+        mobileNameLink.style.paddingTop = "5px";
+        mobileNameLink.setAttribute("data-username", pageUsername);
+        mobileNameLink.innerText = file.name;
+        mobileLinkDiv.appendChild(mobileNameLink);
+        nameColumn.appendChild(mobileLinkDiv);
 
         row.appendChild(nameColumn);
 

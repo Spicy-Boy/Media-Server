@@ -592,8 +592,13 @@ header {
     background-color: #292929;
 }
 #list tbody td {
-    padding-bottom: 3px;
+    padding-bottom: 6px;
 }
+
+/* .file-name-link {
+    padding-bottom: 15px;
+} */
+
 .upload-list-name-column {
     width: 35%;
     /* display: flex; */
