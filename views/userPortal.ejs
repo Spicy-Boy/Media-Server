@@ -14,6 +14,45 @@
         let pageUsername = "<%=targetUser.username%>";
     </script>
 </head>
+<!-- ROW TEMPLATE vvv to be cloned with JS -->
+<template id="upload-row-template">
+    <tr data-filename="" data-filesize="" data-filedate="">
+        <td class="upload-list-name-column">
+          <!-- Desktop Link -->
+          <a href="#" class="file-name-link mobile-invisible" id="" data-username=""></a>
+    
+          <!-- Mobile Info -->
+          <div class="mobile-file-details desktop-invisible font-weight-bold">
+            <a href="#" class="file-name-link" id="" style="padding-top: 5px;" data-username=""></a>
+          </div>
+          <div class="mobile-file-details desktop-invisible" style="padding-top: 15px;">
+            <span>
+              🔗<a href="#" class="file-link" style="text-decoration: underline">LINK</a> ~ Size:
+              <span class="fileSize"></span>
+              <span class="publicIcon" style="display: none;"><!--👁️--></span>
+            </span>
+            <br>
+            <span class="uploadDate" style="font-size: 75%;"></span>
+          </div>
+        </td>
+    
+        <td class="upload-list-link-column">
+          <a href="#" class="file-link">LINK</a>
+        </td>
+    
+        <td class="upload-list-size-column">
+          <span class="fileSize"></span>
+        </td>
+    
+        <td class="upload-list-date-column">
+          <span class="uploadDate"></span>
+          <div class="tooltip-left publicIconTooltip" style="display: none;">
+            <!-- 👁️ -->
+            <span class="tooltip-text">File is visible to the internet!</span>
+          </div>
+        </td>
+      </tr>
+</template>
 <body class="user-index-body white">
 
     <%
@@ -149,7 +188,8 @@
 
                                 <div class="mobile-file-details desktop-invisible" style="padding-top: 15px;">
                                     <span>
-                                        🔗<a href="/u/<%=targetUser.username%>/<%=file.fileId%>" style="text-decoration: underline">LINK</a> ~ Size: <span class="fileSize"><%=file.size%></span>
+                                        🔗<a href="/u/<%=targetUser.username%>/<%=file.fileId%>" style="text-decoration: underline">LINK</a> ~ Size:
+                                        <span class="fileSize"><%=file.size%></span>
                                         <%if (file.isPublic) {%>
                                             👁️
                                         <%}%>
