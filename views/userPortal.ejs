@@ -161,7 +161,7 @@
                     <th class="upload-list-date-column link-as-button"><a href="" id="sortByDate">Date</a></th>
                 </thead>
 
-                <tbody>
+                <tbody id="listBody">
                 <%if (targetUser.files){%>
                     <%targetUser.files.reverse().forEach( (file, index) => {%>
                         <%// vvv this is top level of each individual upload%>
