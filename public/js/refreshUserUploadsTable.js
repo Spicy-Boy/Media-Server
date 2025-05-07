@@ -73,7 +73,7 @@ async function generateNewUploadList()
             icon.style.display = "inline";
 
             clonedRow.querySelectorAll(".publicIconTooltip").forEach(div => {
-                div.textContent = "👁️";
+                div.innerHTML = "👁️"+div.innerHTML;
                 div.style.display = "inline";
             });
         }
