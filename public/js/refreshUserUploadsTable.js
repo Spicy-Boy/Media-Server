@@ -18,7 +18,7 @@ refreshButton.addEventListener("click", (event) => {
 async function generateNewUploadList()
 {
     let listContainer = document.getElementById("list"); //in our case, a table element
-    let tableBody = listContainer.querySelector("tbody");
+    let tableBody = listContainer.querySelector("tbody"); //id of table on user portal is "list"
 
     let files = await getUserFilesFromDB(pageUsername); //variable set by server in the userPortal template
 
@@ -66,9 +66,10 @@ async function generateNewUploadList()
             span.textContent = calendarDate;
         });
 
+        //check if file is public facing, add an eyeball emoji w tooltip to end of date column
         if (file.isPublic)
         {
-            const icon = clonedRow.querySelector(".publicIcon");
+            const icon = clonedRow.querySelector(".publicIcon"); //this is the mobile facing eye
             icon.innerText = "👁️";
             icon.style.display = "inline";
 
@@ -79,9 +80,6 @@ async function generateNewUploadList()
         }
 
         tableBody.appendChild(clonedRow);
-
-        //vv called from an already loaded instance of createDownloadLinks.js
-        createDownloadLinks();
 
     //*&*&* VVV OLDE JS VVV generation method, infinitely inferior to the cloning of templates!
         // let row = document.createElement("tr");
@@ -137,6 +135,10 @@ async function generateNewUploadList()
     });
     
     refreshInProgress = false;
+
+    //vv called from an already loaded instance of createDownloadLinks.js
+    createDownloadLinks();
+    tableFullBackup = tableBody.cloneNode(true); //tableFullBackup is set in 
 }
 
 //phones up the API and retrieves a list of uploaded files from the user's database

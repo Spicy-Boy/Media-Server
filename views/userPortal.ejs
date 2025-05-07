@@ -108,7 +108,7 @@
                 <p id="legal-notice">NOTICE: This upload service is still under development and errors may occur. Your uploads are not private. If you post illegal pornography, you will be reported to the authorities immediately. Upload at your own risk.</p>    
             </div>
 
-            <div id="news">
+            <div id="news" class="mobile-invisible">
                 <div class="text-align-left">
                 News:
                 </div>
@@ -272,6 +272,11 @@
         // fileSizeSpan.innerText = calculateFileSize(basicSize);
 
         console.log('Finished calculating file sizes!');
+    </script>
+
+    <script> //make a backup of the table for use in restoring after searches
+        let tableBodyFull = document.getElementById("list"); //id of table on user portal is "list"
+        let tableFullBackup = tableBodyFull.cloneNode(true);  //save a clone of the table  
     </script>
 
     <%if (isThisActiveUserPage) {%>
