@@ -1,6 +1,8 @@
 // :D
 
 const searchBar = document.getElementById('search-table');
+searchBar.value = "";
+searchBar.focus();
 let tableBody = document.getElementById('listBody') //id of table on user portal is "list"
 
 
