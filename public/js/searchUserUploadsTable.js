@@ -8,9 +8,6 @@ let tableBodyToSearch = document.getElementById('listBody') //id of table on use
 let searchedTableBody = tableBodyToSearch.cloneNode(true); //we work with searchedTable so as not to screw up the original tableBodyToSearch... not greatest naming scheme lol
 searchedTableBody.innerHTML = "";
 
-const originalTableHeight = searchedTableBody.offsetHeight;
-
-
 searchBar.addEventListener("input", ()=>{
     const queryUntouched = searchBar.value; //saved for formatting later
     const query = queryUntouched.trim().toLowerCase();
@@ -51,14 +48,6 @@ searchBar.addEventListener("input", ()=>{
                     const highlightedHTML = textToHighlight.replace(regex, '<span style="background-color: yellow;">$1</span>');
 
                     highlightedTitle.innerHTML = highlightedHTML;
-
-                    //bad code-- breaks due to innerHTML being unreliable vv
-                    // textToHighlight =  textToHighlight.replace(queryUntouched,`<span style="background-color: yellow">${queryUntouched}</span>`);
-
-                    // // let dog = "HAHHAHA"
-                    // // textToHighlight =  textToHighlight.replace(queryUntouched,`<span style="background-color: yellow">${dog}</span>`);
-
-                    // highlightedTitle.innerHTML = textToHighlight;
                 });
 
             });
@@ -72,8 +61,11 @@ searchBar.addEventListener("input", ()=>{
         // }
     });
 
-    // tableBodyToSearch.style.minHeight = originalTableHeight+"px"; //preserves height to prevent page jumps while searching
-    // console.log(tableBodyToSearch.style.minHeight,'+',searchedTableBody.style.minHeight);
+    const pageWrapper = document.getElementById('upload-and-list-wrapper');
+    const blankSpace = document.createElement("div");
+    blankSpace.style.height = "100px";
+    pageWrapper.appendChild(blankSpace);
+
     tableBodyToSearch.replaceWith(searchedTableBody);
 
 
