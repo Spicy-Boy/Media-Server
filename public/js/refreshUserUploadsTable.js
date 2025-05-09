@@ -8,6 +8,8 @@ refreshButton.addEventListener("click", (event) => {
     {
         refreshInProgress = true;
         generateNewUploadList();
+        const searchBar = document.getElementById('search-table');
+        searchBar.value = "";
     }
 
 
@@ -17,8 +19,7 @@ refreshButton.addEventListener("click", (event) => {
 //vvv grabs a table element id, erases its contents, and re-queries the database. Use JS to recreate all elements of the list
 async function generateNewUploadList()
 {
-    let listContainer = document.getElementById("list"); //in our case, a table element
-    let tableBody = listContainer.querySelector(".tbody"); //id of table on user portal is "list"
+    let tableBody = document.getElementById('listBody')
 
     let files = await getUserFilesFromDB(pageUsername); //variable set by server in the userPortal template
 

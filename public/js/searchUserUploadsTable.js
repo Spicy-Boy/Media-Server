@@ -49,7 +49,6 @@ searchBar.addEventListener("input", ()=>{
 
                     highlightedTitle.innerHTML = highlightedHTML;
                 });
-
             });
 
             searchedTableBody.appendChild(clonedRow);
