@@ -62,10 +62,10 @@ searchBar.addEventListener("input", ()=>{
 
     const pageWrapper = document.getElementById('upload-and-list-wrapper');
     const blankSpace = document.createElement("div");
-    blankSpace.style.height = "100px";
+    blankSpace.style.height = "200px";
     pageWrapper.appendChild(blankSpace);
 
     tableBodyToSearch.replaceWith(searchedTableBody);
 
-
+    createDownloadLinks();
 });
