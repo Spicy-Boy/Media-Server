@@ -185,7 +185,11 @@
 
                             <td class="upload-list-name-column">
 
+                                <input type="checkbox" class="checkbox-file-user-portal" id="<%=file.id%>-checkbox" data-fileId="<%=file.id%>">
+
                                 <a href="#" class="file-name-link mobile-invisible" id="<%=file.fileId%>" data-username="<%=targetUser.username%>"><%=file.name%></a>
+
+                                <button class="edit-file-button-user-portal" id="<%=file.id%>-edit-button" style="float: inline-end;" data-fileId="<%=file.id%>">✏️</button>
                                 
                                 <!-- vv mobile information invisible in desktop mode vv-->
                                 <div class="mobile-file-details desktop-invisible font-weight-bold">
@@ -237,6 +241,21 @@
     </div>
     
     <%- include("./partials/userIndexFooter") %>
+
+    <div id="quick-edit-div"> 
+        <div id="grab-button-quick-edit">Editting [filename]
+            <button id="button-close-quick-edit">X</button>
+        </div>
+
+        <form class="quick-edit-form" action="URL" enctype="multipart/form-data" method="post">
+
+            <input type="text" name="username" placeholder="Anonymous" value="Anonymous">
+            <textarea id="quick-content" name="content" rows="4" cols="35"></textarea>
+            <input id="quick-file" name="file" type="file">
+            <input type="submit" value="Post Reply">
+
+        </form>
+    </div>
 
     <script>
         function calculateFileSize(bytes)
@@ -298,6 +317,10 @@
     <script src="/js/searchUserUploadsTable.js"></script>
 
     <script src="/js/refreshUserUploadsTable.js"></script>
-    
+
+    <%if (isThisActiveUserPage) {%>
+    <script src="/js/setupEditFunctionalityUserUploadsTable.js"></script>
+    <%}%>
+
     </body>
 </html>

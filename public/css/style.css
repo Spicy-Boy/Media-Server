@@ -684,7 +684,45 @@ footer a:visited {
     justify-content: center;
 }
 
+/* QUICK EDIT FEATURE: edit individual files without exiting the user portal webpage */
 
+#quick-edit-div {
+    position: fixed;
+    top: 50px;
+    left: 5px;
+
+    display: none;
+    flex-direction: column;
+    padding: 2px;
+
+    background-color: #d6daf0;
+
+    border: pink solid 1px;
+
+    max-width: 100%;
+}
+#grab-button-quick-edit {
+    padding: 2px;
+    background-color: #9988ee;
+    text-align: center;
+    border: black solid 1px;
+
+    cursor: move;
+}
+#button-close-qick-edit {
+    float: right;
+}
+
+/* display: inline-block is the default */
+.checkbox-file-user-portal {
+    display: none;
+}
+.edit-file-button-user-portal {
+    display: none;
+}
+
+
+/* ^^^ Quick Edit Feature ^^^ */
 
 .goaway { /*dont even ask LMAO... this is a secret cheat*/
     display: none;
