@@ -13,7 +13,7 @@ let allEditButtons = document.querySelectorAll(".edit-file-button-user-portal");
 allEditButtons.forEach(button => {
     button.addEventListener("click", () => {
         let buttonId = button.dataset.fileid;
-        console.log(buttonId);
+        
     });
 })
 
@@ -23,7 +23,7 @@ editFilesButton.addEventListener("click", (event)=>{
         editVisible = true;
 
         allEditButtons.forEach( button => {
-            button.style.display = "inline-block";
+            button.style.display = "inline-block"; //make them visible
         });
 
         allEditCheckboxes.forEach( box => {
@@ -35,7 +35,7 @@ editFilesButton.addEventListener("click", (event)=>{
         editVisible = false;
 
         allEditButtons.forEach( button => {
-            button.style.display = "none";
+            button.style.display = "none"; //turn them invisible
         });
 
         allEditCheckboxes.forEach( box => {

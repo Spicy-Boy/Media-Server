@@ -606,21 +606,27 @@ header {
     padding-bottom: 6px;
 }
 
-/* .file-name-link {
+.file-name-link-mobile {
     padding-bottom: 15px;
-} */
+}
+
+
+ 
 
 .upload-list-name-column {
-    width: 35%;
+    /* width: 35%; */
     /* display: flex; */
-    display: table-cell;
-    flex-direction: column;
+    /* display: table-cell; */
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
 
     padding-right: 20px;
 
     word-wrap: break-word; /* Ensures words break when necessary */
     word-break: break-word; /* Specifies how words should break */
     overflow-wrap: break-word; /* Prevents overflow when a long word is too long to fit */
+    
 
     text-align: center;
   
@@ -716,9 +722,11 @@ footer a:visited {
 /* display: inline-block is the default */
 .checkbox-file-user-portal {
     display: none;
+    margin-right: 3px;
 }
 .edit-file-button-user-portal {
     display: none;
+    padding-bottom: 4px;
 }
 
 
@@ -1093,6 +1101,10 @@ footer a:visited {
     margin-bottom: 25px;
 }
 
+.margin-left-auto {
+    margin-left: auto;
+}
+
 .align-self-flex-end {
     /* align-self: flex-end; */
     margin-top: auto;
@@ -1124,6 +1136,11 @@ footer a:visited {
     word-wrap: break-word; /* Ensures words break when necessary */
     word-break: break-word; /* Specifies how words should break */
     overflow-wrap: break-word; /* Prevents overflow when a long word is too long to fit */
+}
+
+.flex-basis-mobile-name {
+    flex-basis: 75%;
+    padding-left: 15px;
 }
 
 .font-weight-bold {

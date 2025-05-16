@@ -189,11 +189,11 @@
 
                                 <a href="#" class="file-name-link mobile-invisible" id="<%=file.fileId%>" data-username="<%=targetUser.username%>"><%=file.name%></a>
 
-                                <button class="edit-file-button-user-portal" id="<%=file.id%>-edit-button" style="float: inline-end;" data-fileId="<%=file.id%>">✏️</button>
+                                <button class="edit-file-button-user-portal margin-left-auto" id="<%=file.id%>-edit-button" style="float: inline-end;" data-fileId="<%=file.id%>">✏️</button>
                                 
                                 <!-- vv mobile information invisible in desktop mode vv-->
-                                <div class="mobile-file-details desktop-invisible font-weight-bold">
-                                    <a href="#" class="file-name-link" id="<%=file.fileId%>" style="padding-top: 5px;" data-username="<%=targetUser.username%>"><%=file.name%></a>
+                                <div class="mobile-file-details flex-basis-mobile-name desktop-invisible font-weight-bold">
+                                    <a href="#" class="file-name-link file-name-link-mobile" id="<%=file.fileId%>" style="padding-top: 5px;" data-username="<%=targetUser.username%>"><%=file.name%></a>
                                 </div>
 
                                 <div class="mobile-file-details desktop-invisible" style="padding-top: 15px;">
