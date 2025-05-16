@@ -614,12 +614,12 @@ header {
  
 
 .upload-list-name-column {
-    /* width: 35%; */
-    /* display: flex; */
-    /* display: table-cell; */
+    /* display: table-cell;
+    width: 35%; */
+    
     display: flex;
     flex-direction: row;
-    align-items: flex-start;
+    /* align-items: flex-start; */
 
     padding-right: 20px;
 
@@ -629,10 +629,19 @@ header {
     
 
     text-align: center;
+
+    /* height: 100%; */
   
 }
+.flex-basis-mobile-name {
+    flex-basis: 75%;
+    padding-left: 15px;
+
+    padding-top: 6px;
+
+}
 .mobile-file-details {
-    padding-top: 5px;
+    /* padding-top: 5px; */
 }
 #name-column-label {
     display: none;
@@ -727,6 +736,7 @@ footer a:visited {
 .edit-file-button-user-portal {
     display: none;
     padding-bottom: 4px;
+    align-self: flex-start;
 }
 
 
@@ -765,6 +775,10 @@ footer a:visited {
     } */
     .upload-list-name-column {
         /* width: 50%; */
+
+        display: table-cell;
+        width: 35%;
+
         text-align: left;
         padding-top: 5px;
         padding-bottom: 5px;
@@ -1136,11 +1150,6 @@ footer a:visited {
     word-wrap: break-word; /* Ensures words break when necessary */
     word-break: break-word; /* Specifies how words should break */
     overflow-wrap: break-word; /* Prevents overflow when a long word is too long to fit */
-}
-
-.flex-basis-mobile-name {
-    flex-basis: 75%;
-    padding-left: 15px;
 }
 
 .font-weight-bold {

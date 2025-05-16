@@ -25,7 +25,7 @@
           <div class="mobile-file-details desktop-invisible font-weight-bold">
             <a href="#" class="file-name-link" id="" style="padding-top: 5px;" data-username=""></a>
           </div>
-          <div class="mobile-file-details desktop-invisible" style="padding-top: 15px;">
+          <div class="mobile-file-details desktop-invisible">
             <span>
               🔗<a href="#" class="file-link" style="text-decoration: underline">LINK</a> ~ Size:
               <span class="fileSize"></span>
@@ -188,7 +188,7 @@
                                 <input type="checkbox" class="checkbox-file-user-portal" id="<%=file.id%>-checkbox" data-fileId="<%=file.id%>">
 
                                 <a href="#" class="file-name-link mobile-invisible" id="<%=file.fileId%>" data-username="<%=targetUser.username%>"><%=file.name%></a>
-
+                                
                                 <button class="edit-file-button-user-portal margin-left-auto" id="<%=file.id%>-edit-button" style="float: inline-end;" data-fileId="<%=file.id%>">✏️</button>
                                 
                                 <!-- vv mobile information invisible in desktop mode vv-->
@@ -196,7 +196,7 @@
                                     <a href="#" class="file-name-link file-name-link-mobile" id="<%=file.fileId%>" style="padding-top: 5px;" data-username="<%=targetUser.username%>"><%=file.name%></a>
                                 </div>
 
-                                <div class="mobile-file-details desktop-invisible" style="padding-top: 15px;">
+                                <div class="mobile-file-details desktop-invisible" style="justify-content: center; align-items: center;">
                                     <span>
                                         🔗<a href="/u/<%=targetUser.username%>/<%=file.fileId%>" style="text-decoration: underline">LINK</a> ~ Size:
                                         <span class="fileSize"><%=file.size%></span>
