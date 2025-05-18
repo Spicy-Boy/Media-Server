@@ -732,6 +732,7 @@ footer a:visited {
 .checkbox-file-user-portal {
     display: none;
     margin-right: 3px;
+    /* margin-top:7px; */
 }
 .edit-file-button-user-portal {
     display: none;
