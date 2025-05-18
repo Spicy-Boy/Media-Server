@@ -496,6 +496,8 @@ header {
     flex-direction: column;
     align-items: center;
     /* TEST COLOR ^^ */
+
+    /* margin-left: 5px; */
 }
 .suicune-width {
     width: 60%;
@@ -621,7 +623,7 @@ header {
     flex-direction: row;
     /* align-items: flex-start; */
 
-    padding-right: 20px;
+    padding-right: 15px;
 
     word-wrap: break-word; /* Ensures words break when necessary */
     word-break: break-word; /* Specifies how words should break */
@@ -732,6 +734,10 @@ footer a:visited {
     float: right;
 }
 
+#edit-toolbar {
+    display: none;
+}
+
 /* display: inline-block is the default */
 .checkbox-file-user-portal {
     display: none;
@@ -764,13 +770,15 @@ footer a:visited {
         flex-direction: row;
     }
     .uploader-container {
-        width: 35%;
+        width: 32%;
     }
     .upload-list-container {
         width: 65%;
         border-left: 2px solid rgb(112, 112, 112);
         padding-left: 20px;
         padding-right: 5px;
+
+        margin-left: 1px;
     }
     /* .upload-list-container {
         width: 65%;
@@ -1103,6 +1111,9 @@ footer a:visited {
     align-items: center;
 }
 
+.margin-10px {
+    margin: 10px;
+}
 .margin-15px {
     margin: 15px;
 }
@@ -1122,6 +1133,9 @@ footer a:visited {
 
 .margin-left-auto {
     margin-left: auto;
+}
+.margin-right-auto {
+    margin-right: auto;
 }
 
 .align-self-flex-end {

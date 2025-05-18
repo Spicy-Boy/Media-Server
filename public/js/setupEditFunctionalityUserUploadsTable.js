@@ -3,6 +3,7 @@
 //You need to make sure only admins or the user that uploaded a file can edit its contents
 
 let editFilesButton = document.getElementById('edit-uploads');
+let editToolbar = document.getElementById('edit-toolbar');
 
 let editVisible = false;
 
@@ -20,6 +21,7 @@ allEditButtons.forEach(button => {
 editFilesButton.addEventListener("click", (event)=>{
     if (!editVisible) 
     {
+        editToolbar.style.display = "flex";
         editVisible = true;
 
         allEditButtons.forEach( button => {
