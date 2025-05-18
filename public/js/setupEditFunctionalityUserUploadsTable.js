@@ -13,7 +13,7 @@ let allEditButtons = document.querySelectorAll(".edit-file-button-user-portal");
 allEditButtons.forEach(button => {
     button.addEventListener("click", () => {
         let buttonId = button.dataset.fileid;
-        
+
     });
 })
 

@@ -2,6 +2,6 @@ const router = require("express").Router();
 
 const {
 
-} = require("");
+} = require("../controllers/quoteController");
 
-
+router.get("../controllers/");

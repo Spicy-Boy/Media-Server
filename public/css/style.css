@@ -641,7 +641,11 @@ header {
 
 }
 .mobile-file-details {
-    /* padding-top: 5px; */
+    padding-top: 8px;
+
+}
+.mobile-file-name-div {
+    padding-left: 15px;
 }
 #name-column-label {
     display: none;
