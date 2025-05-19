@@ -738,6 +738,14 @@ footer a:visited {
     display: none;
 }
 
+/* .edit-uploads-button {
+    margin-top: 15px;
+} */
+/* 
+#select-all-uploads:hover {
+    color: white;
+} */
+
 /* display: inline-block is the default */
 .checkbox-file-user-portal {
     display: none;
