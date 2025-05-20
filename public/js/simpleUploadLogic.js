@@ -113,7 +113,7 @@ async function uploadIndividualFile(file)
         const response = await fetch(createEntryUrl, {
             method: "POST",
             headers: {
-                "file-name": file.name,
+                "file-name": encodeURIComponent(file.name), //encode name to allow strange characters
                 "file-size": file.size
             }
         });
@@ -164,7 +164,7 @@ async function uploadFileChunk(fileChunk, chunkId, chunkCount, fileName, fileNo)
         headers: {
             "content-type": "application/octet-stream",
             "content-length": fileChunk.length,
-            "file-name": fileName,
+            "file-name": encodeURIComponent(fileName), //encoded to allow strange characters in name
             "chunk-id": chunkId,
             "chunk-count": chunkCount
         },

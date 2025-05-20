@@ -40,7 +40,8 @@ async function writeFileWithRetry(filePath, chunk, retries, retryDelay)
 async function uploadInChunks(req, res)
 {
 
-    const fileName = req.headers["file-name"];
+    // const fileName = req.headers["file-name"];
+    const fileName = decodeURIComponent(req.headers["file-name"]);
     const chunkId = req.headers["chunk-id"];
     const chunkCount = req.headers["chunk-count"];
     const username = req.session.activeUser.username;
@@ -166,7 +167,8 @@ async function createPersonalDatabaseEntry(req, res)
 {
     try
     {
-        const fileName = req.headers["file-name"];
+        // const fileName = req.headers["file-name"];
+        const fileName = decodeURIComponent(req.headers["file-name"]);
         const fileSize = req.headers["file-size"];
 
         console.log('Creating database entry for',fileName);
