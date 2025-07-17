@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>:)</title>
+
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+
+    <style>
+        body {
+            background-color: black;
+            color: white;
+        }
+        .panel-container {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+        }
+    </style>
+
+</head>
+<body>
+    <center><p>Are you supposed to be in here?</p></center>
+    
+    <div class="flex-row">
+        <div class="manual-account-creation panel-container">
+            <div class="tac" style="border: solid coral 2px; padding: 10px;">
+                <form method="post" id="create-user-form" action="/api/user/createNewUser">
+                    <h1>Create new User</h1>
+                    <div class="form-group">
+                        <label for="username">Username</label>
+                        <input type="text" id="username" name="username">
+                    </div>
+                    <br>
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input type="password" id="password" name="password" placeholder="Enter password" required>
+                    </div>
+                    <br>
+                    <div class="form-group">
+                        <label for="confirm-password">Confirm Password</label>
+                        <input type="password" id="confirm-password" name="confirm_password" placeholder="Re-enter password" required>
+                    </div>
+                    <br>
+                    <button type="submit">Submit</button>
+
+                    <div id="p1" style="color: red; display: none;">
+                        Passwords do not match!!!
+                    </div>
+                </form>
+
+                <div>
+                    <h3>Current Users:</h3>
+                    <%allUsers.forEach(user => {%>
+                        <div><%=user.username%></div>
+                    <%});%>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+</html>

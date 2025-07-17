@@ -150,7 +150,6 @@ async function renderAdminFunPanel(req, res)
 {
     try {
         const allUsers = await User.find({});
-        console.log(allUsers);
         res.render("adminFunPanel", {allUsers});
 
     } catch (error) {
@@ -163,6 +162,23 @@ async function renderAdminFunPanel(req, res)
     }
 }
 
+
+async function renderUserManagementPanel(req, res)
+{
+    try {
+        const allUsers = await User.find({});
+        res.render("", {allUsers});
+
+    } catch (error) {
+        let errorObj = {
+            message: "renderAdminUserManagementPanel failed",
+            payload: error
+        }
+        console.error(errorObj);
+        res.json("SORRY! Something went wrong loading the adminUserManagementPanel.");
+    }
+}
+
 module.exports = {
     renderHomePage,
     renderLoginPage,
@@ -171,5 +187,6 @@ module.exports = {
     renderSuicuneDeliveryPageSimpleBusboy,
     renderUserIndexPage,
     renderIndividualFilePage,
-    renderAdminFunPanel
+    renderAdminFunPanel,
+    renderUserManagementPanel
 }

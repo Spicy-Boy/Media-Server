@@ -716,7 +716,7 @@ footer a:visited {
     flex-direction: column;
     padding: 2px;
 
-    background-color: #d6daf0;
+    background-color: #000d58;
 
     border: pink solid 1px;
 
@@ -732,6 +732,14 @@ footer a:visited {
 }
 #button-close-qick-edit {
     float: right;
+}
+
+.quick-edit-button {
+    max-width: 102.5px;
+}
+
+.quick-edit-filler {
+    min-height: 12px;
 }
 
 #edit-toolbar {

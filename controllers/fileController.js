@@ -321,7 +321,7 @@ async function deleteFile(req, res)
     catch (error)
     {
         console.error(error);
-        res.status(500).send("Something went wrong during deletion");
+        res.status(500).send("Something went wrong during deletion.");
     }
 
 }

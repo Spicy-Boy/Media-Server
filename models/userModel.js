@@ -42,6 +42,21 @@ const userSchema = new mongoose.Schema(
         isAdmin: {
             type: Boolean,
             default: false
+        },
+        isUploader: {
+            //uploaders have permission to upload to their personal drive. If false, uploading is disabled
+            type: Boolean,
+            default: false
+        },
+        isCurator: {
+            //curators can manage public-facing content and transport uploads from user drives' to public-facing content pages
+            type: Boolean,
+            default: false
+        },
+        isFrozen: {
+            //frozen users are prevented (via middleware) from performing any requests whatsoever... Gotta figure that out lol
+            type: Boolean,
+            default: false
         }
     }
 )

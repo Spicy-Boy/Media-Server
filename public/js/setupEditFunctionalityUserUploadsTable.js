@@ -44,12 +44,14 @@ quickEditCloseButton.addEventListener("click", () => {
     quickEditDiv.style.display = "none";
 });
 
-allEditButtons.forEach(button => {
+allEditButtons.forEach(button => { 
+    //customize the quick edit window here for each individual file
     button.addEventListener("click", () => {
+        
+
         quickEditDiv.style.display = "flex";
 
         let buttonId = button.dataset.fileid;
-
     });
 })
 
@@ -59,7 +61,7 @@ editFilesButton.addEventListener("click", (event)=>{
         editToolbar.style.display = "flex";
         editVisible = true;
 
-        allEditButtons.forEach( button => {
+        allEditButtons.forEach( button => { 
             button.style.display = "inline-block"; //make them visible
         });
 
@@ -70,6 +72,7 @@ editFilesButton.addEventListener("click", (event)=>{
     else
     {
         editVisible = false;
+        editToolbar.style.display = "none";
 
         selectAllButton.textContent = "Select All";
         isSelectAllToggled = false;
