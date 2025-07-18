@@ -22,6 +22,7 @@ const gallerySchema = new mongoose.Schema(
             required: true,
             unique: true
         },
+        title: String,
         isPublic: { //NOT USED yet.. for public web sharing of galleries!
             type: Boolean,
             required: true,
@@ -48,10 +49,27 @@ const gallerySchema = new mongoose.Schema(
                 required: true,
                 unique: true
             },
-            isPermittedToDelete: { //if true, this user can delete any files from the gallery besides their own
+            isPermittedToMakeDeletions: { //if true, this user can delete any files from the gallery besides their own
                 type: Boolean,
                 required: true,
                 default: false
+            }
+        }],
+        images: 
+        [{
+            fileId: {
+                type: String,
+                unique: true
+            },
+            name: String,
+            size: Number,
+            location: String, //a file path
+            date: { //date uploaded
+                type: Date,
+                default: Date.now
+            },
+            dateCreated: { //the file's internal date of creation
+                type: Date
             }
         }]
     }
