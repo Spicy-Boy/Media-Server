@@ -17,49 +17,67 @@
             flex-direction: row;
             flex-wrap: wrap;
         }
+
+        #user-selection-list {
+            width: 25%;
+            background-color: red;
+        }
+
+        #user-selection-display {
+            width: 75%;
+            background-color: blue;
+        }
     </style>
+
+    <script>
+        var userListFromServer = <%- JSON.stringify(allUsers) %>;
+    </script>
 
 </head>
 <body>
-    <center><p>Are you supposed to be in here?</p></center>
+    <center><p>USER MANAGEMENT</p></center>
     
+    <!-- Cont -->
     <div class="flex-row">
-        <div class="manual-account-creation panel-container">
-            <div class="tac" style="border: solid coral 2px; padding: 10px;">
-                <form method="post" id="create-user-form" action="/api/user/createNewUser">
-                    <h1>Create new User</h1>
-                    <div class="form-group">
-                        <label for="username">Username</label>
-                        <input type="text" id="username" name="username">
-                    </div>
-                    <br>
-                    <div class="form-group">
-                        <label for="password">Password</label>
-                        <input type="password" id="password" name="password" placeholder="Enter password" required>
-                    </div>
-                    <br>
-                    <div class="form-group">
-                        <label for="confirm-password">Confirm Password</label>
-                        <input type="password" id="confirm-password" name="confirm_password" placeholder="Re-enter password" required>
-                    </div>
-                    <br>
-                    <button type="submit">Submit</button>
 
-                    <div id="p1" style="color: red; display: none;">
-                        Passwords do not match!!!
+        <div id="user-selection-and-management-window" class="flex-row width-100">
+            
+            <div id="user-selection-list" class="scrollable-div">
+                <!-- 
+                 selectable divs become selected when user holds left click and drags over them
+                 (mousedown, mouseover while mousedown is true)
+
+                 also, holding shift and clicking will select all items between previous selected and next
+                 (use index of previously selected item to do it)
+                -->
+                
+                <%allUsers.forEach((user) => {%>
+                    <script>console.log("hi")</script>
+                    <div class="selectable-div selectable-user-div">
+                        <%=user.username%>
                     </div>
-                </form>
+                <%});%>
 
-                <div>
-                    <h3>Current Users:</h3>
-                    <%allUsers.forEach(user => {%>
-                        <div><%=user.username%></div>
-                    <%});%>
-                </div>
-
+                <!-- <div class="selectable-div selectable-user-div"> -->
+                    <!-- this is an individual entry per user -->
+                <!-- </div> -->
+            
             </div>
+            
+            <div id="user-selection-display" class="">
+            
+            </div>
+
         </div>
+        
+
 
     </div>
+
+    <script>
+        var userListFromServer = <%- JSON.stringify(allUsers) %>;
+
+        console.log(userListFromServer);
+    </script>
 
 </html>

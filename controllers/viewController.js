@@ -167,7 +167,7 @@ async function renderUserManagementPanel(req, res)
 {
     try {
         const allUsers = await User.find({});
-        res.render("", {allUsers});
+        res.render("adminUserManagementPanel", {allUsers});
 
     } catch (error) {
         let errorObj = {

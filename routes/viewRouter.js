@@ -9,14 +9,15 @@ const {
  } = require("../middlewares/authMiddleware");
 
 const {
-    renderHomePage,
+    // renderHomePage,
     renderLoginPage,
-    renderSuicuneDeliveryPage,
-    renderSuicuneDeliveryPageBusboy,
-    renderSuicuneDeliveryPageSimpleBusboy,
+    // renderSuicuneDeliveryPage,
+    // renderSuicuneDeliveryPageBusboy,
+    // renderSuicuneDeliveryPageSimpleBusboy,
     renderUserIndexPage,
     renderIndividualFilePage,
-    renderAdminFunPanel
+    renderAdminFunPanel,
+    renderUserManagementPanel
 } = require("../controllers/viewController");
 
 const {
@@ -38,7 +39,8 @@ router.get("/u/:username", redirectLogin, attachUserObjectToSession, renderUserI
 router.get("/u", redirectLogin, attachUserObjectToSession, renderUserIndexPage);
 
 router.get("/cavern", redirectLogin, adminAuth, renderAdminFunPanel);
-router.get("/user-management-cave", redirectLogin, adminAuth, renderUserManagementPanel);
+//  redirectLogin, adminAuth
+router.get("/souls", renderUserManagementPanel);
 
 router.get("/ai", redirectLogin, (req, res) => {
     res.sendFile(path.join(__dirname, "../public/html/aiQueryPage.html"));
