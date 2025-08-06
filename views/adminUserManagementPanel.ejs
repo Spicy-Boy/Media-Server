@@ -74,16 +74,20 @@
 
 <script> //script for loading user data from server
 
-// let userData = getUserDataFromServer();
+let userSelectionList = document.getElementById('user-selection-list').children;
 
-// console.log(userData);
+createUserButtons();
 
-getUserDataFromServer().then(userData => {
-    console.log("Received users:", userData);
-});
+async function createUserButtons()
+{
+   let userData = await getUserDataFromDB();
 
+    userData.forEach((user) => {
 
-async function getUserDataFromServer()
+    });
+}
+
+async function getUserDataFromDB()
 {
     let userData; 
 
