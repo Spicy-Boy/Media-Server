@@ -139,10 +139,11 @@ async function createNewUser(req, res)
         }
         await User.create(newUser);
         
-        res.redirect("/cavern");
+        res.redirect("/souls");
     }
     catch (error)
     {
+        console.log(error);
         res.send("Yo createNewUser broke!!!");
     }
 }
@@ -170,7 +171,7 @@ async function changeUserPassword(req, res)
 {
     const targetUsername = req.params.username;
 
-    let newPasswordPlain = req.body.password;
+    let newPasswordPlain = req.body.newPassword;
 
     try
     {
@@ -196,11 +197,93 @@ async function changeUserPassword(req, res)
     }
 }
 
+async function toggleIsFrozen(req, res)
+{
+    const targetUsername = req.params.username;
+
+    try
+    {
+        const targetUser = await User.findOne({username: targetUsername});
+        
+        if (!targetUser)
+        {
+            return res.status(404).send("No such user found..");
+        }
+
+        targetUser.isFrozen = !targetUser.isFrozen;
+
+        await targetUser.save();
+
+        res.status(200).redirect("/souls");
+    }
+    catch (error) 
+    {
+        console.error(error);
+        res.status(500).send("An error occured while trying to toggle the frozen status of this user...");
+    }
+}
+
+async function toggleIsCurator(req, res)
+{
+    const targetUsername = req.params.username;
+    
+    try
+    {
+        const targetUser = await User.findOne({username: targetUsername});
+        
+        if (!targetUser)
+        {
+            return res.status(404).send("No such user found..");
+        }
+
+        targetUser.isCurator = !targetUser.isCurator;
+
+        await targetUser.save();
+
+        res.status(200).redirect("/souls");
+    }
+    catch (error) 
+    {
+        console.error(error);
+        res.status(500).send("An error occured while trying to toggle the Curator status of this user...");
+    }
+    
+}
+
+async function toggleIsUploader(req, res)
+{
+    const targetUsername = req.params.username;
+    
+    try
+    {
+        const targetUser = await User.findOne({username: targetUsername});
+        
+        if (!targetUser)
+        {
+            return res.status(404).send("No such user found..");
+        }
+
+        targetUser.isUploader = !targetUser.isUploader;
+
+        await targetUser.save();
+
+        res.status(200).redirect("/souls");
+    }
+    catch (error) 
+    {
+        console.error(error);
+        res.status(500).send("An error occured while trying to toggle the Uploader status of this user...");
+    }
+}
+
 module.exports = {
     loginUser,
     logoutUser,
     attachUserObjectToSession,
     createNewUser,
     sendUsersToWebpage,
-    changeUserPassword
+    changeUserPassword,
+    toggleIsFrozen,
+    toggleIsUploader,
+    toggleIsCurator
 }

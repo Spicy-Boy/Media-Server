@@ -5,9 +5,9 @@ const User = require("../models/userModel");
 const redirectLogin = (req, res, next) => {
     if (!req.session.userId) 
     {
-        console.log('redirectLogin: Auth failed!');
+        console.log('redirectLogin: Auth failed accessing:',req.originalUrl);
         // req.session.loginMessage = "Validate your login, scrubby";
-        console.log(req.originalUrl);
+;
         //attaches the place they are being redirected from to the session. So, if they log in, they can be redirected BACK to where they were originally trying to go! vv
         req.session.returnTo = req.originalUrl;
 

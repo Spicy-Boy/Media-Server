@@ -26,6 +26,28 @@
         #user-selection-display {
             width: 75%;
             background-color: blue;
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+        }
+
+        .invisibility-cloak {
+            display: none;
+        }
+
+        .user-display-padding {
+            padding-top: 1px;
+            padding-bottom: 1px;
+            padding-left: 5px;
+
+            margin-top: 0px;
+            margin-bottom: 0px;
+            margin-left: 0px;
+        }
+
+        .selectable-user-div {
+            padding: 1px;
+            margin-left: 5px;
         }
     </style>
 
@@ -39,6 +61,7 @@
     
     <!-- Cont -->
     <div class="flex-row">
+        <img style="margin: auto; max-width: 300px; margin-bottom: 10px;" src="/images/the-idea-of-evil.png">
 
         <div id="user-selection-and-management-window" class="flex-row width-100">
             
@@ -64,59 +87,297 @@
             </div>
             
             <div id="user-selection-display" class="">
+
+                <div id = "display-panel-1"  class="invisibility-cloak" style="margin-right: 15px; margin-bottom: 15px;">
+
+                    <h3 id="username" class="user-display-padding">Username</h3>
+                    <p class="user-display-padding">Created: <span id="date">xx/xx/xx</span></p>
+                    <p class="user-display-padding">ID: <span id="_id">xxx-xxx-xxx</span></p>
+
+                    
+                    <form method="post" id="change-password-form" action="/api/user/changeUserPassword/LABUBULOVER2000" class="user-display-padding">
+                        <p>Choose a new password?</p>
+                        <label for="new-password">Password</label>
+                        <input type="password" id="new-password" value="" name="newPassword" placeholder="Enter password" required>
+                        <br>
+                        <label for="confirm-new-password">Confirm..</label>
+                        <input type="password" id="confirm-new-password" value="" name="confirmNewPassword" placeholder="Re-enter password" required>
+                        <button type="submit">Submit</button>
+                        <p id="password-message" class="user-display-padding"></p>
+                    </form>
+
+                </div>
+
+                <div id = "display-panel-2" class="invisibility-cloak" style="min-width: 100px; margin-bottom: 15px;">
+                    <form method="post" id="change-isFrozen" action="/api/user/toggleFrozen/LABUBULOVER888">
+                        <p class="user-display-padding">Frozen? <span id="isFrozen" style="color: red">FALSE</span></p>
+                        <button style="margin-left: 5px" type="submit">TOGGLE FROZEN</button>
+                    </form>
+                    <br>
+                    <form method="post" id="change-isCurator" action="/api/user/toggleCurator/LABUBULOVER888">
+                        <p class="user-display-padding">Curator? <span id="isCurator" style="color: red">FALSE</span></p>
+                        <button style="margin-left: 5px" type="submit">TOGGLE CURATOR</button>
+                    </form>
+                    <br>
+                    <form method="post" id="change-isUploader" action="/api/user/toggleUploader/LABUBULOVER888">
+                        <p class="user-display-padding">Uploader? <span id="isUploader" style="color: red">FALSE</span></p>
+                        <button style="margin-left: 5px" type="submit">TOGGLE CURATOR</button>
+                    </form>
+                </div>
+
             
             </div>
 
         </div>
         
+        <div class="manual-account-creation panel-container width-100">
+            <div class="tac width-75 margins-auto" style="border: solid rgb(0, 255, 89) 2px; padding: 10px; margin-top: 15px;">
+                <form method="post" id="create-user-form" action="/api/user/createNewUser">
+                    <h1 style="margin-top: 0">Create new User</h1>
+                    <div class="form-group">
+                        <label for="username">Username</label>
+                        <input type="text" id="username" name="username">
+                    </div>
+                    <br>
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input type="password" id="password" name="password" placeholder="Enter password" required>
+                    </div>
+                    <br>
+                    <div class="form-group">
+                        <label for="confirm-password">Confirm Password</label>
+                        <input type="password" id="confirm-password" name="confirm_password" placeholder="Re-enter password" required>
+                    </div>
+                    <br>
+                    <button type="submit">Submit</button>
+
+                    <div id="p1" style="color: red; display: none;">
+                        Passwords do not match!!!
+                    </div>
+                </form>     
+            </div>
+        </div>
+
+
     </div>
 </body>
 
-<script> //script for loading user data from server
+<script> //script for passwords match before submitting new user or password to DB
 
-let userSelectionList = document.getElementById('user-selection-list').children;
+    let createUserForm = document.getElementById('create-user-form');
 
-createUserButtons();
+    createUserForm.addEventListener("submit", function(event) {
 
-async function createUserButtons()
-{
-   let userData = await getUserDataFromDB();
+        const password = document.getElementById('password').value;
+        const confirmPassword = document.getElementById('confirm-password').value;
 
-    userData.forEach((user) => {
+        const errorMessage = document.getElementById('p1');
 
+        if (password != confirmPassword || password.trim() == "")
+        {
+            event.preventDefault();
+            errorMessage.style.display = "block";
+        }
+        else 
+        {
+            errorMessage.style.display = 'none';
+        }
     });
-}
 
-async function getUserDataFromDB()
-{
-    let userData; 
+    const passwordForm = document.getElementById('change-password-form');
+    const passwordInput1 = document.getElementById('new-password')
+    const passwordInput2 = document.getElementById('confirm-new-password')
+    const passwordMessage = document.getElementById('password-message');
 
-    try 
+    passwordForm.addEventListener("submit", async function(e) {
+        e.preventDefault();
+
+        const formData = new FormData(this);
+        const newPassword = formData.get("newPassword");
+        const confirmNewPassword = formData.get("confirmNewPassword");
+
+        if (newPassword !== confirmNewPassword || newPassword.trim() === "")
+        {
+            passwordMessage.textContent = "Passwords must match!"
+        }
+        else
+        {
+            const response = await fetch(passwordForm.action, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    newPassword: newPassword
+                })
+            });
+
+            passwordMessage.textContent = "Password changed!"
+        }
+    });
+
+    const isFrozenForm = document.getElementById('change-isFrozen');
+    const isCuratorForm = document.getElementById('change-isCurator');
+    const isUploaderForm = document.getElementById('change-isUploader');
+    const isFrozenDOM = document.getElementById('isFrozen');
+    const isCuratorDOM = document.getElementById('isCurator');
+    const isUploaderDOM = document.getElementById('isUploader');
+
+</script>
+
+<script> //script for loading user data from server and setting up buttons!
+    let userButtonElements = Array.from(document.getElementById('user-selection-list').children);
+    let userDisplay = document.getElementById('user-selection-display');
+
+    const displayPanel1 = document.getElementById('display-panel-1');
+    const displayPanel2 = document.getElementById('display-panel-2');
+
+    attachUserDataToLocalList();
+
+    async function attachUserDataToLocalList()
     {
-        let response = await fetch("api/user/sendUsersToWebpage", {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json'
-            }
+        let userData = await getUserDataFromDB();
+
+        userButtonElements.forEach((button, i) => { //i = index
+            button.addEventListener("click", () => {
+
+                displayPanel1.classList.remove("invisibility-cloak");
+                displayPanel2.classList.remove("invisibility-cloak");
+                
+                toggleOffAllButtons();
+
+                button.dataset.selected = "true"
+                button.style.backgroundColor = "pink";
+
+                let listOfSelectedUserAttributes = [];
+                /*
+                INDEX KEY:
+                0: username 1: _id (unique mongodb id of user)
+                2: created (date object) 3: isFrozen
+                4: isUploader 5: isCurator
+                */
+
+                listOfSelectedUserAttributes[0] = userData[i].username;
+                listOfSelectedUserAttributes[1] = userData[i]._id;
+                listOfSelectedUserAttributes[2] = userData[i].created;
+                listOfSelectedUserAttributes[3] = userData[i].isFrozen;
+                listOfSelectedUserAttributes[4] = userData[i].isUploader;
+                listOfSelectedUserAttributes[5] = userData[i].isCurator;
+
+                updateUserInformationDisplay(listOfSelectedUserAttributes);
+
+            });
+        });
+    }
+
+    function toggleOffAllButtons()
+    {
+        userButtonElements.forEach((button)=> {
+            button.dataset.selected = "false";
+            button.style.backgroundColor = "transparent";
         });
 
-        if (!response.ok) {
-            console.log("Error retrieving user list from server: ", response.statusText);
+        passwordMessage.textContent = "";
+        passwordMessage.display = "none";
+
+        passwordInput1.value = "";
+        passwordInput2.value = "";
+    }
+
+    //DOM elements needed to update the display w/ user information vv
+    const usernameDOM = document.getElementById('username');
+    const dateDOM = document.getElementById('date');
+    const idDOM = document.getElementById('_id');
+
+    function updateUserInformationDisplay(listOfAttributes)
+    {
+        /*
+        INDEX KEY:
+        0: username
+        1: _id (unique mongodb id of user)
+        2: created (date object)
+        3: isFrozen
+        4: isUploader
+        5: isCurator
+        */
+        
+        usernameDOM.textContent = listOfAttributes[0];
+
+        let date = new Date(listOfAttributes[2]);
+        const formattedDate = `${(date.getMonth() + 1).toString().padStart(2, '0')}/` + `${date.getDate().toString().padStart(2, '0')}/` + `${date.getFullYear().toString().slice(-2)}`;
+        dateDOM.textContent = formattedDate;
+
+        idDOM.textContent = listOfAttributes[1];
+
+        passwordForm.action = "/api/user/changeUserPassword/"+listOfAttributes[0];
+        
+        isFrozenForm.action = "/api/user/toggleFrozen/"+listOfAttributes[0];
+        isCuratorForm.action = "/api/user/toggleCurator/"+listOfAttributes[0];
+        isUploaderForm.action = "/api/user/toggleUploader/"+listOfAttributes[0];
+
+        if (listOfAttributes[3])
+        {
+            isFrozenDOM.style.color = "yellow";
+            isFrozenDOM.textContent = "TRUE"
+        }
+        else
+        {
+            isFrozenDOM.style.color = "red";
+            isFrozenDOM.textContent = "FALSE"
+        }
+
+        if (listOfAttributes[4])
+        {
+            isUploaderDOM.style.color = "yellow";
+            isUploaderDOM.textContent = "TRUE"
+        }
+        else
+        {
+            isUploaderDOM.style.color = "red";
+            isUploaderDOM.textContent = "FALSE"
+        }
+
+        if (listOfAttributes[5])
+        {
+            isCuratorDOM.style.color = "yellow";
+            isCuratorDOM.textContent = "TRUE"
+        }
+        else
+        {
+            isCuratorDOM.style.color = "red";
+            isCuratorDOM.textContent = "FALSE"
+        }
+    }
+
+    async function getUserDataFromDB()
+    {
+        let userData; 
+
+        try 
+        {
+            let response = await fetch("api/user/sendUsersToWebpage", {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+
+            if (!response.ok) {
+                console.log("Error retrieving user list from server: ", response.statusText);
+
+                return [];
+            }
+
+            userData = await response.json();
+
+            return userData;
+        }
+        catch (error)
+        {
+            console.log("Error fetching user data from the server!",error);
 
             return [];
         }
-
-        userData = await response.json();
-
-        return userData;
     }
-    catch (error)
-    {
-        console.log("Error fetching user data from the server!",error);
 
-        return [];
-    }
-}
 </script>
 
 </html>

@@ -55,73 +55,9 @@
                 </form>
             </div>
         </div>
-        
-        <div class="manual-account-creation panel-container">
-            <div class="tac" style="border: solid coral 2px; padding: 10px;">
-                <form method="post" id="create-user-form" action="/api/user/createNewUser">
-                    <h1>Create new User</h1>
-                    <div class="form-group">
-                        <label for="username">Username</label>
-                        <input type="text" id="username" name="username">
-                    </div>
-                    <br>
-                    <div class="form-group">
-                        <label for="password">Password</label>
-                        <input type="password" id="password" name="password" placeholder="Enter password" required>
-                    </div>
-                    <br>
-                    <div class="form-group">
-                        <label for="confirm-password">Confirm Password</label>
-                        <input type="password" id="confirm-password" name="confirm_password" placeholder="Re-enter password" required>
-                    </div>
-                    <br>
-                    <button type="submit">Submit</button>
-
-                    <div id="p1" style="color: red; display: none;">
-                        Passwords do not match!!!
-                    </div>
-
-
-                </form>
-                <h5>TODO: print list of users and give information about them! Files uploaded, space taking up... etc</h5>
-
-                <div>
-                    <h3>Current Users:</h3>
-                    <%allUsers.forEach(user => {%>
-                        <div><%=user.username%></div>
-                    <%});%>
-                </div>
-
-            </div>
-        </div>
 
 
     </div>
 </body>
-
-<script> //script to ensure passwords match before submitting new user to DB
-
-    let createUserForm = document.getElementById('create-user-form');
-
-    console.log(createUserForm);
-
-    createUserForm.addEventListener("submit", function(event) {
-
-        const password = document.getElementById('password').value;
-        const confirmPassword = document.getElementById('confirm-password').value;
-
-        const errorMessage = document.getElementById('p1');
-
-        if (password != confirmPassword)
-        {
-            event.preventDefault();
-            errorMessage.style.display = "block";
-        }
-        else 
-        {
-            errorMessage.style.display = 'none';
-        }
-    });
-</script>
 
 </html>

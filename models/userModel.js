@@ -19,7 +19,7 @@ const userSchema = new mongoose.Schema(
                     type: String,
                     required: true,
                     default: uuidv4,
-                    unique: true
+                    // unique: true, //this doesnt work how I thought it would!
                 },
                 name: String,
                 size: Number, //in bytes
