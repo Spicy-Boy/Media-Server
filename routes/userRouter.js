@@ -3,7 +3,9 @@ const router = require('express').Router()
 const {
     loginUser,
     logoutUser,
-    createNewUser
+    createNewUser,
+    sendUsersToWebpage,
+    changeUserPassword
 } = require('../controllers/userController')
 
 // requires you to be logged in
@@ -18,5 +20,9 @@ router.post('/login', loginUser);
 router.get('/logout', logoutUser);
 
 router.post("/createNewUser", redirectLogin, adminAuth, createNewUser);
+
+router.get("/sendUsersToWebpage", redirectLogin, adminAuth, sendUsersToWebpage);
+
+router.post("/changeUserPassword/:username", redirectLogin, adminAuth, changeUserPassword);
 
 module.exports = router

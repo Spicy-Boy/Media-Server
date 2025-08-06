@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>:)</title>
+    <title>SOUL WELL</title>
 
     <link rel="stylesheet" type="text/css" href="css/style.css">
 
@@ -29,10 +29,10 @@
         }
     </style>
 
+    <!-- allUsers is a user object sent from the server alongside this ejs file -->
     <script>
-        var userListFromServer = <%- JSON.stringify(allUsers) %>;
+        let userListFromServer;
     </script>
-
 </head>
 <body>
     <center><p>USER MANAGEMENT</p></center>
@@ -52,8 +52,7 @@
                 -->
                 
                 <%allUsers.forEach((user) => {%>
-                    <script>console.log("hi")</script>
-                    <div class="selectable-div selectable-user-div">
+                    <div data-selected="false" data-username="<%=user.username%>" class="selectable-div selectable-user-div">
                         <%=user.username%>
                     </div>
                 <%});%>
@@ -70,14 +69,50 @@
 
         </div>
         
-
-
     </div>
+</body>
 
-    <script>
-        var userListFromServer = <%- JSON.stringify(allUsers) %>;
+<script> //script for loading user data from server
 
-        console.log(userListFromServer);
-    </script>
+// let userData = getUserDataFromServer();
+
+// console.log(userData);
+
+getUserDataFromServer().then(userData => {
+    console.log("Received users:", userData);
+});
+
+
+async function getUserDataFromServer()
+{
+    let userData; 
+
+    try 
+    {
+        let response = await fetch("api/user/sendUsersToWebpage", {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+
+        if (!response.ok) {
+            console.log("Error retrieving user list from server: ", response.statusText);
+
+            return [];
+        }
+
+        userData = await response.json();
+
+        return userData;
+    }
+    catch (error)
+    {
+        console.log("Error fetching user data from the server!",error);
+
+        return [];
+    }
+}
+</script>
 
 </html>

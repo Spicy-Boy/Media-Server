@@ -39,8 +39,7 @@ router.get("/u/:username", redirectLogin, attachUserObjectToSession, renderUserI
 router.get("/u", redirectLogin, attachUserObjectToSession, renderUserIndexPage);
 
 router.get("/cavern", redirectLogin, adminAuth, renderAdminFunPanel);
-//  redirectLogin, adminAuth
-router.get("/souls", renderUserManagementPanel);
+router.get("/souls", redirectLogin, adminAuth, renderUserManagementPanel);
 
 router.get("/ai", redirectLogin, (req, res) => {
     res.sendFile(path.join(__dirname, "../public/html/aiQueryPage.html"));

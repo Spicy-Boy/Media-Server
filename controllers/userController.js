@@ -147,9 +147,60 @@ async function createNewUser(req, res)
     }
 }
 
+async function sendUsersToWebpage(req, res)
+{
+    try 
+    {
+        const allUsers = await User.find({});
+
+        allUsers.forEach((user) => {
+            user.password = "";
+        });
+
+        return res.status(200).json(allUsers);
+    }
+    catch (error) 
+    {
+        console.error(error);
+        res.status(500).send("An error occured while trying to fetch user data... contact an admi- wait, you should already be an admin!!");
+    }
+}
+
+async function changeUserPassword(req, res)
+{
+    const targetUsername = req.params.username;
+
+    let newPasswordPlain = req.body.password;
+
+    try
+    {
+        const targetUser = await User.findOne({username: targetUsername});
+        
+        if (!targetUser)
+        {
+            return res.status(404).send("No such user found..");
+        }
+
+        const encryptedPassword = await argon2.hash(newPasswordPlain);
+
+        targetUser.password = encryptedPassword;
+
+        await targetUser.save();
+
+        res.status(200).send("Password successfully changed for user "+targetUser.username);
+    }
+    catch (error) 
+    {
+        console.error(error);
+        res.status(500).send("An error occured while trying to change the user's password... contact an admi- wait, you should already be an admin!!");
+    }
+}
+
 module.exports = {
     loginUser,
     logoutUser,
     attachUserObjectToSession,
-    createNewUser
+    createNewUser,
+    sendUsersToWebpage,
+    changeUserPassword
 }
