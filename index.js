@@ -7,6 +7,47 @@ const path = require("path");
 const methodOverride = require("method-override");
 const fs = require("fs");
 
+/* : : V : : THE GREAT FIREWALL : : V : : */
+
+const BannedIP = require('./models/bannedIPModel');
+const BannedPath = require('./models/bannedPathModel');
+let localBannedIPs = new Set();
+let localBannedPaths = new Set();
+
+// vv called at startup to populate local lists!
+(async () => {
+    const ipDocuments = await BannedIP.find({});
+    ipDocuments.forEach(document => localBannedIPs.add(document.ip));
+
+    const pathDocuments = await BannedPath.find({});
+    pathDocuments.forEach(document => localBannedPaths.add(document.path));
+})();
+
+app.use(async (req, res, next) => {
+
+    const ip = req.ip;
+    const path = req.path;
+
+    if (localBannedIPs.has(ip))
+    {
+        return res.status(403).send(":)"); //403 forbidden
+    }
+    
+    if (localBannedPaths.has(path)) {
+
+        console.log(`Auto-banning IP ${ip} for probing ${path}`);
+
+        await BannedIP.create({ip: ip, reason: "Automated ban after attempting to access "+path});
+        localBannedIPs.add(ip);
+        
+        return res.status(404).send("Not found");
+    }
+
+    next();
+});
+
+/* : ^ : ^ : THE GREAT FIREWALL : ^ : ^ : */
+
 //allow vv api to be accessible from sites that don't share a domain/port
 const cors = require("cors");
 app.use(cors());
@@ -38,57 +79,7 @@ mongoSessionStore.on('error', function(error) {
 // Simplify to Route / IP / Time of day / User Session
 // Make NOTE if file downloaded or uploaded
 
-/* BEGIN LOGGING to console and file */
-
-/*
-let dateAtStartup = new Date;
-let month = dateAtStartup.getMonth() + 1;
-let day = dateAtStartup.getDate();
-let year = dateAtStartup.getFullYear();
-
-let logPath = `./logs/${year}-${month}-${day}`
-fs.mkdir(logPath, {recursive: true}, (err) =>{
-    if (err) {
-        return console.error("Error creating the folder at "+logPath,err);
-    }
-    // console.log('New log folder created successfully @',logPath);
-});
-logPath = logPath + "/access.log"
-fs.open(logPath, 'wx', (err, fd) => {
-    if (err)
-    {
-        if (err.code === 'EEXIST')
-        {
-            console.log("Log file already exists @"+logPath+", not overwriting.");
-        }
-        else {
-            console.error("Error creating the log file @ "+logPath,err);
-        }
-        return;
-    }
-
-    //if file didn't exist, continues to write it (empty string)
-    fs.write(fd, '', (writeErr) => {
-        if (writeErr) {
-            console.error("Error writing to the log file @ "+logPath,writeErr);
-        } else {
-            console.log('File created successfully!');
-        }
-
-        fs.close(fd, (closeErr) => {
-            if (closeErr) {
-                console.error("Error writing to the log file at "+logPath,closeErr);
-            }
-        });
-    });
-});
-*/
-// app.use(logger("combined", {
-//     stream: fs.createWriteStream(logPath, {flags: 'a'})
-// }));
-// morgan.token('ip', (req) => req.ip || req.connection.remoteAddress);
 app.use(logger("dev"));
-
 
 /* END LOGGING */
 
@@ -113,33 +104,17 @@ app.use(session(
     }
 ));
 
-// AARON's custom user middleware!
+/* ~ $ ~ $ ~ $ ~ R O U T E S ~ $ ~ $ ~ $ ~ */
 
-// <%if (loginMessage) {%>
-//     <h1><%=loginMessage%></h1>
-// <%}%>
+const masterRouter = require("./routes/masterRouter");
+app.use("/", masterRouter);
 
-/* ~ R O U T E S ~ */
-// (routes) //
-const viewRouter = require("./routes/viewRouter");
-app.use("/", viewRouter);
 
-//vv API for the BTW Speedrunning Competition donation portal
-const donationRouter = require("./routes/donationRouter");
-app.use("/api/donations", donationRouter);
-
-const userRouter = require("./routes/userRouter");
-app.use("/api/user", userRouter);
-
-const fileRouter = require("./routes/fileRouter");
-app.use("/api/file", fileRouter);
-
-const aiRouter = require("./routes/aiRouter");
-app.use("/api/ai", aiRouter);
 
 // const suicuneRouter = require("./routes/suicuneRouter");
 // app.use("/api/suicune", suicuneRouter);
 
+// ^ ^ ^ ^ ^ ^ ^ (routes) ^ ^ ^ ^ ^ ^ ^ ^ //
 /* && _ && */
 
 //mongodb connection

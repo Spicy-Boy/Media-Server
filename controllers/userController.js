@@ -157,7 +157,7 @@ async function sendUsersToWebpage(req, res)
         allUsers.forEach((user) => {
             user.password = "";
         });
-
+        
         return res.status(200).json(allUsers);
     }
     catch (error) 

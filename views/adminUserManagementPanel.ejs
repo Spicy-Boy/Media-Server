@@ -158,6 +158,13 @@
             </div>
         </div>
 
+        <div class="panel-container width-100">
+            <form method="post" id="change-isFrozen" action="/api/">
+                <label></label>
+                <input>
+                <button style="margin-left: 5px" type="submit">BAN IP</button>
+            </form>
+        </div>
 
     </div>
 </body>
@@ -220,10 +227,9 @@
     const isFrozenDOM = document.getElementById('isFrozen');
     const isCuratorDOM = document.getElementById('isCurator');
     const isUploaderDOM = document.getElementById('isUploader');
-
-</script>
-
-<script> //script for loading user data from server and setting up buttons!
+ 
+    //script for loading user data from server and setting up buttons!
+    
     let userButtonElements = Array.from(document.getElementById('user-selection-list').children);
     let userDisplay = document.getElementById('user-selection-display');
 
