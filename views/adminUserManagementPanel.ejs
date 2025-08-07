@@ -158,12 +158,21 @@
             </div>
         </div>
 
-        <div class="panel-container width-100">
-            <form method="post" id="change-isFrozen" action="/api/">
-                <label></label>
-                <input>
+        <div style="margin-top: 25px;" class="flex-column margin-left-auto margin-right-auto">
+
+            <form method="post" id="ban-ip" action="/api/moderation/banIP">
+                <label for="ban-ip"></label>
+                <input id="ip" value="" name="ip">
+                <input id="ip-reason" value="" placeholder="Reason for ban?" name="reason">
                 <button style="margin-left: 5px" type="submit">BAN IP</button>
             </form>
+
+            <form method="post" id="ban-path" action="/api/moderation/banPath">
+                <label for="ban-path"></label>
+                <input id="path" value="" name="path">
+                <button style="margin-left: 5px" type="submit">BAN PATH</button>
+            </form>
+
         </div>
 
     </div>

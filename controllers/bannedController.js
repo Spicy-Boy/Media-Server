@@ -10,7 +10,7 @@ async function addIP(req, res)
     {
         await BannedIP.create({ip: ipToBan, reason: reasonForBan});
 
-        return res.status(200).send("Successful ban!");
+        return res.status(200).send("Successful IP ban!");
     }
     catch (error)
     {
@@ -28,7 +28,7 @@ async function addPath(req, res)
     {
         await BannedPath.create({path: pathToBan, reason: reasonForBan});
 
-        return res.status(200).send("Successful ban!");
+        return res.status(200).send("Successful Path ban!");
     }
     catch (error)
     {

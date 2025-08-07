@@ -4,6 +4,9 @@ const path = require("path");
 const viewRouter = require("./viewRouter");
 router.use("/", viewRouter);
 
+const bannedRouter = require("./bannedRouter");
+router.use("/api/moderation", bannedRouter);
+
 const userRouter = require("./userRouter");
 router.use("/api/user", userRouter);
 

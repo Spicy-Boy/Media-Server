@@ -11,8 +11,8 @@ const {
  } = require("../middlewares/authMiddleware");
 
 
-router.post("/api/banIP", validateLogin, adminAuth, addIp);
+router.post("/banIP", validateLogin, adminAuth, addIP);
 
-router.post("/api/banPath", validateLogin, adminAuth, addPath);
+router.post("/banPath", validateLogin, adminAuth, addPath);
 
 module.exports = router;
