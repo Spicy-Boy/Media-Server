@@ -4,4 +4,4 @@ const {
 
 } = require("../controllers/quoteController");
 
-router.get("../controllers/");
+// router.get("../controllers/");

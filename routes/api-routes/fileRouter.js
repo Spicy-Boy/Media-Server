@@ -4,7 +4,7 @@ const { //import auth
     redirectLogin,
     redirectLoginConditionally,
     validateLogin
-} = require("../middlewares/authMiddleware");
+} = require("../../middlewares/authMiddleware");
 
 const {
     uploadInChunks,
@@ -14,7 +14,7 @@ const {
     deleteFile,
     toggleVisibility,
     sendSingleUsersFileList
-} = require("../controllers/fileController");
+} = require("../../controllers/fileController");
 
 // /api/file/upload vv
 router.post("/upload", redirectLogin, uploadInChunks);

@@ -1,11 +1,11 @@
 const router = require("express").Router();
 
 //summon multer vv and its useful upload function
-const upload = require("../middlewares/multer");
+const upload = require("../../middlewares/multer");
 
 const {
     redirectLogin
- } = require("../middlewares/authMiddleware");
+ } = require("../../middlewares/authMiddleware");
 
 const {
     uploadOneFile,
@@ -15,7 +15,7 @@ const {
     manageUploadRequest,
     manageUpload,
     simpleUpload
-} = require("../controllers/suicuneController");
+} = require("../../controllers/suicuneController");
 
 
 // !!! vvv DEPRECATED route using multer

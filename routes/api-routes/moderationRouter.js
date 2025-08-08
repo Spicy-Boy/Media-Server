@@ -3,12 +3,12 @@ const router = require('express').Router();
 const {
     addIP,
     addPath
-} = require('../controllers/bannedController')
+} = require('../../controllers/moderationController')
 
 const {
     adminAuth,
     validateLogin
- } = require("../middlewares/authMiddleware");
+ } = require("../../middlewares/authMiddleware");
 
 
 router.post("/banIP", validateLogin, adminAuth, addIP);

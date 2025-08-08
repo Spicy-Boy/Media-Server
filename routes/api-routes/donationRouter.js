@@ -1,15 +1,15 @@
-const upload = require("../middlewares/multer");
+const upload = require("../../middlewares/multer");
 const router = require("express").Router();
 
 const {
     createNewDonation,
     getDonations
-} = require("../controllers/donationController");
+} = require("../../controllers/donationController");
 
 const {
     redirectLogin,
     adminAuth
- } = require("../middlewares/authMiddleware");
+ } = require("../../middlewares/authMiddleware");
 
 router.post("/createNewDonation", redirectLogin, adminAuth, upload.single('uploaded_file'), createNewDonation);
 

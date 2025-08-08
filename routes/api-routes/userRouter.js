@@ -9,13 +9,13 @@ const {
     toggleIsFrozen,
     toggleIsUploader,
     toggleIsCurator
-} = require('../controllers/userController')
+} = require('../../controllers/userController')
 
 // requires you to be logged in
 const {
     redirectLogin,
     adminAuth
- } = require("../middlewares/authMiddleware");
+ } = require("../../middlewares/authMiddleware");
 
 // localhost:PORT/api/user/login
 router.post('/login', loginUser);
