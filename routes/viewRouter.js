@@ -8,7 +8,7 @@ const {
     validateAdminAuth,
     validateIsCurator,
     validateIsUploader,
-} = require("../middlewares/authRemastered");
+} = require("../middlewares/authRemaster");
 
 const {
     renderHomePage,
@@ -21,7 +21,7 @@ const {
 
 router.get("/login", renderLoginPage);
 
-router.get("/u/:username/:fileId", validateLoginConditionallyForFile/* IF FILE IS PUBLIC ACCESS, STRANGER ON THE INTERNET CAN STILL PASS AUTH */, attachUserObjectToSession, renderIndividualFilePage);
+router.get("/u/:username/:fileId", validateLoginConditionallyForFile/* IF FILE IS PUBLIC ACCESS, STRANGER ON THE INTERNET CAN STILL PASS AUTH */, renderIndividualFilePage);
 
 /* # $ # $ # LOGIN VALIDATION # $ # $ # */
 /* (login required below vvv) */

@@ -109,11 +109,6 @@ app.use(session(
 const masterRouter = require("./routes/masterRouter");
 app.use("/", masterRouter);
 
-
-
-// const suicuneRouter = require("./routes/suicuneRouter");
-// app.use("/api/suicune", suicuneRouter);
-
 // ^ ^ ^ ^ ^ ^ ^ (routes) ^ ^ ^ ^ ^ ^ ^ ^ //
 /* && _ && */
 

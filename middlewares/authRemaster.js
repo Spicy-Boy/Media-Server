@@ -80,18 +80,18 @@ async function validateLogin(req, res, next) //FOR API
     }
     else
     {
-        console.log('validateIsLoggedIn: Auth failed! '+req.body.path);
+        console.log('validateIsLoggedIn: Auth failed! '+req.path);
         res.sendStatus(403); //403 forbidden
     }
 }
 
-async function validateIsLoginWithRedirect(req, res, next) //FOR VIEWS/PAGES
+async function validateLoginWithRedirect(req, res, next) //FOR VIEWS/PAGES
 {
     if (req.session.userId)
     {
-        if (req.body.path = "/login") //redirects already logged in users away from /login
+        if (req.path == "/login") //redirects already logged in users away from /login
         {
-            res.redirect("/home");
+            return res.redirect("/home");
         }
 
         //user session authorized
@@ -99,8 +99,8 @@ async function validateIsLoginWithRedirect(req, res, next) //FOR VIEWS/PAGES
     }
     else
     {
-        console.log('validateIsLoggedInWithRedirect: Auth failed! '+req.body.path);
-        return res.sendStatus(403).redirect("/redirectLogin"); //403 forbidden
+        console.log('validateLoginWithRedirect: Auth failed! '+req.path);
+        return res.status(403).redirect("/redirectLogin"); //403 forbidden
     }
 }
 
@@ -144,7 +144,7 @@ async function validateAdminAuth (req, res, next) //FOR API
         }
         else
         {
-            console.log('validateAdminAuth: Auth failed! '+req.body.path);
+            console.log('validateAdminAuth: Auth failed! '+req.path);
             res.satus(403).send(`<center><h1 style="color: red">:)</h1></center>`);
         }
     }
@@ -164,7 +164,7 @@ async function validateIsUploader()
     }
     else
     {
-        console.log('validateIsUploader: Auth failed! '+req.body.path);
+        console.log('validateIsUploader: Auth failed! '+req.path);
         res.status(403).send("<center><h1>:)</h1></center>"); //403 forbidden
     }
 }
@@ -177,7 +177,7 @@ async function validateIsCurator()
     }
     else
     {
-        console.log('validateIsCurator: Auth failed! '+req.body.path);
+        console.log('validateIsCurator: Auth failed! '+req.path);
         res.status(403).send("<center><h1>:)</h1></center>"); //403 forbidden
     }
 }
@@ -201,7 +201,7 @@ async function validateLoginConditionallyForFile (req, res, next) //FOR VIEWS/PA
         }
         else
         {
-            console.log('validateLoginConditionallyForFile: Auth failed! '+req.body.path);
+            console.log('validateLoginConditionallyForFile: Auth failed! '+req.path);
             res.satus(403).send(`<center><h1>:)</h1></center>`);
         }
     }
@@ -216,7 +216,7 @@ module.exports = {
     loginAndAttachUserToSession,
     logoutUser,
     validateLogin,
-    validateIsLoginWithRedirect,
+    validateLoginWithRedirect,
     validateLoginConditionallyForFile,
     updateUserPermissionsAndFiles,
     validateAdminAuth,

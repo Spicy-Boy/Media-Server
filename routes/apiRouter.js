@@ -28,3 +28,5 @@ router.use("/api/file", fileRouter);
 const aiRouter = require("./api-routes/aiRouter");
 router.use("/api/ai", aiRouter);
 
+module.exports = router;
+
