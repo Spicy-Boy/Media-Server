@@ -21,13 +21,12 @@ async function loginAndAttachUserToSession(req, res)
 
         if (!user)
         {
-            console.log("NO USER FOUND trying to log in");
             return res.redirect("/redirectLogin"); //location: masterRouter.js
         }
 
         if (user.isFrozen) //prevent login if user has been frozen
         {
-            return res.status(403).redirect("<center>🥶</center>")
+            return res.status(403).send("<center>🥶</center>")
         }
 
         const isPasswordCorrect = await argon2.verify(user.password, password);
@@ -42,6 +41,13 @@ async function loginAndAttachUserToSession(req, res)
             //cleanse user object and attach useful variables including files
             user.password = null;
             req.session.activeUser = user;
+
+            if (req.session.returnTo)
+            {
+                let redirectTo = req.session.returnTo;
+                req.session.returnTo = null;
+                return res.redirect(redirectTo);
+            }
 
             return res.redirect("/redirectLogin"); //redirectLogin is like grand central station
         }
@@ -102,6 +108,9 @@ async function validateLoginWithRedirect(req, res, next) //FOR VIEWS/PAGES
     else
     {
         console.log('validateLoginWithRedirect: Auth failed! '+req.path);
+
+        req.session.returnTo = req.path; //save where the user was going!
+
         return res.status(403).redirect("/redirectLogin"); //403 forbidden
     }
 }
@@ -116,7 +125,7 @@ async function updateUserPermissionsAndFiles(req, res, next) //FOR API and VIEWS
 
         if (user.isFrozen)
         {
-            return res.status(403).redirect("<center>🥶</center>")
+            return res.status(403).send("<center>🥶</center>")
         }
 
         user.password = null;

@@ -8,7 +8,6 @@ router.get("/redirectLogin", async (req, res, next) =>{
 
     if (!req.session.userId)
     {
-        req.session.returnTo = req.originalUrl;
         return res.status(403).redirect("/login");
     }
     else if (req.session.userId  && req.session.returnTo)
