@@ -20,7 +20,7 @@ const moderationRouter = require("./api-routes/moderationRouter");
 router.use("/api/moderation", moderationRouter);
 
 const userRouter = require("./api-routes/userRouter");
-router.use("/api/user", userRouter);
+router.use("/user", userRouter);
 
 const fileRouter = require("./api-routes/fileRouter");
 router.use("/api/file", fileRouter);

@@ -1,4 +1,5 @@
 require('dotenv').config();
+const argon2 = require('argon2')
 const User = require("../models/userModel");
 
 // This is a recreation of the "authMiddleware.js" file
@@ -20,6 +21,7 @@ async function loginAndAttachUserToSession(req, res)
 
         if (!user)
         {
+            console.log("NO USER FOUND trying to log in");
             return res.redirect("/redirectLogin"); //location: masterRouter.js
         }
 
@@ -28,14 +30,14 @@ async function loginAndAttachUserToSession(req, res)
             return res.status(403).redirect("<center>🥶</center>")
         }
 
-        const isPasswordCorrect = await argon2.verify(foundUser.password, password);
+        const isPasswordCorrect = await argon2.verify(user.password, password);
 
         if (isPasswordCorrect)
         {
             console.log(username+' successfully verified password!');
 
             // userId is attached here-- it is used to verify that the user is logged in through most routes vvv LOGIN GRANTED!
-            req.session.userId = foundUser._id;
+            req.session.userId = user._id;
             
             //cleanse user object and attach useful variables including files
             user.password = null;
@@ -120,6 +122,9 @@ async function updateUserPermissionsAndFiles(req, res, next) //FOR API and VIEWS
         user.password = null;
         req.session.activeUser = user;
 
+        // vv prevents a crash when rendering activeUser sensitive pages
+        res.locals.activeUser = req.session.activeUser;
+
         next();
     }
     catch (error)
@@ -156,7 +161,7 @@ async function validateAdminAuth (req, res, next) //FOR API
 }
 
 // vv checks user session to validate uploader permissions
-async function validateIsUploader()
+async function validateIsUploader(req, res, next)
 {
     if (req.session.activeUser.isUploader)
     {
@@ -169,7 +174,7 @@ async function validateIsUploader()
     }
 }
 
-async function validateIsCurator()
+async function validateIsCurator(req, res, next)
 {
     if (req.session.activeUser.isCurator)
     {

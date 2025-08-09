@@ -26,17 +26,17 @@ router.post('/login', loginAndAttachUserToSession);
 router.get('/logout', logoutUser);
 
 /* LOGIN AND PERMISSIONS VALIDATION BELOW THESE LINE!*/
-router.use(validateLogin);
-router.use(updateUserPermissionsAndFiles);
+// router.use(validateLogin);
+// router.use(updateUserPermissionsAndFiles);
 
-router.post("/createNewUser", validateAdminAuth, createNewUser);
+router.post("/createNewUser", validateLogin, updateUserPermissionsAndFiles, validateAdminAuth, createNewUser);
 
-router.get("/sendUsersToWebpage", validateAdminAuth, sendUsersToWebpage);
+router.get("/sendUsersToWebpage", validateLogin, updateUserPermissionsAndFiles, validateAdminAuth, sendUsersToWebpage);
 
-router.post("/changeUserPassword/:username", validateAdminAuth, changeUserPassword);
+router.post("/changeUserPassword/:username", validateLogin, updateUserPermissionsAndFiles, validateAdminAuth, changeUserPassword);
 
-router.post("/toggleFrozen/:username", validateAdminAuth, toggleIsFrozen);
-router.post("/toggleCurator/:username", validateAdminAuth, toggleIsCurator);
-router.post("/toggleUploader/:username", validateAdminAuth, toggleIsUploader);
+router.post("/toggleFrozen/:username", validateLogin, updateUserPermissionsAndFiles, validateAdminAuth, toggleIsFrozen);
+router.post("/toggleCurator/:username", validateLogin, updateUserPermissionsAndFiles, validateAdminAuth, toggleIsCurator);
+router.post("/toggleUploader/:username", validateLogin, updateUserPermissionsAndFiles, validateAdminAuth, toggleIsUploader);
 
 module.exports = router

@@ -25,24 +25,24 @@ router.get("/u/:username/:fileId", validateLoginConditionallyForFile/* IF FILE I
 
 /* # $ # $ # LOGIN VALIDATION # $ # $ # */
 /* (login required below vvv) */
-router.use(validateLoginWithRedirect);
+// router.use(validateLoginWithRedirect);
 
 router.get("/", validateLoginWithRedirect, renderHomePage);
 router.get("/home", validateLoginWithRedirect, renderHomePage);
 
 /* # $ # $ # PERMISSIONS VALIDATION # $ # $ # */
 /* (special permissions required below vvv) */
-router.use(updateUserPermissionsAndFiles);
+// router.use(updateUserPermissionsAndFiles);
 
 // vv if no :username parameter, send to session page
-router.get("/u", validateIsUploader, renderUserIndexPage);
-router.get("/u/:username", validateIsUploader, renderUserIndexPage);
+router.get("/u", validateLoginWithRedirect, updateUserPermissionsAndFiles, validateIsUploader, renderUserIndexPage);
+router.get("/u/:username", validateLoginWithRedirect, updateUserPermissionsAndFiles, validateIsUploader, renderUserIndexPage);
 
-router.get("/ai", validateIsUploader, (req, res) => {
+router.get("/ai", validateLoginWithRedirect, updateUserPermissionsAndFiles, validateIsUploader, (req, res) => {
     res.sendFile(path.join(__dirname, "../public/html/aiQueryPage.html"));
 });
 
-router.get("/cavern", validateAdminAuth, renderAdminFunPanel);
-router.get("/souls", validateAdminAuth, renderUserManagementPanel);
+router.get("/cavern", validateLoginWithRedirect, updateUserPermissionsAndFiles, validateAdminAuth, renderAdminFunPanel);
+router.get("/souls", validateLoginWithRedirect, updateUserPermissionsAndFiles, validateAdminAuth, renderUserManagementPanel);
 
 module.exports = router;
