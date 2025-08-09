@@ -10,12 +10,12 @@ router.get("/redirectLogin", async (req, res, next) =>{
     {
         return res.status(403).redirect("/login");
     }
-    else if (req.session.userId  && req.session.returnTo)
-    {
-        redirectTo = req.session.returnTo;
-        req.session.returnTo = null;
-        return res.redirect(redirectTo);
-    }
+    // else if (req.session.userId  && req.session.returnTo)
+    // {
+    //     redirectTo = req.session.returnTo;
+    //     req.session.returnTo = null;
+    //     return res.redirect(redirectTo);
+    // }
     
     //ADVANCED PERMISSIONS ROUTING FOR HOMEPAGE GOES HERE vvv!!
 

@@ -19,9 +19,9 @@ router.get("/getDonations", getDonations);
 
 /* # $ # $ # PERMISSIONS VALIDATION # $ # $ # */
 /* (special permissions required below vvv) */
-router.use(updateUserPermissionsAndFiles);
+// router.use(updateUserPermissionsAndFiles);
 
-router.post("/createNewDonation", validateLogin, validateAdminAuth, upload.single('uploaded_file'), createNewDonation);
+router.post("/createNewDonation", validateLogin, updateUserPermissionsAndFiles, validateAdminAuth, upload.single('uploaded_file'), createNewDonation);
 
 
 

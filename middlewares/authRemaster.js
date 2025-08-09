@@ -159,7 +159,7 @@ async function validateAdminAuth (req, res, next) //FOR API
         else
         {
             console.log('validateAdminAuth: Auth failed! '+req.path);
-            res.satus(403).send(`<center><h1 style="color: red">:)</h1></center>`);
+            res.status(403).send(`<center><h1 style="color: red">:)</h1></center>`);
         }
     }
     catch (error)
@@ -201,22 +201,31 @@ async function validateLoginConditionallyForFile (req, res, next) //FOR VIEWS/PA
 {
     const fileId = req.params.fileId;
     const targetUsername = req.params.username;
-
+    
     try 
     {
         const targetUser = await User.findOne({username: targetUsername});
         
         let targetFile = targetUser.files.find( file => file.fileId === fileId);
         
-        if (targetFile && (req.session.userId || targetFile.isPublic)) 
+        if (targetFile && req.session.userId && req.session.activeUser.isUploader) 
         {
+
             //the path is open!
+            return next();
+        }
+        else if(targetFile.isPublic)
+        {
+            req.session.activeUser = false; 
+            res.locals.activeUser = req.session.activeUser;
+
+            //needs to exist or crash happens
             return next();
         }
         else
         {
             console.log('validateLoginConditionallyForFile: Auth failed! '+req.path);
-            res.satus(403).send(`<center><h1>:)</h1></center>`);
+            res.status(403).send(`<center><h1>:)</h1></center>`);
         }
     }
     catch (error)
