@@ -3,14 +3,22 @@ const router = require("express").Router();
 const {
     callDeepSeek,
     testAi
-} = require("../controllers/aiController");
+} = require("../../controllers/aiController");
 
-const { //import auth
-    redirectLogin,
-    adminAuth
-} = require("../middlewares/authMiddleware");
+const {
+    updateUserPermissionsAndFiles,
+    validateLogin,
+    validateAdminAuth,
+    validateIsCurator,
+    validateIsUploader,
+ } = require("../../middlewares/authRemaster");
 
-router.post("/callDeepSeek", redirectLogin, callDeepSeek);
-router.get("/test", adminAuth, testAi);
+router.use(validateLogin);
+
+router.post("/callDeepSeek", callDeepSeek);
+
+router.use(updateUserPermissionsAndFiles);
+
+router.get("/test", validateAdminAuth, testAi);
 
 module.exports = router;

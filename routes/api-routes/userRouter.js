@@ -11,25 +11,34 @@ const {
     toggleIsCurator
 } = require('../../controllers/userController')
 
-// requires you to be logged in
+
 const {
-    redirectLogin,
-    adminAuth
- } = require("../../middlewares/authMiddleware");
+    loginAndAttachUserToSession,
+    logoutUser,
+    updateUserPermissionsAndFiles,
+    validateLogin,
+    validateAdminAuth,
+    validateIsCurator,
+    validateIsUploader,
+ } = require("../../middlewares/authRemaster");
 
 // localhost:PORT/api/user/login
-router.post('/login', loginUser);
+router.post('/login', loginAndAttachUserToSession);
 
 router.get('/logout', logoutUser);
 
-router.post("/createNewUser", redirectLogin, adminAuth, createNewUser);
+/* LOGIN AND PERMISSIONS VALIDATION BELOW THESE LINE!*/
+router.use(validateLogin);
+router.use(updateUserPermissionsAndFiles);
 
-router.get("/sendUsersToWebpage", redirectLogin, adminAuth, sendUsersToWebpage);
+router.post("/createNewUser", validateAdminAuth, createNewUser);
 
-router.post("/changeUserPassword/:username", redirectLogin, adminAuth, changeUserPassword);
+router.get("/sendUsersToWebpage", validateAdminAuth, sendUsersToWebpage);
 
-router.post("/toggleFrozen/:username", redirectLogin, adminAuth, toggleIsFrozen);
-router.post("/toggleCurator/:username", redirectLogin, adminAuth, toggleIsCurator);
-router.post("/toggleUploader/:username", redirectLogin, adminAuth, toggleIsUploader);
+router.post("/changeUserPassword/:username", validateAdminAuth, changeUserPassword);
+
+router.post("/toggleFrozen/:username", validateAdminAuth, toggleIsFrozen);
+router.post("/toggleCurator/:username", validateAdminAuth, toggleIsCurator);
+router.post("/toggleUploader/:username", validateAdminAuth, toggleIsUploader);
 
 module.exports = router

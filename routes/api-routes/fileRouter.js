@@ -1,10 +1,12 @@
 const router = require("express").Router();
 
-const { //import auth
-    redirectLogin,
-    redirectLoginConditionally,
-    validateLogin
-} = require("../../middlewares/authMiddleware");
+const {
+    updateUserPermissionsAndFiles,
+    validateLogin,
+    validateAdminAuth,
+    validateIsCurator,
+    validateIsUploader,
+ } = require("../../middlewares/authRemaster");
 
 const {
     uploadInChunks,
@@ -16,15 +18,19 @@ const {
     sendSingleUsersFileList
 } = require("../../controllers/fileController");
 
+/* LOGIN AND PERMISSIONS VALIDATION BELOW THESE LINE!*/
+router.use(validateLogin);
+router.use(updateUserPermissionsAndFiles);
+
 // /api/file/upload vv
-router.post("/upload", redirectLogin, uploadInChunks);
-router.post("/createEntry", redirectLogin, createPersonalDatabaseEntry);
-router.get("/download/:username/:fileId", redirectLoginConditionally, downloadFile);
+router.post("/upload", uploadInChunks);
+router.post("/createEntry", createPersonalDatabaseEntry);
+router.get("/download/:username/:fileId", downloadFile);
 
-router.get("/sendFileToWebpage/:username/:fileId", validateLogin, sendFile);
-router.get("/sendUsersFileListToWebpage/:username", validateLogin, sendSingleUsersFileList);
+router.get("/sendFileToWebpage/:username/:fileId", sendFile);
+router.get("/sendUsersFileListToWebpage/:username", sendSingleUsersFileList);
 
-router.post("/delete/:fileId", redirectLogin, deleteFile);
-router.post("/toggleVisibility/:fileId", redirectLogin, toggleVisibility);
+router.post("/delete/:fileId", deleteFile);
+router.post("/toggleVisibility/:fileId", toggleVisibility);
 
 module.exports = router;

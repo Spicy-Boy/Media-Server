@@ -6,13 +6,15 @@ const {
 } = require('../../controllers/moderationController')
 
 const {
-    adminAuth,
-    validateLogin
- } = require("../../middlewares/authMiddleware");
+    validateLogin,
+    validateAdminAuth,
+    updateUserPermissionsAndFiles,
+    validateIsCurator,
+    validateIsUploader,
+ } = require("../../middlewares/authRemaster");
 
+router.post("/banIP", validateLogin, updateUserPermissionsAndFiles, validateAdminAuth, addIP);
 
-router.post("/banIP", validateLogin, adminAuth, addIP);
-
-router.post("/banPath", validateLogin, adminAuth, addPath);
+router.post("/banPath", validateLogin, updateUserPermissionsAndFiles, validateAdminAuth, addPath);
 
 module.exports = router;

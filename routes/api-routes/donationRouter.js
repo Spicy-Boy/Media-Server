@@ -7,12 +7,22 @@ const {
 } = require("../../controllers/donationController");
 
 const {
-    redirectLogin,
-    adminAuth
- } = require("../../middlewares/authMiddleware");
-
-router.post("/createNewDonation", redirectLogin, adminAuth, upload.single('uploaded_file'), createNewDonation);
+    validateLogin,
+    updateUserPermissionsAndFiles,
+    validateAdminAuth,
+    validateIsCurator,
+    validateIsUploader,
+ } = require("../../middlewares/authRemaster");
 
 router.get("/getDonations", getDonations);
+ 
+
+/* # $ # $ # PERMISSIONS VALIDATION # $ # $ # */
+/* (special permissions required below vvv) */
+router.use(updateUserPermissionsAndFiles);
+
+router.post("/createNewDonation", validateLogin, validateAdminAuth, upload.single('uploaded_file'), createNewDonation);
+
+
 
 module.exports = router;

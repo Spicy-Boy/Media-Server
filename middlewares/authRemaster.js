@@ -51,6 +51,25 @@ async function loginAndAttachUserToSession(req, res)
     }
 }
 
+async function logoutUser(req, res)
+{
+    try
+    {
+        req.session.destroy( err => {
+            if (err)
+            {
+                res.redirect("/login");
+            }
+        });
+
+        return res.clearCookie("Session-ID").redirect("/login");; //name of session cookie set in index.js
+    } catch (error) {
+       
+        console.error("Logout function failed?!",error);
+        res.send("LOGOUT FAILED?? :( CONTACT THE ADMIN PLEASE!!!");
+    }
+}
+
 // vv checks if user's session is logged in, otherwise sends 403 forbidden.
 async function validateLogin(req, res, next) //FOR API
 {
@@ -195,6 +214,7 @@ async function validateLoginConditionallyForFile (req, res, next) //FOR VIEWS/PA
 
 module.exports = {
     loginAndAttachUserToSession,
+    logoutUser,
     validateLogin,
     validateIsLoginWithRedirect,
     validateLoginConditionallyForFile,
