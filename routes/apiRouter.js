@@ -2,16 +2,22 @@ const router = require("express").Router();
 const path = require("path");
 
 const {
+    loginAndAttachUserToSession,
     validateLogin,
-    adminAuth,
- } = require("../../middlewares/authRemaster");
+    validateIsLoginWithRedirect,
+    validateLoginConditionallyForFile,
+    updateUserPermissionsAndFiles,
+    validateAdminAuth,
+    validateIsCurator,
+    validateIsUploader,
+ } = require("../middlewares/authRemaster");
 
-//vv API for the BTW Speedrunning Competition donation portal
+//vv API for the BTW Speedrunning Competition donation portal -- no auth!
 const donationRouter = require("./api-routes/donationRouter");
 router.use("/api/donations", donationRouter);
 
-const bannedRouter = require("./api-routes/moderationRouter");
-router.use("/api/moderation", bannedRouter);
+const moderationRouter = require("./api-routes/moderationRouter");
+router.use("/api/moderation", moderationRouter);
 
 const userRouter = require("./api-routes/userRouter");
 router.use("/api/user", userRouter);
