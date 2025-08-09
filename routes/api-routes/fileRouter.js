@@ -19,18 +19,18 @@ const {
 } = require("../../controllers/fileController");
 
 /* LOGIN AND PERMISSIONS VALIDATION BELOW THESE LINE!*/
-router.use(validateLogin);
-router.use(updateUserPermissionsAndFiles);
+// router.use(validateLogin);
+// router.use(updateUserPermissionsAndFiles);
 
 // /api/file/upload vv
-router.post("/upload", uploadInChunks);
-router.post("/createEntry", createPersonalDatabaseEntry);
-router.get("/download/:username/:fileId", downloadFile);
+router.post("/upload", validateLogin, uploadInChunks);
+router.post("/createEntry", validateLogin, createPersonalDatabaseEntry);
+router.get("/download/:username/:fileId", validateLogin,  downloadFile);
 
-router.get("/sendFileToWebpage/:username/:fileId", sendFile);
-router.get("/sendUsersFileListToWebpage/:username", sendSingleUsersFileList);
+router.get("/sendFileToWebpage/:username/:fileId", validateLogin,  sendFile);
+router.get("/sendUsersFileListToWebpage/:username", validateLogin, sendSingleUsersFileList);
 
-router.post("/delete/:fileId", deleteFile);
-router.post("/toggleVisibility/:fileId", toggleVisibility);
+router.post("/delete/:fileId", validateLogin, deleteFile);
+router.post("/toggleVisibility/:fileId", validateLogin, toggleVisibility);
 
 module.exports = router;

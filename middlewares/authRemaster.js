@@ -208,19 +208,21 @@ async function validateLoginConditionallyForFile (req, res, next) //FOR VIEWS/PA
         
         let targetFile = targetUser.files.find( file => file.fileId === fileId);
         
-        if (targetFile && req.session.userId && req.session.activeUser.isUploader) 
+        if (targetFile)
         {
-
-            //the path is open!
-            return next();
-        }
-        else if(targetFile.isPublic)
-        {
-            req.session.activeUser = false; 
-            res.locals.activeUser = req.session.activeUser;
-
-            //needs to exist or crash happens
-            return next();
+            if (req.session.userId && req.session.activeUser.isUploader)
+            {
+                res.locals.activeUser = req.session.activeUser;
+                //the path is open!
+                next();
+            }
+            else if(targetFile.isPublic)
+            {
+                req.session.activeUser = null;
+                res.locals.activeUser = req.session.activeUser;
+                //needs to exist or crash happens
+                next();
+            }
         }
         else
         {
