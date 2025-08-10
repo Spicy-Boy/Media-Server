@@ -214,15 +214,17 @@ async function validateLoginConditionallyForFile (req, res, next) //FOR VIEWS/PA
             {
                 res.locals.activeUser = req.session.activeUser;
                 //the path is open!
-                next();
+                return next();
             }
             else if(targetFile.isPublic)
             {
                 req.session.activeUser = null;
                 res.locals.activeUser = req.session.activeUser;
                 //needs to exist or crash happens
-                next();
+                return next();
             }
+
+            return res.status(403).send("<center><h1>:)</h1></center>");
         }
         else
         {
