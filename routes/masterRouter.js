@@ -16,10 +16,10 @@ router.get("/redirectLogin", async (req, res, next) =>{
     res.send("you found /redirectLogin !!!");
 });
 
-const viewRouter = require("./viewRouter");
-router.use("/", viewRouter);
-
 const apiRouter = require("./apiRouter");
 router.use("/api", apiRouter);
+
+const viewRouter = require("./viewRouter");
+router.use("/", viewRouter);
 
 module.exports = router;
