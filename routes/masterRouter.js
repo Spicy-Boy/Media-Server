@@ -11,6 +11,10 @@ router.get("/redirectLogin", async (req, res, next) =>{
         return res.status(403).redirect("/login");
     }
     
+    if (req.session.activeUser.isFrozen)
+    {
+        
+    }
     //ADVANCED PERMISSIONS ROUTING FOR HOMEPAGE GOES HERE vvv!!
 
     res.send("you found /redirectLogin !!!");

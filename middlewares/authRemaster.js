@@ -49,7 +49,7 @@ async function loginAndAttachUserToSession(req, res)
                 return res.redirect(redirectTo);
             }
 
-            return res.redirect("/redirectLogin"); //redirectLogin is like grand central station
+            return res.redirect("/redirectLogin"); //redirectLogin is like grand central station, it is inside masterRouter.js
         }
     }
     catch(error)

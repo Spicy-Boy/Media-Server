@@ -6,6 +6,7 @@ const {
     validateAdminAuth,
     validateIsCurator,
     validateIsUploader,
+    validateLoginConditionallyForFile,
  } = require("../../middlewares/authRemaster");
 
 const {
@@ -23,9 +24,10 @@ const {
 // router.use(updateUserPermissionsAndFiles);
 
 // /api/file/upload vv
-router.post("/upload", validateLogin, uploadInChunks);
-router.post("/createEntry", validateLogin, createPersonalDatabaseEntry);
-router.get("/download/:username/:fileId", validateLogin,  downloadFile);
+router.get("/download/:username/:fileId", validateLoginConditionallyForFile,  downloadFile);
+
+router.post("/upload", validateLogin, updateUserPermissionsAndFiles, validateIsUploader, uploadInChunks);
+router.post("/createEntry", validateLogin, updateUserPermissionsAndFiles, validateIsUploader, createPersonalDatabaseEntry);
 
 router.get("/sendFileToWebpage/:username/:fileId", validateLogin,  sendFile);
 router.get("/sendUsersFileListToWebpage/:username", validateLogin, sendSingleUsersFileList);
