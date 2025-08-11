@@ -44,12 +44,16 @@ quickEditCloseButton.addEventListener("click", () => {
     quickEditDiv.style.display = "none";
 });
 
+const quickEditFileSize = document.querySelector(".quick-edit-filesize")
+
 allEditButtons.forEach(button => { 
     //customize the quick edit window here for each individual file
     button.addEventListener("click", () => {
         
-
         quickEditDiv.style.display = "flex";
+
+        quickEditDiv.style.top = "5px";
+        quickEditDiv.style.left = "5px";
 
         let buttonId = button.dataset.fileid;
     });
@@ -87,3 +91,40 @@ editFilesButton.addEventListener("click", (event)=>{
         });
     }
 });
+
+
+// DRAG POWER vvv for QUCIK EDIT DIV
+const grabButton = document.getElementById('grab-button-quick-edit');
+
+let isDragging = false;
+
+let startX, startY, initialX, initialY;
+
+grabButton.addEventListener('mousedown', (event) => {
+    isDragging = true;
+    startX = event.clientX;
+    startY = event.clientY;
+    initialX = quickEditDiv.offsetLeft;
+    initialY = quickEditDiv.offsetTop;
+
+    document.addEventListener('mousemove', onMouseMove);
+    document.addEventListener('mouseup', onMouseUp);
+});
+
+function onMouseMove(event) {
+if (isDragging) 
+{
+    const deltaX = event.clientX - startX;
+    const deltaY = event.clientY - startY;
+    quickEditDiv.style.left = `${initialX + deltaX}px`;
+    quickEditDiv.style.top = `${initialY + deltaY}px`;
+}
+}
+
+function onMouseUp() 
+{
+    isDragging = false;
+    document.removeEventListener('mousemove', onMouseMove);
+    document.removeEventListener('mouseup', onMouseUp);
+}
+

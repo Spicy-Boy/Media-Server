@@ -235,8 +235,8 @@
                             </td>
                             
                             
-                            <td class="upload-list-date-column">
-                            <%=calendarDate%>
+                            <td class="upload-list-date-column ">
+                            <span style="display: inline-block; width: 80px;"><%=calendarDate%></span>
                             <%if (file.isPublic) {%>
                                 <div class="tooltip-left">
                                     👁️
@@ -258,7 +258,7 @@
 
     <div id="quick-edit-div"> 
         <div id="grab-button-quick-edit">Quick Edit Menu
-            <button id="button-close-quick-edit">X</button>
+            <button id="button-close-quick-edit" style="float: inline-end">X</button>
         </div>
         <div>
             Name: <span class="quick-edit-filename">
@@ -279,15 +279,10 @@
         <div class="quick-edit-filler"></div>
         <form class="quick-edit-form" action="URL" enctype="multipart/form-data" method="post">
 
-            <input type="text" name="username" placeholder="Anonymous" value="Anonymous">
             <textarea id="quick-content" name="content" rows="4" cols="35"></textarea>
             <input id="quick-file" name="file" type="file">
-            <input type="submit" value="Post Reply">
+            <input type="submit" value="Post Comment">
 
-
-        <!--<form action="/api/file/delete/FILEID">
-            <input type="submit" value="DELETE FILE">
-        </form>--!>
         <div>
 
         </div>
