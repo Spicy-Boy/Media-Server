@@ -753,6 +753,9 @@ footer a:visited {
 #select-all-uploads:hover {
     color: white;
 } */
+ #delete-selected-uploads:hover{
+    color: rgb(255, 0, 255);
+ }
 
 /* display: inline-block is the default */
 .checkbox-file-user-portal {

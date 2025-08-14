@@ -17,23 +17,60 @@ let allEditButtons = document.querySelectorAll(".edit-file-button-user-portal");
 let selectAllButton = document.getElementById('select-all-uploads');
 let isSelectAllToggled = false;
 
+// when a file is "selected" by checking its box, its parent DOM element is added to a list to be processed
+let selectedFiles = [];
+
+allEditCheckboxes.forEach(box => {
+    box.addEventListener("change", (e) => {
+
+        if (e.target.checked)
+        {
+            selectedFiles.push({
+                fileId: box.dataset.fileid,
+                fileName: box.dataset.filename
+            });
+        }
+        else
+        {
+            selectedFiles = selectedFiles.filter(file => file.fileId !== box.dataset.fileid);
+            // ^^ clever little function to filter out the deselected file from the list
+        }
+
+        //TESTER vv
+        console.log("Selected List:",selectedFiles);
+    });
+});
+
 selectAllButton.addEventListener("click", () => {
 
     if (!isSelectAllToggled)
     {
         selectAllButton.textContent = "Deselect All";
+
+        selectedFiles = [];
+
         allEditCheckboxes.forEach(box => {
             box.checked = true;
-            isSelectAllToggled = true;
+
+            selectedFiles.push({
+                fileId: box.dataset.fileid,
+                fileName: box.dataset.filename
+            });
         });
+
+        isSelectAllToggled = true;
     }
     else
     {
         selectAllButton.textContent = "Select All";
+
+        selectedFiles = [];
+
         allEditCheckboxes.forEach(box => {
             box.checked = false;
-            isSelectAllToggled = false;
         });
+
+        isSelectAllToggled = false;
     }
 });
 
@@ -44,18 +81,40 @@ quickEditCloseButton.addEventListener("click", () => {
     quickEditDiv.style.display = "none";
 });
 
-const quickEditFileSize = document.querySelector(".quick-edit-filesize")
+//DOM elements to change every time the quick edit menu is open!
+const quickEditFileName = document.getElementById('quick-edit-filename');
+const quickEditFileSize = document.getElementById('quick-edit-filesize');
+const quickEditToggleVisibility = document.getElementById('quick-edit-toggle-visibility');
+const quickEditDeleteButton = document.getElementById('quick-edit-delete');
+const quickEditCommentForm = document.getElementById('quick-edit-comment-form');
+
+//NOTE: the file list is acquired from the previously loaded refreshUserUploadsTable.js script
+// simply called "files", this list stores the file objects from the database according to the user's most recent refresh
 
 allEditButtons.forEach(button => { 
     //customize the quick edit window here for each individual file
     button.addEventListener("click", () => {
+
+        let specificFile;
+
+        if (files == undefined)
+        {
+            console.log('Action ceased: wait for file list to load from server..');
+            return;
+        }
+        else
+        {
+            //vv match button's internal file id to the actual fileid from the filelist
+            specificFile = files.find(file => file.fileId === button.dataset.fileid);
+            console.log(specificFile);
+        }
         
         quickEditDiv.style.display = "flex";
 
         quickEditDiv.style.top = "5px";
         quickEditDiv.style.left = "5px";
 
-        let buttonId = button.dataset.fileid;
+        quickEditFileName.textContent = "hi";
     });
 })
 
@@ -92,7 +151,6 @@ editFilesButton.addEventListener("click", (event)=>{
     }
 });
 
-
 // DRAG POWER vvv for QUCIK EDIT DIV
 const grabButton = document.getElementById('grab-button-quick-edit');
 
@@ -128,3 +186,7 @@ function onMouseUp()
     document.removeEventListener('mouseup', onMouseUp);
 }
 
+//ensures all boxes vv are unchecked when page loads [ ]
+document.addEventListener("DOMContentLoaded", () => {
+    allEditCheckboxes.forEach(box => box.checked = false);
+});

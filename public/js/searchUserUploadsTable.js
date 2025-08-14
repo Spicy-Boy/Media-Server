@@ -14,12 +14,13 @@ searchBar.addEventListener("input", ()=>{
     searchedTableBody.innerHTML = "";
 
     //tester vvv
-    console.log('queryUntouched:',queryUntouched,"\nquery:",query);
+    // console.log('queryUntouched:',queryUntouched,"\nquery:",query);
 
     if (query == "")
     {
         searchedTableBody.replaceWith(tableBodyToSearch);
-        console.log('BLANK');
+        //vv TESTER
+        // console.log('BLANK');
         return;
     }
 

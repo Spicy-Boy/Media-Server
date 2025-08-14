@@ -199,11 +199,12 @@
 
                             <td class="upload-list-name-column">
 
-                                <input type="checkbox" class="checkbox-file-user-portal" id="<%=file.id%>-checkbox" data-fileId="<%=file.id%>">
+                                <input type="checkbox" class="checkbox-file-user-portal" data-fileid="<%=file.fileId%>" data-filename="<%=file.name%>">
+                                
 
                                 <a href="#" class="file-name-link mobile-invisible" id="<%=file.fileId%>" data-username="<%=targetUser.username%>"><%=file.name%></a>
                                 
-                                <button class="edit-file-button-user-portal margin-left-auto" id="<%=file.id%>-edit-button" style="float: inline-end;" data-fileId="<%=file.id%>">✏️</button>
+                                <button class="edit-file-button-user-portal margin-left-auto" style="float: inline-end;" data-fileid="<%=file.fileId%>">✏️</button>
                                 
                                 <!-- vv mobile information invisible in desktop mode vv-->
                                 <div class="mobile-file-details flex-basis-mobile-name desktop-invisible font-weight-bold">
@@ -261,35 +262,35 @@
             <button id="button-close-quick-edit" style="float: inline-end">X</button>
         </div>
         <div>
-            Name: <span class="quick-edit-filename">
+            Name: <span id="quick-edit-filename" class="quick-edit-filename">
                 FILENAME FILENAME FILENAME FILENAMDHAD>.adwudwauduahw
             </span>
         </div>
         <div>
-            Size: <span class="quick-edit-filesize">
+            Size: <span id="quick-edit-filesize" class="quick-edit-filesize">
                 50 MB
             </span>
         </div>
         <div class="quick-edit-filler"></div>
         <span>
-            <button class="quick-edit-button">Toggle Visibility</button> Current: Visible to Entire Internet!
+            <button id="quick-edit-toggle-visibility" class="quick-edit-button">Toggle Visibility</button> Current: Visible to Entire Internet!
         </span>
-        <div class="quick-edit-filler"></div>
+        <div id="quick-edit-delete" class="quick-edit-filler"></div>
         <button class="quick-edit-button">DELETE FILE</button>
+        
         <div class="quick-edit-filler"></div>
-        <form class="quick-edit-form" action="URL" enctype="multipart/form-data" method="post">
+        
+        <form id="quick-edit-comment-form" class="quick-edit-form" action="URL" enctype="multipart/form-data" method="post">
 
-            <textarea id="quick-content" name="content" rows="4" cols="35"></textarea>
-            <input id="quick-file" name="file" type="file">
+            <textarea id="quick-edit-content" name="content" rows="4" cols="35"></textarea>
+
+            <input id="quick-edit-file" name="file" type="file">
+            
             <input type="submit" value="Post Comment">
 
         <div>
 
         </div>
-
-        <form class="quick-edit-form" action="URL" enctype="multipart/form-data" method="post">
-
-            
 
         </form>
     </div>
