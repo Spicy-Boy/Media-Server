@@ -85,38 +85,94 @@ quickEditCloseButton.addEventListener("click", () => {
 const quickEditFileName = document.getElementById('quick-edit-filename');
 const quickEditFileSize = document.getElementById('quick-edit-filesize');
 const quickEditToggleVisibility = document.getElementById('quick-edit-toggle-visibility');
+const quickEditToggleVisibilityMessage = document.getElementById('quick-edit-toggle-visibility-message')
 const quickEditDeleteButton = document.getElementById('quick-edit-delete');
 const quickEditCommentForm = document.getElementById('quick-edit-comment-form');
 
 //NOTE: the file list is acquired from the previously loaded refreshUserUploadsTable.js script
-// simply called "files", this list stores the file objects from the database according to the user's most recent refresh
-
-allEditButtons.forEach(button => { 
-    //customize the quick edit window here for each individual file
-    button.addEventListener("click", () => {
-
-        let specificFile;
-
+// simply called "files", this list stores the file objects from the database according to the user's most recent refresh. It is undefined by default
+setupAllEditButtons();
+async function setupAllEditButtons()
+{
+    try
+    {
         if (files == undefined)
         {
-            console.log('Action ceased: wait for file list to load from server..');
-            return;
+            //if files hasn't been initiated yet, summon it from db
+            files = await getUserFilesFromDB(pageUsername); //getUserFilesFromDB is a function from refreshUserUploadsTable.js, as is the files variable (shared)
+            console.log('Files:',files);
         }
         else
         {
-            //vv match button's internal file id to the actual fileid from the filelist
-            specificFile = files.find(file => file.fileId === button.dataset.fileid);
-            console.log(specificFile);
+            console.log('Files:', files);
         }
-        
-        quickEditDiv.style.display = "flex";
 
-        quickEditDiv.style.top = "5px";
-        quickEditDiv.style.left = "5px";
+        allEditButtons.forEach(button => { 
+            //customize the quick edit window here for each individual file
+            button.addEventListener("click", async() => {
+                let specificFile;
 
-        quickEditFileName.textContent = "hi";
-    });
-})
+                // //vv match button's internal file id to the actual fileid from the filelist
+
+                //TESTER vvv
+                // console.log('button id',button.dataset.fileid);
+
+                files.forEach(file =>{
+                    if (file.fileId == button.dataset.fileid)
+                    {
+                        specificFile = file;
+                    }
+                })
+
+                //TESTERS vv
+                // console.log(specificFile);
+                // console.log('filename:',specificFile.name);
+
+                quickEditDiv.style.display = "flex";
+
+                quickEditDiv.style.top = "5px";
+                quickEditDiv.style.left = "5px";
+
+                quickEditFileName.textContent = specificFile.name;
+                quickEditFileSize.textContent = calculateFileSize(Number(specificFile.size)); //calculateFileSize is imported from calculateFileSize.js
+
+                if (specificFile.isPublic)
+                {
+                    quickEditToggleVisibilityMessage.textContent = "Visible to internet? TRUE";
+                }
+                else
+                {
+                    quickEditToggleVisibilityMessage.textContent = "Visible to internet? FALSE";
+                }
+
+                quickEditToggleVisibility.addEventListener("click", async () => {
+                    const response = await fetch("/api/file/toggleVisibility/"+specificFile.fileId, {
+                        method: "POST",
+                    })
+                    .then(res => res.json())
+                    .then(data => {
+                       if (data.isPublic)
+                        {
+                            quickEditToggleVisibilityMessage.textContent = "Visible to internet? TRUE";
+                        } 
+                        else
+                        {
+                            quickEditToggleVisibilityMessage.textContent = "Visible to internet? FALSE";
+                        }
+                    });
+
+ 
+                });
+
+            });
+
+        });
+    }
+    catch (error)
+    {
+        console.log('ERROR OCCURED TRYING TO QUERY FILES FROM DATABASE FOR EDIT BUTTON FUNCTIONALITY!',error);
+    }
+}
 
 editFilesButton.addEventListener("click", (event)=>{
     if (!editVisible) 

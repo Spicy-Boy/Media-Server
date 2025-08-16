@@ -17,12 +17,12 @@ refreshButton.addEventListener("click", (event) => {
 
 let files;
 
-async function createInitialFilesList()
-{
-    files = await getUserFilesFromDB(pageUsername); //function from refreshUserUploadsTable.js
-    //variable "pageUsername" set by server in the userPortal.ejs template  
-}
-createInitialFilesList();
+// async function createInitialFilesList()
+// {
+//     files = await getUserFilesFromDB(pageUsername); //function from refreshUserUploadsTable.js
+//     //variable "pageUsername" set by server in the userPortal.ejs template  
+// }
+// createInitialFilesList();
 
 //NOTE: an html template that could be cloned would be far more effective than manually creating elements w/ js
 //vvv grabs a table element id, erases its contents, and re-queries the database. Use JS to recreate all elements of the list

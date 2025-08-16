@@ -262,28 +262,28 @@
             <button id="button-close-quick-edit" style="float: inline-end">X</button>
         </div>
         <div>
-            Name: <span id="quick-edit-filename" class="quick-edit-filename">
+            <span style="color: #707070">Name: </span><span id="quick-edit-filename" class="quick-edit-filename">
                 FILENAME FILENAME FILENAME FILENAMDHAD>.adwudwauduahw
             </span>
         </div>
         <div>
-            Size: <span id="quick-edit-filesize" class="quick-edit-filesize">
+            <span style="color: #707070">Size: </span> <span id="quick-edit-filesize" class="quick-edit-filesize">
                 50 MB
             </span>
         </div>
         <div class="quick-edit-filler"></div>
         <span>
-            <button id="quick-edit-toggle-visibility" class="quick-edit-button">Toggle Visibility</button> Current: Visible to Entire Internet!
+            <button id="quick-edit-toggle-visibility" class="quick-edit-button">Toggle Visibility</button> <span id="quick-edit-toggle-visibility-message">Current: Visible to Entire Internet!</span>
         </span>
-        <div id="quick-edit-delete" class="quick-edit-filler"></div>
-        <button class="quick-edit-button">DELETE FILE</button>
+        <div class="quick-edit-filler"></div>
+        <button id="quick-edit-delete" class="quick-edit-button hover-red">DELETE FILE</button>
         
         <div class="quick-edit-filler"></div>
         
         <form id="quick-edit-comment-form" class="quick-edit-form" action="URL" enctype="multipart/form-data" method="post">
-
+            <p style="color: #707070; margin-bottom: 5px;">Write comment:</p>
             <textarea id="quick-edit-content" name="content" rows="4" cols="35"></textarea>
-
+            <br>
             <input id="quick-edit-file" name="file" type="file">
             
             <input type="submit" value="Post Comment">

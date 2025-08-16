@@ -27,7 +27,11 @@ router.get("/u/:username/:fileId", validateLoginConditionallyForFile/* IF FILE I
 /* (login required below vvv) */
 // router.use(validateLoginWithRedirect);
 
-router.get("/", validateLoginWithRedirect, renderHomePage);
+// router.get("/", validateLoginWithRedirect, renderHomePage);
+
+//TEMP:
+router.get("/", validateLoginWithRedirect, updateUserPermissionsAndFiles, validateIsUploader, renderUserIndexPage);
+
 router.get("/home", validateLoginWithRedirect, renderHomePage);
 
 /* # $ # $ # PERMISSIONS VALIDATION # $ # $ # */

@@ -311,6 +311,17 @@ async function deleteFile(req, res)
             });
 
             await dbUser.save();
+
+            if (req.body.redirectToUserIndexPage)
+            {
+                return res.status(200).redirect(`/u`);
+            }
+            else
+            {
+                return res.status(200).json({
+                    isDeleted: true
+                });
+            }
             res.redirect("/u");
         }
         else 
@@ -321,7 +332,9 @@ async function deleteFile(req, res)
     catch (error)
     {
         console.error(error);
-        res.status(500).send("Something went wrong during deletion.");
+        res.status(500).json({
+            isDeleted: true
+        });
     }
 
 }
@@ -350,7 +363,18 @@ async function toggleVisibility(req, res)
 
             console.log("Setting the isPublic value of "+targetFile.name+" to "+targetFile.isPublic+"...");
             await dbUser.save();
-            res.redirect(`/u/${dbUser.username}/${targetFile.fileId}`)
+
+            if (req.body.redirectToIndividualFilePage)
+            {
+                return res.status(200).redirect(`/u/${dbUser.username}/${targetFile.fileId}`);
+            }
+            else
+            {
+                return res.status(200).json({
+                    isPublic: targetFile.isPublic
+                });
+            }
+
         }
         else 
         {
@@ -360,7 +384,7 @@ async function toggleVisibility(req, res)
     catch(error)
     {
         console.error(error);
-        res.status(500).send("Something went wrong during visibility toggle..");
+        return res.status(500).send("Something went wrong during visibility toggle..");
     }
 }
 

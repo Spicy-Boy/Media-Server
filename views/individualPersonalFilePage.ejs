@@ -46,10 +46,12 @@
         <div class="user-controls">
             <form method="post" action="/api/file/delete/<%=file.fileId%>">
                 <input type="submit" value="DELETE FILE">
+                <input type="hidden" name="redirectToUserIndexPage" value="true">
             </form>
     
             <form method="post" action="/api/file/toggleVisibility/<%=file.fileId%>">
                 <input type="submit" value="TOGGLE VISIBILITY">
+                <input type="hidden" name="redirectToIndividualFilePage" value="true">
                 <%if (file.isPublic){%>
                     ~ ~ Current Visibility: Open to the entire internet!!!
                 <%}else{%>
