@@ -705,6 +705,32 @@ footer a:visited {
     justify-content: center;
 }
 
+/* DELETION WARNING FEATURE: ask user if they are sure before initiating a deletion */
+
+#deletion-warning-div {
+    background-color: rgb(165, 165, 165);
+
+
+    position: fixed;
+    width: 80%;
+    z-index: 9999;
+    /* height: 100%; */
+
+    top: 15px;
+
+    padding: 15px;
+    margin-left: auto;
+    margin-right: auto;
+
+    /* VVV forces the div centered no matter screen size */
+    left: 50%;
+    transform: translateX(-50%);
+
+    border: red solid 5px;
+
+    display: none;
+}
+
 /* QUICK EDIT FEATURE: edit individual files without exiting the user portal webpage */
 
 #quick-edit-div {
@@ -714,7 +740,7 @@ footer a:visited {
 
     display: none;
     flex-direction: column;
-    padding: 2px;
+    padding: 10px;
 
     background-color: #303030;
 

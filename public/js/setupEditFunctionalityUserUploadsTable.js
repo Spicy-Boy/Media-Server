@@ -88,6 +88,7 @@ const quickEditToggleVisibility = document.getElementById('quick-edit-toggle-vis
 const quickEditToggleVisibilityMessage = document.getElementById('quick-edit-toggle-visibility-message')
 const quickEditDeleteButton = document.getElementById('quick-edit-delete');
 const quickEditCommentForm = document.getElementById('quick-edit-comment-form');
+const deletionWarningDiv = document.getElementById('deletion-warning-div');
 
 //NOTE: the file list is acquired from the previously loaded refreshUserUploadsTable.js script
 // simply called "files", this list stores the file objects from the database according to the user's most recent refresh. It is undefined by default
@@ -136,15 +137,26 @@ async function setupAllEditButtons()
                 quickEditFileName.textContent = specificFile.name;
                 quickEditFileSize.textContent = calculateFileSize(Number(specificFile.size)); //calculateFileSize is imported from calculateFileSize.js
 
+                //TOGGLE VISIBILITY! VVV
+                const desktopEyeball = document.getElementById('desktop-eyeball-'+specificFile.fileId);
+                const mobileEyeball = document.getElementById('mobile-eyeball-'+specificFile.fileId);
+
                 if (specificFile.isPublic)
                 {
                     quickEditToggleVisibilityMessage.textContent = "Visible to internet? TRUE";
+                    //vv reflect the change in the DOM index
+                    console.log(mobileEyeball,desktopEyeball);
+                    mobileEyeball.style.display = "inline";
+                    mobileEyeball.innerText = "👁️";
+                    desktopEyeball.style.display = "inline";
+                    desktopEyeball.innerText = "👁️";
                 }
                 else
                 {
                     quickEditToggleVisibilityMessage.textContent = "Visible to internet? FALSE";
+                    mobileEyeball.style.display = "none";
+                    desktopEyeball.style.display = "none";
                 }
-
                 quickEditToggleVisibility.addEventListener("click", async () => {
                     const response = await fetch("/api/file/toggleVisibility/"+specificFile.fileId, {
                         method: "POST",
@@ -160,10 +172,14 @@ async function setupAllEditButtons()
                             quickEditToggleVisibilityMessage.textContent = "Visible to internet? FALSE";
                         }
                     });
-
- 
                 });
 
+
+                //DELETION / DELETE BUTTON VVV
+                quickEditDeleteButton.addEventListener("click", async () => {
+
+                    deletionWarningDiv.style.display = "inline";
+                });
             });
 
         });

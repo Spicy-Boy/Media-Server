@@ -215,9 +215,9 @@
                                     <span>
                                         🔗<a href="/u/<%=targetUser.username%>/<%=file.fileId%>" style="text-decoration: underline">LINK</a> ~ Size:
                                         <span class="fileSize"><%=file.size%></span>
-                                        <%if (file.isPublic) {%>
-                                            👁️
-                                        <%}%>
+                                        
+                                            <span id="mobile-eyeball-<%=file.fileId%>"><%if (file.isPublic) {%>👁️<%}%></span>
+                                        
                                     </span>
                                     <br>
                                     <span style="font-size: 75%;">
@@ -238,12 +238,12 @@
                             
                             <td class="upload-list-date-column ">
                             <span style="display: inline-block; width: 80px;"><%=calendarDate%></span>
-                            <%if (file.isPublic) {%>
-                                <div class="tooltip-left">
-                                    👁️
-                                    <span class="tooltip-text">File is visible to the internet!</span>
-                                </div>
-                            <%}%>
+
+                            <div class="tooltip-left">
+                                <span id="desktop-eyeball-<%=file.fileId%>">👁️</span>
+                                <span class="tooltip-text">File is visible to the internet!</span>
+                            </div>
+
                             </td>
                             
                         </tr>
@@ -256,6 +256,18 @@
     </div>
     
     <%- include("./partials/userIndexFooter") %>
+
+    <div id="deletion-warning-div">
+        <h1 class="tac" style="color: red; background-color: white;">
+            WARNING!
+        </h1>
+        <div class="tac" style="margin-bottom: 10px; background-color: white; color: black">
+            THESE FILES WILL BE PERMANENTLY DELETED:
+        </div>
+        <div class="tac" style="background-color: black; color: white; padding: 5px;">
+        
+        </div>
+    </div>
 
     <div id="quick-edit-div"> 
         <div id="grab-button-quick-edit">Quick Edit Menu
