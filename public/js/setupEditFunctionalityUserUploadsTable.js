@@ -52,7 +52,7 @@ selectAllButton.addEventListener("click", () => {
         allEditCheckboxes.forEach(box => {
             box.checked = true;
 
-            selectedFiles.push({
+            selectedFiles.push({ //selected files marked by file name and id, can be matched with the "files" list to perform actions on files
                 fileId: box.dataset.fileid,
                 fileName: box.dataset.filename
             });
@@ -101,11 +101,14 @@ async function setupAllEditButtons()
         {
             //if files hasn't been initiated yet, summon it from db
             files = await getUserFilesFromDB(pageUsername); //getUserFilesFromDB is a function from refreshUserUploadsTable.js, as is the files variable (shared)
-            console.log('Files:',files);
+
+            //TESTER vv
+            // console.log('Files:',files);
         }
         else
         {
-            console.log('Files:', files);
+            //TESTER vv
+            // console.log('Files:', files);
         }
 
         allEditButtons.forEach(button => { 
@@ -140,7 +143,7 @@ async function setupAllEditButtons()
                 //TOGGLE VISIBILITY! VVV
                 const desktopEyeball = document.getElementById('desktop-eyeball-'+specificFile.fileId);
                 const mobileEyeball = document.getElementById('mobile-eyeball-'+specificFile.fileId);
-                
+
                 quickEditToggleVisibility.addEventListener("click", async () => {
                     const response = await fetch("/api/file/toggleVisibility/"+specificFile.fileId, {
                         method: "POST",
@@ -151,9 +154,10 @@ async function setupAllEditButtons()
                         {
                             quickEditToggleVisibilityMessage.textContent = "Visible to internet? TRUE";
                             //vv reflect the change in the DOM index
-                            console.log(mobileEyeball,desktopEyeball);
+                            // console.log(mobileEyeball,desktopEyeball);
                             mobileEyeball.style.display = "inline";
                             mobileEyeball.innerText = "👁️";
+
                             desktopEyeball.style.display = "inline";
                             desktopEyeball.innerText = "👁️";
                         } 
@@ -203,6 +207,8 @@ editFilesButton.addEventListener("click", (event)=>{
 
         selectAllButton.textContent = "Select All";
         isSelectAllToggled = false;
+
+        selectedFiles = []; //reset selected files list
 
         allEditButtons.forEach( button => {
             button.style.display = "none"; //turn them invisible
