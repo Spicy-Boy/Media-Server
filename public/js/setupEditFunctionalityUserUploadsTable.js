@@ -140,23 +140,7 @@ async function setupAllEditButtons()
                 //TOGGLE VISIBILITY! VVV
                 const desktopEyeball = document.getElementById('desktop-eyeball-'+specificFile.fileId);
                 const mobileEyeball = document.getElementById('mobile-eyeball-'+specificFile.fileId);
-
-                if (specificFile.isPublic)
-                {
-                    quickEditToggleVisibilityMessage.textContent = "Visible to internet? TRUE";
-                    //vv reflect the change in the DOM index
-                    console.log(mobileEyeball,desktopEyeball);
-                    mobileEyeball.style.display = "inline";
-                    mobileEyeball.innerText = "👁️";
-                    desktopEyeball.style.display = "inline";
-                    desktopEyeball.innerText = "👁️";
-                }
-                else
-                {
-                    quickEditToggleVisibilityMessage.textContent = "Visible to internet? FALSE";
-                    mobileEyeball.style.display = "none";
-                    desktopEyeball.style.display = "none";
-                }
+                
                 quickEditToggleVisibility.addEventListener("click", async () => {
                     const response = await fetch("/api/file/toggleVisibility/"+specificFile.fileId, {
                         method: "POST",
@@ -166,10 +150,18 @@ async function setupAllEditButtons()
                        if (data.isPublic)
                         {
                             quickEditToggleVisibilityMessage.textContent = "Visible to internet? TRUE";
+                            //vv reflect the change in the DOM index
+                            console.log(mobileEyeball,desktopEyeball);
+                            mobileEyeball.style.display = "inline";
+                            mobileEyeball.innerText = "👁️";
+                            desktopEyeball.style.display = "inline";
+                            desktopEyeball.innerText = "👁️";
                         } 
                         else
                         {
                             quickEditToggleVisibilityMessage.textContent = "Visible to internet? FALSE";
+                            mobileEyeball.style.display = "none";
+                            desktopEyeball.style.display = "none";
                         }
                     });
                 });

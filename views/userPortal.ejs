@@ -215,9 +215,11 @@
                                     <span>
                                         🔗<a href="/u/<%=targetUser.username%>/<%=file.fileId%>" style="text-decoration: underline">LINK</a> ~ Size:
                                         <span class="fileSize"><%=file.size%></span>
-                                        
-                                            <span id="mobile-eyeball-<%=file.fileId%>"><%if (file.isPublic) {%>👁️<%}%></span>
-                                        
+                                        <span id="mobile-eyeball-<%=file.fileId%>">
+                                            <% if (file.isPublic) { %>
+                                                👁️
+                                            <% } %>  
+                                        </span>
                                     </span>
                                     <br>
                                     <span style="font-size: 75%;">
@@ -240,7 +242,11 @@
                             <span style="display: inline-block; width: 80px;"><%=calendarDate%></span>
 
                             <div class="tooltip-left">
-                                <span id="desktop-eyeball-<%=file.fileId%>">👁️</span>
+                                <span id="desktop-eyeball-<%=file.fileId%>">
+                                <% if (file.isPublic) { %>
+                                    👁️
+                                <% } %>  
+                                </span>
                                 <span class="tooltip-text">File is visible to the internet!</span>
                             </div>
 
