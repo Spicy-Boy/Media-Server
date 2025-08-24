@@ -38,7 +38,7 @@ allEditCheckboxes.forEach(box => {
         }
 
         //TESTER vv
-        console.log("Selected List:",selectedFiles);
+        // console.log("Selected List:",selectedFiles);
     });
 });
 
@@ -89,10 +89,42 @@ const quickEditToggleVisibilityMessage = document.getElementById('quick-edit-tog
 const quickEditDeleteButton = document.getElementById('quick-edit-delete');
 const quickEditCommentForm = document.getElementById('quick-edit-comment-form');
 
+const toggleVisibilitySelectedButton = document.getElementById('toggle-visibility-selected-uploads');
+toggleVisibilitySelectedButton.addEventListener("click", async () => {
+
+    if (selectedFiles.length > 0)
+    {
+        for (const file of selectedFiles)
+        {
+            const desktopEyeball = document.getElementById('desktop-eyeball-'+file.fileId);
+            const mobileEyeball = document.getElementById('mobile-eyeball-'+file.fileId);
+
+            const response = await fetch("/api/file/toggleVisibility/"+file.fileId, {
+                method: "POST",
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.isPublic)
+                {
+                    mobileEyeball.style.display = "inline";
+                    mobileEyeball.innerText = "👁️";
+
+                    desktopEyeball.style.display = "inline";
+                    desktopEyeball.innerText = "👁️";
+                }
+                else
+                {
+                    mobileEyeball.style.display = "none";
+                    desktopEyeball.style.display = "none";
+                }
+            });
+        }
+    }
+});
+
 const deletionWarningDiv = document.getElementById('deletion-warning-div');
 const fileDeletionListDiv = document.getElementById('file-deletion-list-div');
 const trueDeleteButton = document.getElementById('true-delete-button');
-
 const cancelDeleteButton = document.getElementById('cancel-delete-button');
 cancelDeleteButton.addEventListener("click", () => {
     deletionWarningDiv.style.display = "none";
@@ -211,7 +243,7 @@ async function setupAllEditButtons()
                     })
                     .then(res => res.json())
                     .then(data => {
-                       if (data.isPublic)
+                        if (data.isPublic)
                         {
                             quickEditToggleVisibilityMessage.textContent = "Visible to internet? TRUE";
                             //vv reflect the change in the DOM index
