@@ -96,6 +96,7 @@ toggleVisibilitySelectedButton.addEventListener("click", async () => {
     {
         for (const file of selectedFiles)
         {
+
             const desktopEyeball = document.getElementById('desktop-eyeball-'+file.fileId);
             const mobileEyeball = document.getElementById('mobile-eyeball-'+file.fileId);
 
@@ -187,6 +188,7 @@ trueDeleteButton.addEventListener("click", async () => {
     deleteSelectedFiles();
 });
 
+let specificFile;
 
 //NOTE: the file list is acquired from the previously loaded refreshUserUploadsTable.js script
 // simply called "files", this list stores the file objects from the database according to the user's most recent refresh. It is undefined by default
@@ -207,7 +209,6 @@ async function setupAllEditButtons()
         allEditButtons.forEach(button => { 
             //customize the quick edit window here for each individual file
             button.addEventListener("click", async() => {
-                let specificFile;
 
                 // //vv match button's internal file id to the actual fileid from the filelist
 
@@ -232,48 +233,6 @@ async function setupAllEditButtons()
 
                 quickEditFileName.textContent = specificFile.name;
                 quickEditFileSize.textContent = calculateFileSize(Number(specificFile.size)); //calculateFileSize is imported from calculateFileSize.js
-
-                //TOGGLE VISIBILITY! VVV
-                const desktopEyeball = document.getElementById('desktop-eyeball-'+specificFile.fileId);
-                const mobileEyeball = document.getElementById('mobile-eyeball-'+specificFile.fileId);
-
-                quickEditToggleVisibility.addEventListener("click", async () => {
-                    const response = await fetch("/api/file/toggleVisibility/"+specificFile.fileId, {
-                        method: "POST",
-                    })
-                    .then(res => res.json())
-                    .then(data => {
-                        if (data.isPublic)
-                        {
-                            quickEditToggleVisibilityMessage.textContent = "Visible to internet? TRUE";
-                            //vv reflect the change in the DOM index
-                            // console.log(mobileEyeball,desktopEyeball);
-                            mobileEyeball.style.display = "inline";
-                            mobileEyeball.innerText = "👁️";
-
-                            desktopEyeball.style.display = "inline";
-                            desktopEyeball.innerText = "👁️";
-                        } 
-                        else
-                        {
-                            quickEditToggleVisibilityMessage.textContent = "Visible to internet? FALSE";
-                            mobileEyeball.style.display = "none";
-                            desktopEyeball.style.display = "none";
-                        }
-                    });
-                });
-
-                //DELETION / DELETE BUTTON VVV
-                quickEditDeleteButton.addEventListener("click", async () => {
-
-                    selectedFilesToDelete = [];
-                    selectedFilesToDelete.push(specificFile);
-
-                    deletionWarningDiv.style.display = "inline";
-
-                    fileDeletionListDiv.textContent = "";
-                    fileDeletionListDiv.textContent = specificFile.name;
-                });
             });
 
         });
@@ -283,6 +242,47 @@ async function setupAllEditButtons()
         console.log('ERROR OCCURED TRYING TO QUERY FILES FROM DATABASE FOR EDIT BUTTON FUNCTIONALITY!',error);
     }
 }
+
+//TOGGLE VISIBILITY! VVV
+quickEditToggleVisibility.addEventListener("click", async () => {
+    const response = await fetch("/api/file/toggleVisibility/"+specificFile.fileId, {
+        method: "POST",
+    })
+    .then(res => res.json())
+    .then(data => {
+        const desktopEyeball = document.getElementById('desktop-eyeball-'+specificFile.fileId);
+        const mobileEyeball = document.getElementById('mobile-eyeball-'+specificFile.fileId);
+
+        if (data.isPublic)
+        {
+            quickEditToggleVisibilityMessage.textContent = "Visible to internet? TRUE";
+            //vv reflect the change in the DOM index
+            // console.log(mobileEyeball,desktopEyeball);
+            mobileEyeball.style.display = "inline";
+            mobileEyeball.innerText = "👁️";
+
+            desktopEyeball.style.display = "inline";
+            desktopEyeball.innerText = "👁️";
+        } 
+        else
+        {
+            quickEditToggleVisibilityMessage.textContent = "Visible to internet? FALSE";
+            mobileEyeball.style.display = "none";
+            desktopEyeball.style.display = "none";
+        }
+    });
+});
+
+//DELETION / DELETE BUTTON VVV
+quickEditDeleteButton.addEventListener("click", async () => {
+    selectedFilesToDelete = [];
+    selectedFilesToDelete.push(specificFile);
+
+    deletionWarningDiv.style.display = "inline";
+
+    fileDeletionListDiv.textContent = "";
+    fileDeletionListDiv.textContent = specificFile.name;
+});
 
 editFilesButton.addEventListener("click", (event)=>{
     if (!editVisible) 

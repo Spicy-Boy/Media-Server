@@ -32,7 +32,20 @@ const userSchema = new mongoose.Schema(
                 isPublic: {
                     type: Boolean,
                     default: false
-                }
+                },
+                comments: [
+                    {
+                        textContent: {
+                            type: String,
+                            default: ""
+                        },
+                        createdAt: {
+                            type: Date,
+                            default: Date.now
+                        },
+                        imgUrl, //location of accompanying image, if any
+                    }
+                ],
             }
         ],
         created: { 
