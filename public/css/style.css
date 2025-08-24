@@ -707,6 +707,13 @@ footer a:visited {
 
 /* DELETION WARNING FEATURE: ask user if they are sure before initiating a deletion */
 
+#file-deletion-list-div{
+  max-height: 300px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding-right: 0.5rem;
+}
+
 #deletion-warning-div {
     background-color: rgb(165, 165, 165);
 
