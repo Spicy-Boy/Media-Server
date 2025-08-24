@@ -1,6 +1,9 @@
 const fs = require("fs");
 const User = require("../models/userModel");
 
+// vv metadata middleware that analyzes img dimensions
+const sharp = require('sharp');
+
 function createPersonalFilePath (username)
 {
 
@@ -388,6 +391,39 @@ async function toggleVisibility(req, res)
     }
 }
 
+async function addCommentToFile(req, res)
+{
+    const fileId = req.params.fileId;
+    const username = req.params.username;
+
+    try {
+
+        const dbUser = await User.findOne({username: username});
+        
+        targetFile = dbUser.files.find( file => file.fileId === fileId);
+
+        let newComment = {
+            username: req.params.username,
+            textContent: req.body.content,
+        }
+
+        if (req.file)
+        {
+            let commentImgPath = process.env.MAIL_DELIVERY_LOCATION+"/"+username+"_files/"+fileId+"/";
+
+            newComment.imgUrl = `${commentImgPath}${req.file.filename}`;
+
+            newPost.imgSize = Math.floor(((req.file.size / 1024) * 100) /100);
+            newPost.imgFileType = req.file.mimetype;
+        }
+    }
+    catch (error)
+    {
+        console.log("An error occured adding a comment to a file!",error);
+        return res.status(500);
+    }
+}
+
 module.exports = {
     uploadInChunks,
     createPersonalDatabaseEntry,
@@ -395,5 +431,6 @@ module.exports = {
     deleteFile,
     toggleVisibility,
     sendFile,
-    sendSingleUsersFileList
+    sendSingleUsersFileList,
+    addCommentToFile
 };

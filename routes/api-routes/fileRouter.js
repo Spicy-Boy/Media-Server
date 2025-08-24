@@ -16,7 +16,8 @@ const {
     sendFile,
     deleteFile,
     toggleVisibility,
-    sendSingleUsersFileList
+    sendSingleUsersFileList,
+    addCommentToFile
 } = require("../../controllers/fileController");
 
 /* LOGIN AND PERMISSIONS VALIDATION BELOW THESE LINE!*/
@@ -28,6 +29,8 @@ router.get("/download/:username/:fileId", validateLoginConditionallyForFile,  do
 
 router.post("/upload", validateLogin, updateUserPermissionsAndFiles, validateIsUploader, uploadInChunks);
 router.post("/createEntry", validateLogin, updateUserPermissionsAndFiles, validateIsUploader, createPersonalDatabaseEntry);
+
+router.post("/addComment/:username/:fileId", validateLogin, updateUserPermissionsAndFiles, validateIsUploader, addCommentToFile);
 
 router.get("/sendFileToWebpage/:username/:fileId", validateLogin,  sendFile);
 router.get("/sendUsersFileListToWebpage/:username", validateLogin, sendSingleUsersFileList);

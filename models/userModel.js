@@ -33,8 +33,9 @@ const userSchema = new mongoose.Schema(
                     type: Boolean,
                     default: false
                 },
-                comments: [
+                comments: [ //images uploaded 
                     {
+                        username: String,
                         textContent: {
                             type: String,
                             default: ""
@@ -43,7 +44,11 @@ const userSchema = new mongoose.Schema(
                             type: Date,
                             default: Date.now
                         },
-                        imgUrl, //location of accompanying image, if any
+                        imgUrl: String, //location of accompanying image, if any
+                        imgSize: Number,
+                        imgWidth: Number,
+                        imgHeight: Number,
+                        imgFileType: String,
                     }
                 ],
             }

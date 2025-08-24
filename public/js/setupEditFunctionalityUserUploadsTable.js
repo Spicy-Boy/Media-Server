@@ -145,7 +145,6 @@ deleteSelectedButton.addEventListener("click", () => {
         });
     }
 });
-
 async function deleteSelectedFiles()
 {
     if (selectedFilesToDelete.length > 0)
@@ -282,6 +281,22 @@ quickEditDeleteButton.addEventListener("click", async () => {
 
     fileDeletionListDiv.textContent = "";
     fileDeletionListDiv.textContent = specificFile.name;
+});
+
+// QUICK EDIT COMMENT SUBMISSION vv
+const commentSubmissionButton = document.getElementById('quick-edit-comment-submission');
+const commentSubmissionStatus = document.getElementById('quick-edit-comment-status');
+commentSubmissionButton.addEventListener("click", async (event) => {
+    event.preventDefault();
+    
+    const response = await fetch("/api/file/addComment/"+pageUsername+"/"+specificFile.fileId, {
+        method: "POST",
+        
+    })
+    .then(res => res.json())
+    .then(data => {
+
+    });
 });
 
 editFilesButton.addEventListener("click", (event)=>{
