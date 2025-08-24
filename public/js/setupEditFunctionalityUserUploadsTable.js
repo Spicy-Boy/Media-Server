@@ -19,7 +19,8 @@ let isSelectAllToggled = false;
 
 // when a file is "selected" by checking its box, its parent DOM element is added to a list to be processed
 let selectedFiles = [];
-
+let selectedFilesToDelete = [];
+// vv CHECKBOX SELECTION FUNCTIONALITY
 allEditCheckboxes.forEach(box => {
     box.addEventListener("change", (e) => {
 
@@ -27,7 +28,7 @@ allEditCheckboxes.forEach(box => {
         {
             selectedFiles.push({
                 fileId: box.dataset.fileid,
-                fileName: box.dataset.filename
+                name: box.dataset.filename
             });
         }
         else
@@ -42,7 +43,6 @@ allEditCheckboxes.forEach(box => {
 });
 
 selectAllButton.addEventListener("click", () => {
-
     if (!isSelectAllToggled)
     {
         selectAllButton.textContent = "Deselect All";
@@ -54,7 +54,7 @@ selectAllButton.addEventListener("click", () => {
 
             selectedFiles.push({ //selected files marked by file name and id, can be matched with the "files" list to perform actions on files
                 fileId: box.dataset.fileid,
-                fileName: box.dataset.filename
+                name: box.dataset.filename
             });
         });
 
@@ -88,7 +88,73 @@ const quickEditToggleVisibility = document.getElementById('quick-edit-toggle-vis
 const quickEditToggleVisibilityMessage = document.getElementById('quick-edit-toggle-visibility-message')
 const quickEditDeleteButton = document.getElementById('quick-edit-delete');
 const quickEditCommentForm = document.getElementById('quick-edit-comment-form');
+
 const deletionWarningDiv = document.getElementById('deletion-warning-div');
+const fileDeletionListDiv = document.getElementById('file-deletion-list-div');
+const trueDeleteButton = document.getElementById('true-delete-button');
+
+const cancelDeleteButton = document.getElementById('cancel-delete-button');
+cancelDeleteButton.addEventListener("click", () => {
+    deletionWarningDiv.style.display = "none";
+});
+
+deleteSelectedButton = document.getElementById('delete-selected-uploads');
+deleteSelectedButton.addEventListener("click", () => {
+    selectedFilesToDelete = selectedFiles;
+
+    if (selectedFilesToDelete.length > 0)
+    {
+        deletionWarningDiv.style.display = "inline";
+
+        fileDeletionListDiv.textContent = "";
+        selectedFilesToDelete.forEach(file => {
+            fileDeletionListDiv.innerHTML += file.name+"<br>";
+        });
+    }
+});
+
+async function deleteSelectedFiles()
+{
+    if (selectedFilesToDelete.length > 0)
+    {
+        console.log('PREPARING TO DELETE '+selectedFilesToDelete.length+" FILES!\nCLOSE THIS BROWSER WINDOW IMMEDIATELY TO STOP IT!");
+    }
+    else
+    {
+        console.log('The delete button was pressed, but the deletion list is empty! How did you manage that?');
+        return;
+    }
+
+    for (const file of selectedFilesToDelete)
+    {
+        const response = await fetch(`/api/file/delete/${file.fileId}`, {
+            method: "POST",
+        })
+        .then(res => res.json())
+        .then(data => {
+            if (data.isDeleted)
+            {
+                const fileToRemoveFromDOM = document.querySelector(`[data-fileId="${file.fileId}"]`);
+                fileToRemoveFromDOM.style.display = "none";
+                quickEditDiv.style.display = "none";
+
+                console.log('Successfully deleted',file.name);
+            }
+            else
+            {
+                console.log('OH NO! Failed to delete file',file.name);
+            }
+        });
+    }
+
+    deletionWarningDiv.style.display = "none";
+}
+
+//DELETE FUNCTIONALITY vvv
+trueDeleteButton.addEventListener("click", async () => {
+    deleteSelectedFiles();
+});
+
 
 //NOTE: the file list is acquired from the previously loaded refreshUserUploadsTable.js script
 // simply called "files", this list stores the file objects from the database according to the user's most recent refresh. It is undefined by default
@@ -100,15 +166,10 @@ async function setupAllEditButtons()
         if (files == undefined)
         {
             //if files hasn't been initiated yet, summon it from db
-            files = await getUserFilesFromDB(pageUsername); //getUserFilesFromDB is a function from refreshUserUploadsTable.js, as is the files variable (shared)
+            files = await getUserFilesFromDB(pageUsername); //getUserFilesFromDB is a function from refreshUserUploadsTable.js, as is the files variable itself. As such, refreshUserUploads script must be run before this one!
 
             //TESTER vv
             // console.log('Files:',files);
-        }
-        else
-        {
-            //TESTER vv
-            // console.log('Files:', files);
         }
 
         allEditButtons.forEach(button => { 
@@ -170,11 +231,16 @@ async function setupAllEditButtons()
                     });
                 });
 
-
                 //DELETION / DELETE BUTTON VVV
                 quickEditDeleteButton.addEventListener("click", async () => {
 
+                    selectedFilesToDelete = [];
+                    selectedFilesToDelete.push(specificFile);
+
                     deletionWarningDiv.style.display = "inline";
+
+                    fileDeletionListDiv.textContent = "";
+                    fileDeletionListDiv.textContent = specificFile.name;
                 });
             });
 
@@ -209,6 +275,7 @@ editFilesButton.addEventListener("click", (event)=>{
         isSelectAllToggled = false;
 
         selectedFiles = []; //reset selected files list
+        selectedFilesToDelete = [];
 
         allEditButtons.forEach( button => {
             button.style.display = "none"; //turn them invisible

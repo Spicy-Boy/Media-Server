@@ -185,8 +185,9 @@
                 <%if (targetUser.files){%>
                     <%targetUser.files.reverse().forEach( (file, index) => {%>
                         <%// vvv this is top level of each individual upload%>
-                        <tr data-filename="<%=file.name%>" data-filesize="<%=file.size%>" data-filedate="<%=file.date%>"> 
-
+                        <tr data-filename="<%=file.name%>" data-filesize="<%=file.size%>" data-filedate="<%=file.date%>"
+                        data-fileId="<%=file.fileId%>"
+                        > 
                             <%
                                 //format date for use later on down the line
                                 const dateUploaded = file.date;
@@ -264,14 +265,21 @@
     <%- include("./partials/userIndexFooter") %>
 
     <div id="deletion-warning-div">
-        <h1 class="tac" style="color: red; background-color: white;">
-            WARNING!
+        <h1 class="tac" style="color: red; background-color: white; padding-bottom: 3px;">
+            ☠️ WARNING! ☠️
         </h1>
         <div class="tac" style="margin-bottom: 10px; background-color: white; color: black">
             THESE FILES WILL BE PERMANENTLY DELETED:
         </div>
-        <div class="tac" style="background-color: black; color: white; padding: 5px;">
+        <div id="file-deletion-list-div" class="tac" style="background-color: black; color: white; padding: 5px;">
         
+        </div>
+        <br>
+        <div class="flex-row width-100 flex-centered">
+            
+            <button id="true-delete-button" style="background-color: red; color: black; border-radius: 0px; font-size: 24px;">DELETE</button>
+            <div style="width: 25%"></div>
+            <button id="cancel-delete-button" style="border-radius: 0px; font-size: 24px;">CANCEL</button>
         </div>
     </div>
 
@@ -281,12 +289,12 @@
         </div>
         <div>
             <span style="color: #707070">Name: </span><span id="quick-edit-filename" class="quick-edit-filename">
-                FILENAME FILENAME FILENAME FILENAMDHAD>.adwudwauduahw
+                FILE NAME???
             </span>
         </div>
         <div>
             <span style="color: #707070">Size: </span> <span id="quick-edit-filesize" class="quick-edit-filesize">
-                50 MB
+                ?? MB
             </span>
         </div>
         <div class="quick-edit-filler"></div>

@@ -224,12 +224,12 @@ async function validateLoginConditionallyForFile (req, res, next) //FOR VIEWS/PA
                 return next();
             }
 
+            console.log('validateLoginConditionallyForFile: Auth failed! '+req.path);
             return res.status(403).send("<center><h1>:)</h1></center>");
         }
         else
         {
-            console.log('validateLoginConditionallyForFile: Auth failed! '+req.path);
-            res.status(403).send(`<center><h1>:)</h1></center>`);
+            res.status(404).send(`<center><h1>404</h1></center>`);
         }
     }
     catch (error)
