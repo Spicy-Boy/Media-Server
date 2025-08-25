@@ -399,8 +399,14 @@ async function addCommentToFile(req, res)
     try {
 
         const dbUser = await User.findOne({username: username});
+        if (!dbUser) {
+            return res.status(404).json({ error: "User not found!" });
+        }
         
         targetFile = dbUser.files.find( file => file.fileId === fileId);
+        if (!targetFile) {
+            return res.status(404).json({ error: "File not found!" });
+        }
 
         let newComment = {
             username: req.params.username,
@@ -413,9 +419,34 @@ async function addCommentToFile(req, res)
 
             newComment.imgUrl = `${commentImgPath}${req.file.filename}`;
 
-            newPost.imgSize = Math.floor(((req.file.size / 1024) * 100) /100);
-            newPost.imgFileType = req.file.mimetype;
+            newComment.imgSize = Math.floor(((req.file.size / 1024) * 100) /100);
+
+            newComment.imgFileType = req.file.mimetype;
+
+            try {
+                const imgMetadata = await sharp(req.file.path).metadata();
+                newComment.imgWidth = imgMetadata.width;
+                newComment.imgHeight = imgMetadata.height;
+            } 
+            catch (error)
+            {
+                console.error("Error processing image metadata:",error);
+                return res.status(500);
+            }
         }
+        else
+        {
+            newComment.imgUrl = "";
+        }
+
+        targetFile.comments.push(newComment);
+
+        await dbUser.save();
+
+        return res.status(201).json({
+            success: true
+        })
+
     }
     catch (error)
     {

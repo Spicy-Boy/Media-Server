@@ -1,4 +1,4 @@
-const upload = require("../../middlewares/multer");
+// const upload = require("../../middlewares/multer");
 const router = require("express").Router();
 
 const {
@@ -21,7 +21,7 @@ router.get("/getDonations", getDonations);
 /* (special permissions required below vvv) */
 // router.use(updateUserPermissionsAndFiles);
 
-router.post("/createNewDonation", validateLogin, updateUserPermissionsAndFiles, validateAdminAuth, upload.single('uploaded_file'), createNewDonation);
+// router.post("/createNewDonation", validateLogin, updateUserPermissionsAndFiles, validateAdminAuth, upload.single('uploaded_file'), createNewDonation);
 
 
 

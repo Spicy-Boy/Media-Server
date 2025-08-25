@@ -131,6 +131,9 @@ cancelDeleteButton.addEventListener("click", () => {
     deletionWarningDiv.style.display = "none";
 });
 
+const commentSubmissionButton = document.getElementById('quick-edit-comment-submission');
+const commentSubmissionStatus = document.getElementById('quick-edit-comment-status');
+
 deleteSelectedButton = document.getElementById('delete-selected-uploads');
 deleteSelectedButton.addEventListener("click", () => {
     selectedFilesToDelete = selectedFiles;
@@ -207,6 +210,7 @@ async function setupAllEditButtons()
 
         allEditButtons.forEach(button => { 
             //customize the quick edit window here for each individual file
+            // vv when individual edit button is clicked vv
             button.addEventListener("click", async() => {
 
                 // //vv match button's internal file id to the actual fileid from the filelist
@@ -232,8 +236,9 @@ async function setupAllEditButtons()
 
                 quickEditFileName.textContent = specificFile.name;
                 quickEditFileSize.textContent = calculateFileSize(Number(specificFile.size)); //calculateFileSize is imported from calculateFileSize.js
-            });
 
+                commentSubmissionStatus.textContent = "";
+            });
         });
     }
     catch (error)
@@ -284,18 +289,34 @@ quickEditDeleteButton.addEventListener("click", async () => {
 });
 
 // QUICK EDIT COMMENT SUBMISSION vv
-const commentSubmissionButton = document.getElementById('quick-edit-comment-submission');
-const commentSubmissionStatus = document.getElementById('quick-edit-comment-status');
 commentSubmissionButton.addEventListener("click", async (event) => {
     event.preventDefault();
+
+    const formData = new FormData();
     
+    formData.append("content", document.getElementById("quick-edit-content").value); //attach comment
+
+    const fileInput = document.getElementById("quick-edit-file"); 
+    if (fileInput.files.length > 0) 
+    {
+        formData.append("uploaded_file", fileInput.files[0]); //attach file if it exists
+    }
+
     const response = await fetch("/api/file/addComment/"+pageUsername+"/"+specificFile.fileId, {
         method: "POST",
-        
+        body: formData //attached all at once as an object
     })
     .then(res => res.json())
     .then(data => {
-
+        if (data.success)
+        {
+            console.log('Comment added succesfully!');
+            commentSubmissionStatus.textContent = "SUCCESS!";
+        }
+        else
+        {
+            commentSubmissionStatus.textContent = "Failed to upload...";
+        }
     });
 });
 

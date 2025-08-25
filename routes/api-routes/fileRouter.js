@@ -1,4 +1,5 @@
 const router = require("express").Router();
+const uploadCommentImage = require("../../middlewares/multerForComments");
 
 const {
     updateUserPermissionsAndFiles,
@@ -30,7 +31,7 @@ router.get("/download/:username/:fileId", validateLoginConditionallyForFile,  do
 router.post("/upload", validateLogin, updateUserPermissionsAndFiles, validateIsUploader, uploadInChunks);
 router.post("/createEntry", validateLogin, updateUserPermissionsAndFiles, validateIsUploader, createPersonalDatabaseEntry);
 
-router.post("/addComment/:username/:fileId", validateLogin, updateUserPermissionsAndFiles, validateIsUploader, addCommentToFile);
+router.post("/addComment/:username/:fileId", validateLogin, updateUserPermissionsAndFiles, validateIsUploader, uploadCommentImage.single('uploaded_file'), addCommentToFile);
 
 router.get("/sendFileToWebpage/:username/:fileId", validateLogin,  sendFile);
 router.get("/sendUsersFileListToWebpage/:username", validateLogin, sendSingleUsersFileList);
