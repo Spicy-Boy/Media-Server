@@ -90,6 +90,15 @@ nav li div:hover {
     vertical-align: middle;
 }
 
+/* TEXT FORMATTING */
+/* STYLES TO HELP TEXT LOOK GOOD! */
+
+.preserve-whitespace {
+    white-space: pre-line;
+}
+
+/* ^^ TEXT FORMATTING! */
+
 .user-controls {
     /* position: absolute;
     top: 10px; */

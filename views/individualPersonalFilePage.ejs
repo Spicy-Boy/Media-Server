@@ -63,6 +63,31 @@
 
     <%}%>
 
+    <%  if (file.comments) { //if a file has comments, print them%>
+
+    <br>
+    <hr style="color: #707070">
+
+        <%file.comments.forEach(comment => {%>
+            <div style="background-color: rgb(201, 0, 0);" class="comment-container">
+
+                <% if (comment.imgUrl && comment.imgUrl != "") {%>
+
+                    <img src="/api/file/sendFileToWebpage/<%=targetUser.username%>/<%=file.fileId%>" style="max-width: 25%;">
+
+                <%}%>
+                
+                <blockquote class="post-message preserve-whitespace"><%=comment.textContent%></blockquote>
+            </div>
+            
+
+
+        <%});%>
+
+    <%}%>
+
+
+
     <%- include("./partials/userIndexFooter") %>
 </body>
 
