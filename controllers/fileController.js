@@ -408,6 +408,8 @@ async function addCommentToFile(req, res)
             return res.status(404).json({ error: "File not found!" });
         }
 
+        console.log('Submitting comment for',targetFile.name);
+
         let newComment = {
             username: req.params.username,
             textContent: req.body.content,
@@ -415,6 +417,8 @@ async function addCommentToFile(req, res)
 
         if (req.file)
         {
+            console.log('Analyzing file...');
+            
             let commentImgPath = process.env.MAIL_DELIVERY_LOCATION+"/"+username+"_files/"+fileId+"/";
 
             newComment.imgUrl = `${commentImgPath}${req.file.filename}`;
@@ -439,8 +443,14 @@ async function addCommentToFile(req, res)
             newComment.imgUrl = "";
         }
 
-        targetFile.comments.push(newComment);
+        //find a file index in order to directly inject the comment...
+        //this shows the weakness of having a triple nested list. The user model contains the file list with each containing its own comment list. I am straining the viability of this strategy, and three different models would have been less complicated!!
+        const fileIndex = dbUser.files.findIndex(file => file.fileId === fileId);
+        if (fileIndex === -1) {
+            return res.status(404).json({ error: "File not found!" });
+        }
 
+        dbUser.files[fileIndex].comments.push(newComment);
         await dbUser.save();
 
         return res.status(201).json({

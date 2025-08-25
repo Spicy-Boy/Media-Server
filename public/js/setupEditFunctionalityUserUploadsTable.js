@@ -209,20 +209,21 @@ async function setupAllEditButtons()
         }
 
         allEditButtons.forEach(button => { 
-            //customize the quick edit window here for each individual file
+            
+            //customize the quick edit window that each file-associated event listener will pull up (the pencil edit buttons in the dom for each file)
             // vv when individual edit button is clicked vv
             button.addEventListener("click", async() => {
 
                 // //vv match button's internal file id to the actual fileid from the filelist
-
-                //TESTER vvv
-                // console.log('button id',button.dataset.fileid);
-
                 files.forEach(file =>{
                     if (file.fileId == button.dataset.fileid)
                     {
                         specificFile = file;
                     }
+
+                    
+                    //TESTER vvv
+                    // console.log('button id',button.dataset.fileid);
                 })
 
                 //TESTERS vv
@@ -231,13 +232,15 @@ async function setupAllEditButtons()
 
                 quickEditDiv.style.display = "flex";
 
-                quickEditDiv.style.top = "5px";
+                quickEditDiv.style.top = "50px";
                 quickEditDiv.style.left = "5px";
 
                 quickEditFileName.textContent = specificFile.name;
                 quickEditFileSize.textContent = calculateFileSize(Number(specificFile.size)); //calculateFileSize is imported from calculateFileSize.js
 
                 commentSubmissionStatus.textContent = "";
+
+                
             });
         });
     }

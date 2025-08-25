@@ -33,7 +33,8 @@ router.post("/createEntry", validateLogin, updateUserPermissionsAndFiles, valida
 
 router.post("/addComment/:username/:fileId", validateLogin, updateUserPermissionsAndFiles, validateIsUploader, uploadCommentImage.single('uploaded_file'), addCommentToFile);
 
-router.get("/sendFileToWebpage/:username/:fileId", validateLogin,  sendFile);
+router.get("/sendFileToWebpage/:username/:fileId", validateLogin, sendFile);
+
 router.get("/sendUsersFileListToWebpage/:username", validateLogin, sendSingleUsersFileList);
 
 router.post("/delete/:fileId", validateLogin, deleteFile);

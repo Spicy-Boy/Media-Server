@@ -9,7 +9,8 @@ const storage = multer.diskStorage({
     {
         let commentImgPath = process.env.MAIL_DELIVERY_LOCATION+"/"+req.params.username+"_files/"+req.params.fileId+"/";
 
-        console.log('MULTER ACTIVATING!');
+        //TESTER vv
+        // console.log('MULTER ACTIVATING!');
 
         fs.mkdirSync(commentImgPath, { recursive: true });
 
