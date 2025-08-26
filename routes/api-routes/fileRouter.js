@@ -18,7 +18,8 @@ const {
     deleteFile,
     toggleVisibility,
     sendSingleUsersFileList,
-    addCommentToFile
+    addCommentToFile,
+    sendCommentFileByIndex
 } = require("../../controllers/fileController");
 
 /* LOGIN AND PERMISSIONS VALIDATION BELOW THESE LINE!*/
@@ -26,14 +27,15 @@ const {
 // router.use(updateUserPermissionsAndFiles);
 
 // /api/file/upload vv
-router.get("/download/:username/:fileId", validateLoginConditionallyForFile,  downloadFile);
+router.get("/download/:username/:fileId", validateLoginConditionallyForFile, downloadFile);
 
 router.post("/upload", validateLogin, updateUserPermissionsAndFiles, validateIsUploader, uploadInChunks);
 router.post("/createEntry", validateLogin, updateUserPermissionsAndFiles, validateIsUploader, createPersonalDatabaseEntry);
 
 router.post("/addComment/:username/:fileId", validateLogin, updateUserPermissionsAndFiles, validateIsUploader, uploadCommentImage.single('uploaded_file'), addCommentToFile);
+router.get("/sendCommentFileByIndex/:username/:fileId/:index", validateLoginConditionallyForFile, sendCommentFileByIndex);
 
-router.get("/sendFileToWebpage/:username/:fileId", validateLogin, sendFile);
+router.get("/sendFileToWebpage/:username/:fileId", validateLoginConditionallyForFile, sendFile);
 
 router.get("/sendUsersFileListToWebpage/:username", validateLogin, sendSingleUsersFileList);
 

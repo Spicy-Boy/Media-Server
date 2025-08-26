@@ -22,7 +22,7 @@
         let lowercaseFileName = file.name.toLowerCase();
         let isFileImage = lowercaseFileName.endsWith(".jpg") || lowercaseFileName.endsWith(".png") || lowercaseFileName.endsWith(".jpeg") || lowercaseFileName.endsWith(".gif") || lowercaseFileName.endsWith(".avif") || lowercaseFileName.endsWith(".webp");
 
-        if (activeUser && isFileImage) { //conditionally render images if user is logged in
+        if (isFileImage) { //conditionally render images if user is logged in
         %>
             <img src="/api/file/sendFileToWebpage/<%=targetUser.username%>/<%=file.fileId%>" style="max-width: 25%;">
             <br>
@@ -63,24 +63,22 @@
 
     <%}%>
 
-    <%  if (file.comments) { //if a file has comments, print them%>
+    <%  if (file.comments && file.comments.length > 0) { //if a file has comments, print them%>
 
     <br>
     <hr style="color: #707070">
 
-        <%file.comments.forEach(comment => {%>
-            <div style="background-color: rgb(201, 0, 0);" class="comment-container">
+        <%file.comments.forEach((comment, index) => {%>
+            <div style="background-color: rgb(27, 27, 27); padding: 5px; margin-top: 5px;" class="comment-container">
 
                 <% if (comment.imgUrl && comment.imgUrl != "") {%>
 
-                    <img src="/api/file/sendFileToWebpage/<%=targetUser.username%>/<%=file.fileId%>" style="max-width: 25%;">
+                    <img style="padding: 5px;" src="/api/file/sendCommentFileByIndex/<%=targetUser.username%>/<%=file.fileId%>/<%=index%>" style="max-width: 25%;">
 
                 <%}%>
                 
                 <blockquote class="post-message preserve-whitespace"><%=comment.textContent%></blockquote>
             </div>
-            
-
 
         <%});%>
 

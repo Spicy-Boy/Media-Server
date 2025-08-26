@@ -282,7 +282,42 @@ async function sendFile(req, res)
         });
     }
     catch (error) {
-        console.error(error);
+        console.error("Error occured trying to send file:",error);
+        res.status(500).send("An error occured while trying to find the file for display..");
+    }
+}
+
+async function sendCommentFileByIndex( req, res )
+{
+    const targetUsername = req.params.username;
+    const fileId = req.params.fileId;
+    const commentIndex = req.params.index;
+
+    try {
+        const targetUser = await User.findOne({username: targetUsername});
+
+        targetFile = targetUser.files.find( file => file.fileId === fileId);
+
+        if (!targetFile) {
+            return res.status(404).send('File not found.');
+        }
+
+        // vvv the main difference between this function and sendFile is the structure of the file location url. Perhaps I can make a more dynamic way to summon and send files without needing to make a new function every time....
+        let commentFileLocation = targetFile.comments[commentIndex].imgUrl;
+
+        res.sendFile(commentFileLocation, (error) => {            
+            if (error)
+            {
+                console.error('Error sending comment file..', error);
+                if (!res.headersSent) {
+                    res.status(500).send('An error occurred while sending the requested comment file... does it still exist? Contact admin for support.');
+                }
+            }
+        });
+    }
+    catch (error)
+    {
+        console.error("Error occured trying to send comment file:",error);
         res.status(500).send("An error occured while trying to find the file for display..");
     }
 }
@@ -444,12 +479,18 @@ async function addCommentToFile(req, res)
         }
 
         //find a file index in order to directly inject the comment...
-        //this shows the weakness of having a triple nested list. The user model contains the file list with each containing its own comment list. I am straining the viability of this strategy, and three different models would have been less complicated!!
+        //this shows the weakness of having a triple nested list. The user model contains the file list with each file containing its own comment list. I am straining the viability of this strategy, and three different models would have been less complicated!!
         const fileIndex = dbUser.files.findIndex(file => file.fileId === fileId);
         if (fileIndex === -1) {
             return res.status(404).json({ error: "File not found!" });
         }
 
+        if (newComment.textContent == "" && newComment.imgUrl == "")
+        {
+            return res.status(500).json({ error: "Comment not acceptable.. is it blank?" });
+        }
+
+        //push comment into the correct file via its index
         dbUser.files[fileIndex].comments.push(newComment);
         await dbUser.save();
 
@@ -465,6 +506,10 @@ async function addCommentToFile(req, res)
     }
 }
 
+// todo!! fix the refresh button template and code to reflect new changes in the user index
+
+// todo!! uuuhhh news posting?
+
 module.exports = {
     uploadInChunks,
     createPersonalDatabaseEntry,
@@ -473,5 +518,6 @@ module.exports = {
     toggleVisibility,
     sendFile,
     sendSingleUsersFileList,
-    addCommentToFile
+    addCommentToFile,
+    sendCommentFileByIndex
 };
