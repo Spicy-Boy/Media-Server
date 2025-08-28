@@ -99,6 +99,10 @@ nav li div:hover {
 
 /* ^^ TEXT FORMATTING! */
 
+.comment-thumbnail {
+    max-width: 300px;
+}
+
 .user-controls {
     /* position: absolute;
     top: 10px; */

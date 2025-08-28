@@ -73,8 +73,11 @@
 
                 <% if (comment.imgUrl && comment.imgUrl != "") {%>
 
-                    <img class="click-to-enlarge-image" style="padding: 5px;" src="/api/file/sendCommentFileByIndex/<%=targetUser.username%>/<%=file.fileId%>/<%=index%>" style="max-width: 25%;">
+                    <a href="#" class="click-to-enlarge-image" data-img-width="<%=comment.imgWidth%>" data-img-height="<%=comment.imgHeight%>">
 
+                        <img class="comment-thumbnail" style="padding: 5px;" src="/api/file/sendCommentFileByIndex/<%=targetUser.username%>/<%=file.fileId%>/<%=index%>" style="max-width: 25%;">
+
+                    </a>
                 <%}%>
                 
                 <blockquote class="post-message preserve-whitespace"><%=comment.textContent%></blockquote>
@@ -125,5 +128,7 @@
 
     console.log('Finished calculating file size!');
 </script>
+
+<script src="/js/setupClickToEnlargeImages.js"></script>
 
 </html>
