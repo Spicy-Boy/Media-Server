@@ -1,6 +1,8 @@
 const BannedIP = require('../models/bannedIPModel');
 const BannedPath = require('../models/bannedPathModel');
 
+const { localBannedIPs, localBannedPaths } = require('../middlewares/localBanStore');
+
 //vv adds an IP to banlist on db
 async function addIP(req, res)
 {
@@ -9,6 +11,11 @@ async function addIP(req, res)
     try
     {
         await BannedIP.create({ip: ipToBan, reason: reasonForBan});
+
+        if (localBannedIPs)
+        {
+            localBannedIPs.add(pathToBan);
+        }
 
         return res.status(200).send("Successful IP ban!");
     }
@@ -27,6 +34,11 @@ async function addPath(req, res)
     try
     {
         await BannedPath.create({path: pathToBan, reason: reasonForBan});
+
+        if (localBannedPaths)
+        {
+            localBannedPaths.add(pathToBan);
+        }
 
         return res.status(200).send("Successful Path ban!");
     }

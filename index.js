@@ -11,8 +11,10 @@ const fs = require("fs");
 
 const BannedIP = require('./models/bannedIPModel');
 const BannedPath = require('./models/bannedPathModel');
-let localBannedIPs = new Set();
-let localBannedPaths = new Set();
+// vv moved to localBanStore.js in middlewares
+// let localBannedIPs = new Set();
+// let localBannedPaths = new Set();
+const { localBannedIPs, localBannedPaths } = require('./middlewares/localBanStore');
 
 // vv called at startup to populate local lists!
 (async () => {
@@ -28,8 +30,13 @@ app.use(async (req, res, next) => {
     const ip = req.ip;
     const path = req.path;
 
+    //vv tester logging vvv
+    // console.log('path:',path,"ip:",ip);
+
     if (localBannedIPs.has(ip))
     {
+        console.log('DEFLECTED',ip,':)');
+
         return res.status(403).send(":)"); //403 forbidden
     }
     
@@ -75,12 +82,9 @@ mongoSessionStore.on('error', function(error) {
 });
 
 /**LOGGING ~ ~ ~ */
-// TODO: 
-// Simplify to Route / IP / Time of day / User Session
-// Make NOTE if file downloaded or uploaded
-
-app.use(logger("dev"));
-
+// app.use(logger("dev")); // <-- Morgan default
+const ipLogger = require("./middlewares/customLogger");
+app.use(ipLogger);
 /* END LOGGING */
 
 app.use(express.urlencoded({ extended: false }));
