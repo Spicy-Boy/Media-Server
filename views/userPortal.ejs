@@ -14,45 +14,73 @@
         let pageUsername = "<%=targetUser.username%>";
     </script>
 </head>
+
 <!-- ROW TEMPLATE vvv to be cloned with JS -->
 <template id="upload-row-template">
-    <tr data-filename="" data-filesize="" data-filedate="">
+    <!-- dynamic: data-filename, filesize, filedate, and fileId -->
+    <tr data-filename="" data-filesize="" data-filedate="" data-fileId="">
         <td class="upload-list-name-column">
-          <!-- Desktop Link -->
-          <a href="#" class="file-name-link mobile-invisible" id="" data-username=""></a>
-    
-          <!-- Mobile Info -->
-          <div class="mobile-file-details desktop-invisible mobile-file-name-div font-weight-bold">
-            <a href="#" class="file-name-link" id="" style="padding-top: 5px;" data-username=""></a>
-          </div>
-          <div class="mobile-file-details desktop-invisible">
-            <span>
-              🔗<a href="#" class="file-link" style="text-decoration: underline">LINK</a> ~ Size:
-              <span class="fileSize"></span>
-              <span class="publicIcon" style="display: none;"><!--👁️--></span>
-            </span>
-            <br>
-            <span class="uploadDate" style="font-size: 75%;"></span>
-          </div>
+
+            <!-- dynamic: data-fileId, filename -->
+            <input type="checkbox" class="checkbox-file-user-portal" data-fileid="" data-filename="">
+            <!-- Desktop Link w/ file name-->
+            <!-- dynamic: id and data-username -->
+            <a href="#" class="file-name-link mobile-invisible" id="" data-username=""></a>
+            <!-- edit button -->
+            <!-- dynamic: data-fileId -->
+            <button class="edit-file-button-user-portal margin-left-auto" style="float: inline-end;" data-fileid="">✏️</button>
+            
+            <div class="mobile-file-details flex-basis-mobile-name desktop-invisible font-weight-bold">
+                <!-- dynamic: id and data-username -->
+                <a href="#" class="file-name-link file-name-link-mobile" id="" style="padding-top: 5px;" data-username=""></a>
+            </div>
+        
+            <div class="mobile-file-details desktop-invisible" style="justify-content: center; align-items: center;">
+                <span>
+                    <!-- dynamic: a href="/u/:username/:fileId" -->
+                    🔗<a href="" style="text-decoration: underline">LINK</a> ~ Size:
+                    <!-- dynamic: contents of class="fileSize" -->
+                    <span class="fileSize"></span>
+                    <!-- dynamic: span id = "movile-eyeball-FILEID" and if eyeball is printed-->
+                    <span id="">
+                        👁️
+                    </span>
+                </span>
+                <br>
+                <span style="font-size: 75%;">
+                    <!-- dynamic: plain text Uploaded: [calendarDate] -->
+                    Uploaded:
+                </span>
+            </div>
+
         </td>
     
         <td class="upload-list-link-column">
-          <a href="#" class="file-link">LINK</a>
+            <!-- dynamic: a href="[/u/:username/:fileId]" -->
+            <a href="#" class="file-link">LINK</a>
         </td>
     
         <td class="upload-list-size-column">
-          <span class="fileSize"></span>
+            <!-- dynamic: content of class="fileSize" -->
+            <span class="fileSize"></span>
         </td>
     
         <td class="upload-list-date-column">
-          <span class="uploadDate"></span>
-          <div class="tooltip-left publicIconTooltip" style="display: none;">
-            <!-- 👁️ -->
-            <span class="tooltip-text">File is visible to the internet!</span>
-          </div>
+            <!-- dynamic: content of span vv calendarDate -->
+            <span style="display: inline-block; width: 80px;"></span>
+
+            <div class="tooltip-left">
+                <!-- dynamic: id of "desktop-eyeball-[fileId]" -->
+                <span id="">
+                    👁️
+                </span>
+                <span class="tooltip-text">File is visible to the internet!</span>
+            </div>
+
         </td>
       </tr>
 </template>
+
 <body class="user-index-body white">
 
     <%
@@ -144,10 +172,11 @@
                         🔄<span class="underlined">Refresh</span>
                     </div>
                     
+                    <% if (isThisActiveUserPage) {%>
                     <div class="generic-utility-button edit-uploads-button" id="edit-uploads">
                         ✏️<span class="underlined">Edit</span>
                     </div>
-                    
+                    <%}%>
                 </div>
 
                 <div id="edit-toolbar" class="flex-row flex-centered-mobile" style="margin-top: 15px;">
@@ -202,7 +231,6 @@
 
                                 <input type="checkbox" class="checkbox-file-user-portal" data-fileid="<%=file.fileId%>" data-filename="<%=file.name%>">
                                 
-
                                 <a href="#" class="file-name-link mobile-invisible" id="<%=file.fileId%>" data-username="<%=targetUser.username%>"><%=file.name%></a>
                                 
                                 <button class="edit-file-button-user-portal margin-left-auto" style="float: inline-end;" data-fileid="<%=file.fileId%>">✏️</button>

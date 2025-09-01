@@ -136,7 +136,10 @@ const commentSubmissionStatus = document.getElementById('quick-edit-comment-stat
 
 deleteSelectedButton = document.getElementById('delete-selected-uploads');
 deleteSelectedButton.addEventListener("click", () => {
-    selectedFilesToDelete = selectedFiles;
+
+    selectedFilesToDelete = [...selectedFiles];   // spread
+    selectedFilesToDelete = selectedFiles.slice(); // slice
+    selectedFilesToDelete = Array.from(selectedFiles);
 
     if (selectedFilesToDelete.length > 0)
     {
@@ -148,6 +151,7 @@ deleteSelectedButton.addEventListener("click", () => {
         });
     }
 });
+
 async function deleteSelectedFiles()
 {
     if (selectedFilesToDelete.length > 0)
@@ -174,6 +178,14 @@ async function deleteSelectedFiles()
                 quickEditDiv.style.display = "none";
 
                 console.log('Successfully deleted',file.name);
+
+                // REMOVE THE FILE from selectedFiles
+                let deletedIndex = selectedFiles.findIndex(
+                    (f) => f.fileId === file.fileId
+                );
+                if (deletedIndex !== -1) {
+                    selectedFiles.splice(deletedIndex, 1);
+                }
             }
             else
             {
