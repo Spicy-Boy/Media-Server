@@ -47,6 +47,11 @@ async function generateNewUploadList()
         row.setAttribute("data-filename", file.name);
         row.setAttribute("data-filesize", file.size);
         row.setAttribute("data-filedate", file.date);
+        row.setAttribute("data-fileId",file.fileId)
+
+        const checkbox = clonedRow.querySelector("input");
+        checkbox.setAttribute("data-fileid",file.fildId);
+        checkbox.setAttribute("data-filename", file.name);
 
         //grab each instance of file name link and populate it
         clonedRow.querySelectorAll(".file-name-link").forEach(link => {
@@ -54,6 +59,12 @@ async function generateNewUploadList()
             link.id = file.fileId;
             link.setAttribute("data-username", pageUsername); //pageUsername is set in header of main html document
         });
+
+        NOTE AARON the refresh button doesnt actually fix the edit button setup, it completely deletes the event listeners O_O
+        we need to rerun the entire script for setting up edit functionality upon refresh
+
+        const editButton = clonedRow.querySelector("button");
+        editButton.setAttribute("data-fileid",file.fileId);
 
         //grab each instance of file link and populate it with download route
         clonedRow.querySelectorAll(".file-link").forEach(link => {
