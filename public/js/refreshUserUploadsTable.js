@@ -60,8 +60,8 @@ async function generateNewUploadList()
             link.setAttribute("data-username", pageUsername); //pageUsername is set in header of main html document
         });
 
-        NOTE AARON the refresh button doesnt actually fix the edit button setup, it completely deletes the event listeners O_O
-        we need to rerun the entire script for setting up edit functionality upon refresh
+        // NOTE AARON the refresh button doesnt actually fix the edit button setup, it completely deletes the event listeners O_O
+        // we need to rerun the entire script for setting up edit functionality upon refresh
 
         const editButton = clonedRow.querySelector("button");
         editButton.setAttribute("data-fileid",file.fileId);
@@ -88,17 +88,30 @@ async function generateNewUploadList()
         });
 
         //check if file is public facing, add an eyeball emoji w tooltip to end of date column
+        const mobileIcon = clonedRow.querySelector(".mobile-eyeball-span"); //this is the mobile facing eye
+        mobileIcon.id = "mobile-eyeball-"+file.fileId;
+        const desktopIcon = clonedRow.querySelector(".desktop-eyeball-span");
+        desktopIcon.id = "desktop-eyeball-"+file.fileId;
         if (file.isPublic)
         {
-            const icon = clonedRow.querySelector(".publicIcon"); //this is the mobile facing eye
-            icon.innerText = "👁️";
-            icon.style.display = "inline";
-
-            clonedRow.querySelectorAll(".publicIconTooltip").forEach(div => {
-                div.innerHTML = "👁️"+div.innerHTML;
-                div.style.display = "inline";
-            });
+            mobileIcon.style.display = "inline";
+            mobileIcon.innerText = "👁️";
+            desktopIcon.style.display = "inline";
+            desktopIcon.innerText = "👁️";
         }
+        else
+        {
+            mobileIcon.innerText = "";
+            desktopIcon.innerText = "";
+        }
+
+        
+
+        clonedRow.querySelectorAll(".publicIconTooltip").forEach(div => {
+            div.innerHTML = "👁️"+div.innerHTML;
+            div.style.display = "inline";
+        });
+        
 
         tableBody.appendChild(clonedRow);
 

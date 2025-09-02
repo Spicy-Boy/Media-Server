@@ -38,18 +38,18 @@
             <div class="mobile-file-details desktop-invisible" style="justify-content: center; align-items: center;">
                 <span>
                     <!-- dynamic: a href="/u/:username/:fileId" -->
-                    🔗<a href="" style="text-decoration: underline">LINK</a> ~ Size:
+                    🔗<a href="" class="file-link" style="text-decoration: underline">LINK</a> ~ Size:
                     <!-- dynamic: contents of class="fileSize" -->
                     <span class="fileSize"></span>
-                    <!-- dynamic: span id = "movile-eyeball-FILEID" and if eyeball is printed-->
-                    <span id="">
+                    <!-- dynamic: span id = "mobile-eyeball-FILEID" and if eyeball is printed-->
+                    <span class="mobile-eyeball-span" id="">
                         👁️
                     </span>
                 </span>
                 <br>
                 <span style="font-size: 75%;">
                     <!-- dynamic: plain text Uploaded: [calendarDate] -->
-                    Uploaded:
+                    Uploaded: <span class="uploadDate"></span>
                 </span>
             </div>
 
@@ -67,11 +67,11 @@
     
         <td class="upload-list-date-column">
             <!-- dynamic: content of span vv calendarDate -->
-            <span style="display: inline-block; width: 80px;"></span>
+            <span class="uploadDate" style="display: inline-block; width: 80px;"></span>
 
             <div class="tooltip-left">
                 <!-- dynamic: id of "desktop-eyeball-[fileId]" -->
-                <span id="">
+                <span class="desktop-eyeball-span" id="">
                     👁️
                 </span>
                 <span class="tooltip-text">File is visible to the internet!</span>
@@ -251,8 +251,8 @@
                                         </span>
                                     </span>
                                     <br>
-                                    <span style="font-size: 75%;">
-                                        Uploaded: <%=calendarDate%>
+                                    <span class="uploadDate" style="font-size: 75%;">
+                                        Uploaded: <span class="uploadDate"><%=calendarDate%></span>
                                     </span>
                                 </div>
                                 <!-- ^^ mobile information-->
@@ -268,10 +268,10 @@
                             
                             
                             <td class="upload-list-date-column ">
-                            <span style="display: inline-block; width: 80px;"><%=calendarDate%></span>
+                            <span class="uploadDate" style="display: inline-block; width: 80px;"><%=calendarDate%></span>
 
                             <div class="tooltip-left">
-                                <span id="desktop-eyeball-<%=file.fileId%>">
+                                <span class="desktop-eyeball-span" id="desktop-eyeball-<%=file.fileId%>">
                                 <% if (file.isPublic) { %>
                                     👁️
                                 <% } %>  
