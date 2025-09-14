@@ -9,9 +9,45 @@
     <!-- vvv font awesome for useful icons like search glass -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
+    <%
+    let isThisActiveUserPage = false;
+    if (activeUser.username == targetUser.username)
+    {
+        isThisActiveUserPage = true;
+    }
+    %>
+
     <script>
         //these variables are created server-side for use with scripts
         let pageUsername = "<%=targetUser.username%>";
+
+        let isThisActiveUserPageLocalVariable = <%=isThisActiveUserPage%>;
+
+        let files;
+
+        //phones up the API and retrieves a list of uploaded files from the user's database
+        async function getUserFilesFromDB(username)
+        {
+            try {
+                const response = await fetch(`/api/file/sendUsersFileListToWebpage/${username}`, {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                if (!response.ok) {
+                    console.log("Error retrieving user's file list from server: ", response.statusText);
+                }
+
+                const files = await response.json();
+
+                return files;
+
+            } catch (error) {
+                console.log("Needless to say, the refresh button didn't work...");
+            }
+        }
     </script>
 </head>
 
@@ -82,14 +118,6 @@
 </template>
 
 <body class="user-index-body white">
-
-    <%
-    let isThisActiveUserPage = false;
-    if (activeUser.username == targetUser.username)
-    {
-        isThisActiveUserPage = true;
-    }
-    %>
 
     <%- include("./partials/userIndexHeader") %>
 
@@ -407,11 +435,15 @@
 
     <script src="/js/searchUserUploadsTable.js"></script>
 
-    <script src="/js/refreshUserUploadsTable.js"></script>
-
     <%if (isThisActiveUserPage) {%>
     <script src="/js/setupEditFunctionalityUserUploadsTable.js"></script>
+
+    <script>
+        setupEditFunctionality()
+    </script>
     <%}%>
+
+    <script src="/js/refreshUserUploadsTable.js"></script>
 
     </body>
 </html>

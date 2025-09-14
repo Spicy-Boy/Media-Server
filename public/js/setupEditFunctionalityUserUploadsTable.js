@@ -1,46 +1,137 @@
-//NOTE TO AARON:
+//vvv ONLY NEED TO BE SET UP ONCE per page load
+const editFilesButton = document.getElementById('edit-uploads'); //clicked to enable all editting functionality
+const editToolbar = document.getElementById('edit-toolbar'); //a hidden bar containing options like Select All, Delete Selected, and Toggle Visibility (enabled when the editFilesButton above is clicked)
+const quickEditDiv = document.getElementById('quick-edit-div');
+const selectAllButton = document.getElementById('select-all-uploads');
+const deletionWarningDiv = document.getElementById('deletion-warning-div');
+const fileDeletionListDiv = document.getElementById('file-deletion-list-div');
+const trueDeleteButton = document.getElementById('true-delete-button');
+const cancelDeleteButton = document.getElementById('cancel-delete-button');
+cancelDeleteButton.addEventListener("click", () => {
+    deletionWarningDiv.style.display = "none";
+});
+// ^^ set up once per page load
 
-//You need to make sure only admins or the user that uploaded a file can edit its contents
-
-let editFilesButton = document.getElementById('edit-uploads');
-let editToolbar = document.getElementById('edit-toolbar');
-
-let editVisible = false;
-
-//array of all the checkboxes next to the file names
-let allEditCheckboxes = document.querySelectorAll(".checkbox-file-user-portal");
-
-//array of all the edit buttons next to the file names
-let allEditButtons = document.querySelectorAll(".edit-file-button-user-portal");
-
-//button on the utility bar that can select or deselect all uploads
-let selectAllButton = document.getElementById('select-all-uploads');
+/* vv STATES initial vv */
+let editVisible = false; //if true, show editing functionality
 let isSelectAllToggled = false;
-
-// when a file is "selected" by checking its box, its parent DOM element is added to a list to be processed
 let selectedFiles = [];
-let selectedFilesToDelete = [];
-// vv CHECKBOX SELECTION FUNCTIONALITY
-allEditCheckboxes.forEach(box => {
-    box.addEventListener("change", (e) => {
+let selectedFilesToDelete = []; //important to keep this apart from selection list
+let specificFile;
+let allEditCheckboxes;
+let allEditButtons
+/* ^^ STATES initial ^^ */
 
-        if (e.target.checked)
+//NEW vv delegated listener for checkboxes vv
+document.addEventListener("change", (e) => {
+    if (e.target.classList.contains("checkbox-file-user-portal"))
+    {
+        const box = e.target;
+        if (box.checked)
         {
+
             selectedFiles.push({
                 fileId: box.dataset.fileid,
                 name: box.dataset.filename
             });
+            
+            //TESTER vv
+            console.log('Selected',box.dataset.filename);
+            console.log('New Selected List:',selectedFiles);
         }
         else
         {
             selectedFiles = selectedFiles.filter(file => file.fileId !== box.dataset.fileid);
             // ^^ clever little function to filter out the deselected file from the list
         }
-
-        //TESTER vv
-        // console.log("Selected List:",selectedFiles);
-    });
+    }
 });
+
+//delegated listener for pencil/edit buttons
+document.addEventListener("click", async (e) => {
+    if (e.target.classList.contains("edit-file-button-user-portal")) {
+        const fileId = e.target.dataset.fileid;
+        if (!files) { //files and associated function is set in the header of the userPortal.ejs file
+            files = await getUserFilesFromDB(pageUsername);
+        }
+        specificFile = files.find(f => f.fileId == fileId);
+
+        quickEditDiv.style.display = "flex";
+        document.getElementById('quick-edit-filename').textContent = specificFile.name;
+        document.getElementById('quick-edit-filesize').textContent = calculateFileSize(Number(specificFile.size));
+    }
+});
+
+//ensures all boxes vv are unchecked when page loads [ ]
+document.addEventListener("DOMContentLoaded", () => {
+    const allEditCheckboxes = document.querySelectorAll(".checkbox-file-user-portal");
+    allEditCheckboxes.forEach(box => box.checked = false);
+});
+
+function setupEditFunctionality()
+{
+    editVisible = false;
+
+    /* vv STATES vv */ //reset every page load or refresh
+    editVisible = false; //if true, show editing functionality
+    isSelectAllToggled = false;
+    selectedFiles = [];
+    selectedFilesToDelete = []; //important to keep this apart from selection list
+    specificFile = null;
+    allEditCheckboxes = document.querySelectorAll(".checkbox-file-user-portal");
+    allEditButtons = document.querySelectorAll(".edit-file-button-user-portal");
+    /* ^^ STATES ^^ */
+
+    //RESET DOM elements
+    editToolbar.style.display = "none"; 
+    selectAllButton.textContent = "Select All";
+
+    editFilesButton.removeEventListener("click", setupEditButtonSpecifically);
+    editFilesButton.addEventListener("click", setupEditButtonSpecifically);
+}
+
+function setupEditButtonSpecifically()
+{
+    // Grab fresh references to these DOM elements every time, as they will reset with refreshes
+    allEditCheckboxes = document.querySelectorAll(".checkbox-file-user-portal");
+    allEditButtons = document.querySelectorAll(".edit-file-button-user-portal");
+
+    if (!editVisible) 
+    {
+        editToolbar.style.display = "flex";
+        editVisible = true;
+
+        allEditButtons.forEach( button => { 
+            button.style.display = "inline-block"; //make them visible
+        });
+
+        allEditCheckboxes.forEach( box => {
+            box.style.display = "inline-block";
+        });
+    }
+    else
+    {
+        editVisible = false;
+        editToolbar.style.display = "none";
+
+        selectAllButton.textContent = "Select All";
+        isSelectAllToggled = false;
+
+        selectedFiles = []; //reset selected files list
+        selectedFilesToDelete = [];
+
+        allEditButtons.forEach( button => {
+            button.style.display = "none"; //turn them invisible
+        });
+
+        allEditCheckboxes.forEach( box => {
+            //TESTER
+            // console.log(box);
+            box.checked = false;
+            box.style.display = "none";
+        });
+    }
+}
 
 selectAllButton.addEventListener("click", () => {
     if (!isSelectAllToggled)
@@ -73,8 +164,6 @@ selectAllButton.addEventListener("click", () => {
         isSelectAllToggled = false;
     }
 });
-
-const quickEditDiv = document.getElementById('quick-edit-div');
 
 const quickEditCloseButton = document.getElementById('button-close-quick-edit');
 quickEditCloseButton.addEventListener("click", () => {
@@ -121,14 +210,6 @@ toggleVisibilitySelectedButton.addEventListener("click", async () => {
             });
         }
     }
-});
-
-const deletionWarningDiv = document.getElementById('deletion-warning-div');
-const fileDeletionListDiv = document.getElementById('file-deletion-list-div');
-const trueDeleteButton = document.getElementById('true-delete-button');
-const cancelDeleteButton = document.getElementById('cancel-delete-button');
-cancelDeleteButton.addEventListener("click", () => {
-    deletionWarningDiv.style.display = "none";
 });
 
 const commentSubmissionButton = document.getElementById('quick-edit-comment-submission');
@@ -202,65 +283,64 @@ trueDeleteButton.addEventListener("click", async () => {
     deleteSelectedFiles();
 });
 
-let specificFile;
+    // let specificFile;
+    //NOTE: the file list is acquired from the previously loaded refreshUserUploadsTable.js script
+    // simply called "files", this list stores the file objects from the database according to the user's most recent refresh. It is undefined by default
+    // setupAllEditButtons();
+    // async function setupAllEditButtons()
+    // {
+    //     try
+    //     {
+    //         if (files == undefined)
+    //         {
+    //             //if files hasn't been initiated yet, summon it from db
+    //             files = await getUserFilesFromDB(pageUsername); //getUserFilesFromDB is a function from refreshUserUploadsTable.js, as is the files variable itself. As such, refreshUserUploads script must be run before this one!
 
-//NOTE: the file list is acquired from the previously loaded refreshUserUploadsTable.js script
-// simply called "files", this list stores the file objects from the database according to the user's most recent refresh. It is undefined by default
-setupAllEditButtons();
-async function setupAllEditButtons()
-{
-    try
-    {
-        if (files == undefined)
-        {
-            //if files hasn't been initiated yet, summon it from db
-            files = await getUserFilesFromDB(pageUsername); //getUserFilesFromDB is a function from refreshUserUploadsTable.js, as is the files variable itself. As such, refreshUserUploads script must be run before this one!
+    //             //TESTER vv
+    //             // console.log('Files:',files);
+    //         }
 
-            //TESTER vv
-            // console.log('Files:',files);
-        }
+    //         allEditButtons.forEach(button => { 
+                
+    //             //customize the quick edit window that each file-associated event listener will pull up (the pencil edit buttons in the dom for each file)
+    //             // vv when individual edit button is clicked vv
+    //             button.addEventListener("click", async() => {
 
-        allEditButtons.forEach(button => { 
-            
-            //customize the quick edit window that each file-associated event listener will pull up (the pencil edit buttons in the dom for each file)
-            // vv when individual edit button is clicked vv
-            button.addEventListener("click", async() => {
+    //                 // //vv match button's internal file id to the actual fileid from the filelist
+    //                 files.forEach(file =>{
+    //                     if (file.fileId == button.dataset.fileid)
+    //                     {
+    //                         specificFile = file;
+    //                     }
 
-                // //vv match button's internal file id to the actual fileid from the filelist
-                files.forEach(file =>{
-                    if (file.fileId == button.dataset.fileid)
-                    {
-                        specificFile = file;
-                    }
+                        
+    //                     //TESTER vvv
+    //                     // console.log('button id',button.dataset.fileid);
+    //                 })
+
+    //                 //TESTERS vv
+    //                 // console.log(specificFile);
+    //                 // console.log('filename:',specificFile.name);
+
+    //                 quickEditDiv.style.display = "flex";
+
+    //                 quickEditDiv.style.top = "50px";
+    //                 quickEditDiv.style.left = "5px";
+
+    //                 quickEditFileName.textContent = specificFile.name;
+    //                 quickEditFileSize.textContent = calculateFileSize(Number(specificFile.size)); //calculateFileSize is imported from calculateFileSize.js
+
+    //                 commentSubmissionStatus.textContent = "";
 
                     
-                    //TESTER vvv
-                    // console.log('button id',button.dataset.fileid);
-                })
-
-                //TESTERS vv
-                // console.log(specificFile);
-                // console.log('filename:',specificFile.name);
-
-                quickEditDiv.style.display = "flex";
-
-                quickEditDiv.style.top = "50px";
-                quickEditDiv.style.left = "5px";
-
-                quickEditFileName.textContent = specificFile.name;
-                quickEditFileSize.textContent = calculateFileSize(Number(specificFile.size)); //calculateFileSize is imported from calculateFileSize.js
-
-                commentSubmissionStatus.textContent = "";
-
-                
-            });
-        });
-    }
-    catch (error)
-    {
-        console.log('ERROR OCCURED TRYING TO QUERY FILES FROM DATABASE FOR EDIT BUTTON FUNCTIONALITY!',error);
-    }
-}
+    //             });
+    //         });
+    //     }
+    //     catch (error)
+    //     {
+    //         console.log('ERROR OCCURED TRYING TO QUERY FILES FROM DATABASE FOR EDIT BUTTON FUNCTIONALITY!',error);
+    //     }
+    // }
 
 //TOGGLE VISIBILITY! VVV
 quickEditToggleVisibility.addEventListener("click", async () => {
@@ -335,41 +415,44 @@ commentSubmissionButton.addEventListener("click", async (event) => {
     });
 });
 
-editFilesButton.addEventListener("click", (event)=>{
-    if (!editVisible) 
-    {
-        editToolbar.style.display = "flex";
-        editVisible = true;
+    // editFilesButton.addEventListener("click", (event)=>{
+    //     if (!editVisible) 
+    //     {
+    //         editToolbar.style.display = "flex";
+    //         editVisible = true;
 
-        allEditButtons.forEach( button => { 
-            button.style.display = "inline-block"; //make them visible
-        });
+    //         allEditButtons.forEach( button => { 
+    //             button.style.display = "inline-block"; //make them visible
+    //         });
 
-        allEditCheckboxes.forEach( box => {
-            box.style.display = "inline-block";
-        });
-    }
-    else
-    {
-        editVisible = false;
-        editToolbar.style.display = "none";
+    //         allEditCheckboxes.forEach( box => {
+    //             box.style.display = "inline-block";
+    //         });
+    //     }
+    //     else
+    //     {
+    //         editVisible = false;
+    //         editToolbar.style.display = "none";
 
-        selectAllButton.textContent = "Select All";
-        isSelectAllToggled = false;
+    //         selectAllButton.textContent = "Select All";
+    //         isSelectAllToggled = false;
 
-        selectedFiles = []; //reset selected files list
-        selectedFilesToDelete = [];
+    //         selectedFiles = []; //reset selected files list
+    //         selectedFilesToDelete = [];
 
-        allEditButtons.forEach( button => {
-            button.style.display = "none"; //turn them invisible
-        });
+    //         allEditButtons.forEach( button => {
+    //             button.style.display = "none"; //turn them invisible
+    //         });
 
-        allEditCheckboxes.forEach( box => {
-            box.checked = false;
-            box.style.display = "none";
-        });
-    }
-});
+    //         allEditCheckboxes.forEach( box => {
+    //             //TESTER
+    //             // console.log(box);
+    //             box.checked = false;
+    //             box.style.display = "none";
+    //         });
+    //     }
+    // });
+
 
 // DRAG POWER vvv for QUCIK EDIT DIV
 const grabButton = document.getElementById('grab-button-quick-edit');
@@ -405,8 +488,3 @@ function onMouseUp()
     document.removeEventListener('mousemove', onMouseMove);
     document.removeEventListener('mouseup', onMouseUp);
 }
-
-//ensures all boxes vv are unchecked when page loads [ ]
-document.addEventListener("DOMContentLoaded", () => {
-    allEditCheckboxes.forEach(box => box.checked = false);
-});

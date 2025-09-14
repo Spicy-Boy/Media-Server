@@ -10,12 +10,18 @@ refreshButton.addEventListener("click", (event) => {
         generateNewUploadList();
         const searchBar = document.getElementById('search-table');
         searchBar.value = "";
+
+        if (isThisActiveUserPageLocalVariable)
+        {
+            setupEditFunctionality();
+        }
     }
 
 
 });
 
-let files;
+// vv moved to userPortal.ejs or otherwise the header
+// let files;
 
 // async function createInitialFilesList()
 // {
@@ -50,7 +56,7 @@ async function generateNewUploadList()
         row.setAttribute("data-fileId",file.fileId)
 
         const checkbox = clonedRow.querySelector("input");
-        checkbox.setAttribute("data-fileid",file.fildId);
+        checkbox.setAttribute("data-fileid",file.fileId);
         checkbox.setAttribute("data-filename", file.name);
 
         //grab each instance of file name link and populate it
@@ -173,29 +179,5 @@ async function generateNewUploadList()
     //vv called from an already loaded instance of createDownloadLinks.js
     createDownloadLinks();
     tableFullBackup = tableBody.cloneNode(true); //tableFullBackup is set in 
-}
-
-//phones up the API and retrieves a list of uploaded files from the user's database
-async function getUserFilesFromDB(username)
-{
-    try {
-        const response = await fetch(`/api/file/sendUsersFileListToWebpage/${username}`, {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        });
-
-        if (!response.ok) {
-            console.log("Error retrieving user's file list from server: ", response.statusText);
-        }
-
-        const files = await response.json();
-
-        return files;
-
-    } catch (error) {
-        console.log("Needless to say, the refresh button didn't work...");
-    }
 }
 
