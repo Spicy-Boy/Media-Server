@@ -4,6 +4,8 @@ const argon2 = require('argon2')
 // const jwt = require('jsonwebtoken')
 require('dotenv').config()
 
+let userManagementPath = process.env.USER_MANAGEMENT_PATH;
+
 async function loginUser(req, res)
 {
     try
@@ -139,7 +141,7 @@ async function createNewUser(req, res)
         }
         await User.create(newUser);
         
-        res.redirect("/souls");
+        res.redirect(userManagementPath);
     }
     catch (error)
     {
@@ -214,7 +216,7 @@ async function toggleIsFrozen(req, res)
 
         await targetUser.save();
 
-        res.status(200).redirect("/souls");
+        res.status(200).redirect(userManagementPath);
     }
     catch (error) 
     {
@@ -240,7 +242,7 @@ async function toggleIsCurator(req, res)
 
         await targetUser.save();
 
-        res.status(200).redirect("/souls");
+        res.status(200).redirect(userManagementPath);
     }
     catch (error) 
     {
@@ -267,7 +269,7 @@ async function toggleIsUploader(req, res)
 
         await targetUser.save();
 
-        res.status(200).redirect("/souls");
+        res.status(200).redirect(userManagementPath);
     }
     catch (error) 
     {

@@ -99,7 +99,7 @@ async function validateLoginWithRedirect(req, res, next) //FOR VIEWS/PAGES
     {
         if (req.path == "/login") //redirects already logged in users away from /login
         {
-            return res.redirect("/home");
+            return res.redirect("/redirectLogin");
         }
 
         //user session authorized
