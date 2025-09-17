@@ -21,7 +21,7 @@ async function loginAndAttachUserToSession(req, res)
 
         if (!user)
         {
-            return res.redirect("/redirectLogin"); //location: masterRouter.js
+            return res.redirect("/login?loginerror=true"); //location: masterRouter.js
         }
 
         if (user.isFrozen) //prevent login if user has been frozen
@@ -50,6 +50,10 @@ async function loginAndAttachUserToSession(req, res)
             }
 
             return res.redirect("/redirectLogin"); //redirectLogin is like grand central station, it is inside masterRouter.js
+        }
+        else
+        {
+            return res.redirect("/login?loginerror=true");
         }
     }
     catch(error)
