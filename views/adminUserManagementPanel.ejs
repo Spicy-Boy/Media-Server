@@ -397,4 +397,11 @@
 
 </script>
 
+<script>
+    // RESET all the inputs on the page so they are blank on load
+    window.addEventListener("load", function() {
+        document.querySelectorAll("input").forEach(input => input.value = "");
+    });
+</script>
+
 </html>

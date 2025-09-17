@@ -40,7 +40,9 @@ async function addPath(req, res)
             localBannedPaths.add(pathToBan);
         }
 
-        return res.status(200).send("Successful Path ban!");
+        // return res.status(200).send("Successful Path ban!");
+        console.log('Banned path:',pathToBan);
+        return res.status(200).redirect(process.env.USER_MANAGEMENT_PATH);
     }
     catch (error)
     {
