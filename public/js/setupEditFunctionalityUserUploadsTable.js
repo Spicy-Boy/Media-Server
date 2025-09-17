@@ -255,7 +255,8 @@ async function deleteSelectedFiles()
             if (data.isDeleted)
             {
                 const fileToRemoveFromDOM = document.querySelector(`[data-fileId="${file.fileId}"]`);
-                fileToRemoveFromDOM.style.display = "none";
+                // fileToRemoveFromDOM.style.display = "none"; // OLD!!! doesnt work with revamped search code
+                fileToRemoveFromDOM.remove();
                 quickEditDiv.style.display = "none";
 
                 console.log('Successfully deleted',file.name);
