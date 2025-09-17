@@ -173,6 +173,13 @@ async function generateNewUploadList()
 
         // tableBody.appendChild(row);
     });
+
+    // VV IMPORTANT for search bar functionality!!
+    let tableBodyToSearch = document.getElementById('listBody'); //id of table on user portal is "list"
+    // vv saved HTML to be restored after highlighting is done
+    tableBodyToSearch.querySelectorAll(".file-name-link").forEach(link => {
+        link.dataset.originalHTML = link.innerHTML;
+    });
     
     refreshInProgress = false;
 

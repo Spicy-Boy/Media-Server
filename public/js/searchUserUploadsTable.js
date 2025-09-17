@@ -3,56 +3,63 @@
 const searchBar = document.getElementById('search-table');
 searchBar.value = "";
 searchBar.focus();
-let tableBodyToSearch = document.getElementById('listBody') //id of table on user portal is "list"
 
-let searchedTableBody = tableBodyToSearch.cloneNode(true); //we work with searchedTable so as not to screw up the original tableBodyToSearch... not greatest naming scheme lol
-searchedTableBody.innerHTML = "";
+let tableBodyToSearch = document.getElementById('listBody'); //id of table on user portal is "list"
 
-searchBar.addEventListener("input", ()=>{
+// vv saved HTML to be restored after highlighting is done
+tableBodyToSearch.querySelectorAll(".file-name-link").forEach(link => {
+    link.dataset.originalHTML = link.innerHTML;
+});
+
+// searchBar.addEventListener("click", () => {
+//     tableBodyToSearch.querySelectorAll(".file-name-link").forEach(link => {
+//         link.dataset.originalHTML = link.innerHTML;
+//     });
+// });
+
+searchBar.addEventListener("input", () => {
     const queryUntouched = searchBar.value; //saved for formatting later
     const query = queryUntouched.trim().toLowerCase();
-    searchedTableBody.innerHTML = "";
-
     //tester vvv
     // console.log('queryUntouched:',queryUntouched,"\nquery:",query);
 
-    if (query == "")
-    {
-        searchedTableBody.replaceWith(tableBodyToSearch);
-        //vv TESTER
-        // console.log('BLANK');
-        return;
-    }
-
     const rows = tableBodyToSearch.querySelectorAll("tr"); //grab each row out of the table
+
+    if (query == "") //reset table visibility when searchbar empty
+    {
+        rows.forEach(row => {
+            row.style.display = '';
+            row.querySelectorAll('.file-name-link').forEach(link => {
+                if (link.dataset.originalHTML)
+                {
+                    link.innerHTML = link.dataset.originalHTML; //reset the link to its pre-highlighted html
+                } 
+            });
+    });
+    }
 
     rows.forEach(row => {
         
-        const fileTitles = row.querySelectorAll(".file-name-link"); //presumably 2 per row, mobile and desktop formatted title elements
+        const fileTitleLinks = row.querySelectorAll(".file-name-link"); //presumably 2 per row, mobile and desktop formatted title elements
 
-        if (fileTitles[0].textContent.toLowerCase().includes(query)) {
-        //tester vv
+        if (fileTitleLinks[0].textContent.toLowerCase().includes(query)) 
+        {
+            //tester vv
             // console.log('MATCH!', row);
 
-            const clonedRow = row.cloneNode(true);
+            row.style.display = "";
 
-            fileTitles.forEach( title => {
+            fileTitleLinks.forEach( titleLink => {
                 
-                let highlightedFileTitles = clonedRow.querySelectorAll(".file-name-link");
+                const originalTitle = titleLink.dataset.originalHTML;
 
-                highlightedFileTitles.forEach(highlightedTitle => {
-
-                    textToHighlight = highlightedTitle.textContent;
-
-                    //A REGULAR EXPRESSION!~
-                    const regex = new RegExp(`(${query})`, 'gi');
-                    const highlightedHTML = textToHighlight.replace(regex, '<span style="background-color: yellow;">$1</span>');
-
-                    highlightedTitle.innerHTML = highlightedHTML;
-                });
+                const regex = new RegExp(`(${query})`, 'gi');
+                titleLink.innerHTML = originalTitle.replace(regex, '<span style="background-color: yellow;">$1</span>');
             });
-
-            searchedTableBody.appendChild(clonedRow);
+        }
+        else
+        {
+            row.style.display = 'none';
         }
     //tester vvv
         // else
@@ -65,8 +72,6 @@ searchBar.addEventListener("input", ()=>{
     const blankSpace = document.createElement("div");
     blankSpace.style.height = "200px";
     pageWrapper.appendChild(blankSpace);
-
-    tableBodyToSearch.replaceWith(searchedTableBody);
 
     createDownloadLinks();
 });
