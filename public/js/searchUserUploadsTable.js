@@ -11,11 +11,9 @@ tableBodyToSearch.querySelectorAll(".file-name-link").forEach(link => {
     link.dataset.originalHTML = link.innerHTML;
 });
 
-// searchBar.addEventListener("click", () => {
-//     tableBodyToSearch.querySelectorAll(".file-name-link").forEach(link => {
-//         link.dataset.originalHTML = link.innerHTML;
-//     });
-// });
+function escapeRegExp(string) { //gets rid of the weird regex codes so they don't mess with my search
+  return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
 
 searchBar.addEventListener("input", () => {
     const queryUntouched = searchBar.value; //saved for formatting later
@@ -53,7 +51,7 @@ searchBar.addEventListener("input", () => {
                 
                 const originalTitle = titleLink.dataset.originalHTML;
 
-                const regex = new RegExp(`(${query})`, 'gi');
+                const regex = new RegExp(`(${escapeRegExp(query)})`, 'gi');
                 titleLink.innerHTML = originalTitle.replace(regex, '<span style="background-color: yellow;">$1</span>');
             });
         }
