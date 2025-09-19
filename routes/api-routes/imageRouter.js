@@ -12,7 +12,9 @@ const {
 } = require("../../middlewares/authRemaster");
 
 const {
-    createImageDatabaseEntry
+    createImageDatabaseEntry,
+    getImagesByUsername,
+    sendImageById
 } = require("../../controllers/imageController");
 
 router.post("/uploadImageWithMulter", validateLogin, updateUserPermissionsAndFiles, validateIsUploader,
@@ -28,5 +30,10 @@ router.post("/uploadImageWithMulter", validateLogin, updateUserPermissionsAndFil
     })
 }
 , createImageDatabaseEntry);
+
+// /api/images/getImagesByUsername/:username
+router.get("/getImagesByUsername/:username", validateLogin, updateUserPermissionsAndFiles, getImagesByUsername);
+
+router.get("/sendImageById/:imageId", validateLogin, sendImageById);
 
 module.exports = router;

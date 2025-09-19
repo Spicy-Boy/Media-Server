@@ -19,7 +19,38 @@
         body {
             background-color: black;
         }
+
+        .gallery-segment-day {
+            padding: 10px;
+            width: 95%;
+        }
+
+        .gallery-segment-date-label {
+            margin-top: 5px;
+            color: white;
+        }
+
+        .gallery-segment-pictures {
+            width: 95%;
+        }
+
+        .gallery-image {
+            width: 100px;
+            height: 100px;
+            background-color: red;
+
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            cursor: pointer;
+            margin: 5px;
+            
+        }
     </style>
+
+    <script>
+        let pageUsername = "<%=targetUser.username%>";
+    </script>
 
 </head>
 
@@ -40,6 +71,30 @@
     </div>
     <div id="upload-console" style="max-height: 200px; overflow-y: auto" class="flex-column">
 
+    </div>
+
+    <div id="gallery" class="flex-column flex-centered">
+        <!-- GALLERY HOLDER -->
+         
+        <div class="gallery-segment-day flex-column">
+
+            <div class="gallery-segment-date-label">
+                <h1>July 10th, 2025</h1>
+            </div>
+
+            <div class="gallery-segment-pictures flex-row flex-wrap">
+                <div class="gallery-image" style="background-image: url('/images/800px-Luddite.jpg')">
+
+                </div>
+            </div>
+
+        </div>
+        <!-- GALLERY HOLDER -->
+    </div>
+
+    <!-- vvv the lightbox from which images are displayed! -->
+    <div id="image-display" class="hidden"> 
+        
     </div>
 </body>
 
@@ -139,6 +194,38 @@
         return uploadConsole.appendChild(consoleMessage);
     }
 
+</script>
+
+<script>
+
+    runFetch();
+
+    async function runFetch()
+    {
+        let images = await fetchImagesByUsername(pageUsername);
+        console.log(images);
+    }
+
+    async function fetchImagesByUsername(username) 
+    {
+        try
+        {
+            const response = await fetch("/api/image/getImagesByUsername/"+username, {
+                method: "GET"
+            });
+
+            const data = await response.json();
+
+            console.log(data);
+            return data;
+
+        }
+        catch (error)
+        {
+            console.log('fetchImagesByUsername failed!', error);
+        }
+
+    }
 </script>
 
 </html>

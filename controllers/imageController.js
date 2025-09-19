@@ -4,9 +4,44 @@ const Image = require("../models/imageModel")
 const sharp = require('sharp');
 const ExifParser = require('exif-parser');
 
-async function getImagesByUser(req, res)
+async function getImagesByUsername(req, res)
 {
-    
+    let username = req.params.username;
+
+    try
+    {
+        const images = await Image.find({ username }).sort({ imgDate: 1 });
+
+        res.status(200).send(images);
+    }
+    catch (error)
+    {
+        console.log('getImagesByUsername failed:',error);
+        res.status(400).json({
+          success: false,
+          errorMsg: "Failed to retrieve images from server - internal error!"
+        });
+    }
+}
+
+async function sendImageById(req, res)
+{
+    let imgId = req.params.imageId
+
+    try
+    {
+        const images = await Image.find({ imgId }).sort({ imgDate: 1 });
+
+        res.status(200).send(images);
+    }
+    catch (error)
+    {
+        console.log('getImagesByUsername failed:',error);
+        res.status(400).json({
+          success: false,
+          errorMsg: "Failed to retrieve images from server - internal error!"
+        });
+    }
 }
 
 async function createImageDatabaseEntry(req, res)
@@ -80,5 +115,7 @@ function getPhotoTakenDate(filePath) {
 }
 
 module.exports = {
-    createImageDatabaseEntry
+    createImageDatabaseEntry,
+    getImagesByUsername,
+    sendImageById
 };
