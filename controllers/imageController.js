@@ -4,6 +4,11 @@ const Image = require("../models/imageModel")
 const sharp = require('sharp');
 const ExifParser = require('exif-parser');
 
+async function getImagesByUser(req, res)
+{
+    
+}
+
 async function createImageDatabaseEntry(req, res)
 {
     try
@@ -69,7 +74,7 @@ function getPhotoTakenDate(filePath) {
             return false;                       // fallback to Jan 1, 1970
         }
     } catch (err) {
-        console.error("Failed to read EXIF data:", err);
+        console.error("Refering to modified date -> Failed to read EXIF data:", err);
         return false;                           // fallback
     }
 }
