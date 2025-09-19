@@ -53,10 +53,10 @@
             left: 50%;
             transform: translate(-50%, -50%);
 
-            width: 99%;
-            height: 99%;
+            width: 100%;
+            height: 100%;
 
-            background-color: blue;
+            background-color: rgba(0, 0, 0, 0.685);
 
             display: flex;
             align-items: center;
@@ -71,6 +71,14 @@
 
         .hidden {
             display: none !important;
+        }
+
+        .close {
+            position: absolute;
+            top: 5px; right: 20px;
+            font-size: 40px;
+            color: white;
+            cursor: pointer;
         }
     </style>
 
@@ -122,6 +130,7 @@
 
     <!-- vvv the lightbox from which images are displayed! -->
     <div id="image-display" class="hidden"> 
+        <span onclick="closeDisplay()" class="close">&times;</span>
         <img id="image-to-be-displayed" src="" alt="A beautiful picture projected from magic box.">
     </div>
 </body>
@@ -267,6 +276,10 @@
         const image = document.getElementById('image-to-be-displayed');
         image.src = src;
         display.classList.remove("hidden");
+    }
+
+    function closeDisplay() {
+        document.getElementById("image-display").classList.add("hidden");
     }
 
 </script>
