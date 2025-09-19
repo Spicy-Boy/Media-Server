@@ -46,6 +46,32 @@
             margin: 5px;
             
         }
+
+        #image-display {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+
+            width: 99%;
+            height: 99%;
+
+            background-color: blue;
+
+            display: flex;
+            align-items: center;
+            justify-content: center; 
+        }
+        #image-to-be-displayed {
+            max-width: 99%;
+            max-height: 99%;
+
+            text-align: center;
+        }
+
+        .hidden {
+            display: none !important;
+        }
     </style>
 
     <script>
@@ -83,9 +109,11 @@
             </div>
 
             <div class="gallery-segment-pictures flex-row flex-wrap">
-                <div class="gallery-image" style="background-image: url('/images/800px-Luddite.jpg')">
 
-                </div>
+                <div class="gallery-image" style="background-image: url('/images/800px-Luddite.jpg')" onClick="openFullImage('/images/800px-Luddite.jpg')"></div>
+
+                <div class="gallery-image" style="background-image: url('/images/landscape.jpg')" onClick="openFullImage('/images/landscape.jpg')"></div>
+
             </div>
 
         </div>
@@ -94,7 +122,7 @@
 
     <!-- vvv the lightbox from which images are displayed! -->
     <div id="image-display" class="hidden"> 
-        
+        <img id="image-to-be-displayed" src="" alt="A beautiful picture projected from magic box.">
     </div>
 </body>
 
@@ -113,7 +141,7 @@
     uploadButton.addEventListener("click", async (event) => {
         event.preventDefault();
         // TESTER VV
-        console.log(fileInput.files);
+        // console.log(fileInput.files);
 
         fileNo = 1;
 
@@ -203,7 +231,8 @@
     async function runFetch()
     {
         let images = await fetchImagesByUsername(pageUsername);
-        console.log(images);
+        //TESTER vv
+        // console.log(images);
     }
 
     async function fetchImagesByUsername(username) 
@@ -216,7 +245,8 @@
 
             const data = await response.json();
 
-            console.log(data);
+            //TESTER vv
+            // console.log(data);
             return data;
 
         }
@@ -226,6 +256,19 @@
         }
 
     }
+</script>
+
+<script>
+    
+    function openFullImage(src)
+    {
+        console.log('OPENING!');
+        const display = document.getElementById('image-display');
+        const image = document.getElementById('image-to-be-displayed');
+        image.src = src;
+        display.classList.remove("hidden");
+    }
+
 </script>
 
 </html>
