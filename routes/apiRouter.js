@@ -4,7 +4,7 @@ const path = require("path");
 const {
     loginAndAttachUserToSession,
     validateLogin,
-    validateIsLoginWithRedirect,
+    validateLoginWithRedirect,
     validateLoginConditionallyForFile,
     updateUserPermissionsAndFiles,
     validateAdminAuth,
@@ -24,6 +24,9 @@ router.use("/user", userRouter);
 
 const fileRouter = require("./api-routes/fileRouter");
 router.use("/file", fileRouter);
+
+const imageRouter = require("./api-routes/imageRouter")
+router.use("/image", imageRouter);
 
 const aiRouter = require("./api-routes/aiRouter");
 router.use("/ai", aiRouter);

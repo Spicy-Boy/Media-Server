@@ -53,6 +53,11 @@ const userSchema = new mongoose.Schema(
                 ],
             }
         ],
+        // images: [ //proposal, not implemented yet... is it smart?
+        //     {
+        //         imgId: String,
+        //     }
+        // ],
         created: { 
             type: Date,
             default: Date.now
@@ -72,7 +77,7 @@ const userSchema = new mongoose.Schema(
             default: false
         },
         isFrozen: {
-            //frozen users are prevented (via middleware) from performing any requests whatsoever... Gotta figure that out lol
+            //frozen users are prevented (via middleware) from performing any requests whatsoever... I think... value is checked in the validateLogin function of authRemaster
             type: Boolean,
             default: false
         }

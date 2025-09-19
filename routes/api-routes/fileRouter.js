@@ -39,7 +39,7 @@ router.get("/sendFileToWebpage/:username/:fileId", validateLoginConditionallyFor
 
 router.get("/sendUsersFileListToWebpage/:username", validateLogin, sendSingleUsersFileList);
 
-router.post("/delete/:fileId", validateLogin, deleteFile);
+router.post("/delete/:fileId", validateLogin, updateUserPermissionsAndFiles, validateIsUploader, deleteFile);
 router.post("/toggleVisibility/:fileId", validateLogin, toggleVisibility);
 
 module.exports = router;

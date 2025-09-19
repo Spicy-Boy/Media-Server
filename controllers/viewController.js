@@ -162,7 +162,6 @@ async function renderAdminFunPanel(req, res)
     }
 }
 
-
 async function renderUserManagementPanel(req, res)
 {
     try {
@@ -176,6 +175,29 @@ async function renderUserManagementPanel(req, res)
         }
         console.error(errorObj);
         res.json("SORRY! Something went wrong loading the adminUserManagementPanel.");
+    }
+}
+
+async function renderBasicImageHub(req, res)
+{
+    try 
+    {
+        const {username} = req.params;
+
+        let targetUser;
+
+        targetUser = await User.findOne({ username });
+
+        if (targetUser)
+        {
+            targetUser.password = ""; //client doesnt actually see targetUser, the render engine that builds the ejs html does!
+            targetUser.files = null;
+            res.render("imageHubBasic", {targetUser});
+        }
+    } catch (error)
+    {
+        console.error(errorObj);
+        res.json("SORRY! Something went wrong loading the renderBasicImageHub.");
     }
 }
 
