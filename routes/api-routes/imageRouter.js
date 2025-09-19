@@ -12,7 +12,6 @@ const {
 } = require("../../middlewares/authRemaster");
 
 const {
-    uploadImageWithMulter,
     createImageDatabaseEntry
 } = require("../../controllers/imageController");
 
@@ -28,6 +27,6 @@ router.post("/uploadImageWithMulter", validateLogin, updateUserPermissionsAndFil
       next(); // continue to next middleware if no error
     })
 }
-, uploadImageWithMulter);
+, createImageDatabaseEntry);
 
 module.exports = router;

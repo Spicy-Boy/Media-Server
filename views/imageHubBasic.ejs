@@ -15,10 +15,130 @@
     }
     %>
 
+    <style>
+        body {
+            background-color: black;
+        }
+    </style>
+
 </head>
 
 <body>
+    <div class="flex-row flex-centered">
+        <%if (isThisActiveUserPage) {%>
+        <form class="suicune-form flex-column flex-centered" style="width: 99%;" enctype="multipart/form-data" method="post">
+            <img src="/images/smeargle.png">
+            <div id="upload-files" style="margin-bottom: 15px;">
+                <label for="images-input">Choose images to upload: </label>
+                <input id="images-input" name="uploaded_file" type="file" multiple>
+            </div>
 
+            <input type="submit" value="BEGIN UPLOAD" id="upload-button">
+
+        </form>
+        <%}%>
+    </div>
+    <div id="upload-console" style="max-height: 200px; overflow-y: auto" class="flex-column">
+
+    </div>
 </body>
+
+<script> //script for uploading files when the BEGIN UPLOAD button is pressed
+
+    //much of this code is adapted from simpleUploadLogin.js to handle the client side of file uploading vv
+
+    const uploadButton = document.getElementById('upload-button');
+    const fileInput = document.getElementById('images-input');
+
+    const uploadConsole = document.getElementById('upload-console'); //attach DOM elements to this to keep the user informed of their upload progress
+
+    let fileNo = 1;
+    let fileName = "";
+
+    uploadButton.addEventListener("click", async (event) => {
+        event.preventDefault();
+        // TESTER VV
+        console.log(fileInput.files);
+
+        fileNo = 1;
+
+        let files = fileInput.files;
+
+        let numberOfFiles = files.length;
+
+
+        for (const file of files)
+        {
+            const lastModifiedTimestamp = file.lastModified;
+            //TESTER vv
+            const lastModifiedDate = new Date(lastModifiedTimestamp);
+            console.log(lastModifiedDate);
+            //TESTER ^^
+
+            fileName = file.name;
+
+            console.log('('+fileNo+'/'+numberOfFiles+') Preparing to upload:',fileName);
+            addUploadToConsoleDOM(numberOfFiles);
+            try
+            {
+                const formData = new FormData();
+                formData.append("uploaded_file", file); //uploaded_file matches the parameter expected by multer in the route definition
+                formData.append("lastModified", lastModifiedTimestamp)
+                const response = await fetch("/api/image/uploadImageWithMulter", {
+                    method: "POST",
+                    body: formData,
+                });
+
+                const result = await response.json();
+                if (result.success)
+                {
+                    console.log('Successfully uploaded',fileName);
+                    addUploadStatusToConsoleDOM(result.success, result.errorMsg);
+                }
+                else
+                {
+                    console.log('Failed to upload',fileName);
+                    addUploadStatusToConsoleDOM(result.success, result.errorMsg);
+                }
+            }
+            catch (error)
+            {
+                console.log('Request to upload failed!', error);
+            }
+
+            // addUploadStatusToConsoleDOM(true, null);
+            fileNo++; //END
+        }
+
+    });
+
+    function addUploadToConsoleDOM(numberOfFiles)
+    {
+        const consoleMessage = document.createElement("div");
+        consoleMessage.innerText = '('+fileNo+'/'+numberOfFiles+') Preparing to upload: '+fileName;
+        consoleMessage.style.color = "white";
+        return uploadConsole.appendChild(consoleMessage);
+    }
+    function addUploadStatusToConsoleDOM(success, statusMessage)
+    {
+        if (!statusMessage)
+        {   
+            statusMessage = "NO MESSAGE";
+        }
+        const consoleMessage = document.createElement("div");
+        consoleMessage.textContent = "Successful? "+success+" - Status: "+statusMessage;
+        if (!success)
+        {
+            consoleMessage.style.color = "red";
+        }
+        else
+        {
+            consoleMessage.style.color = "white";
+        }
+
+        return uploadConsole.appendChild(consoleMessage);
+    }
+
+</script>
 
 </html>

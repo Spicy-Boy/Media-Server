@@ -210,5 +210,6 @@ module.exports = {
     renderUserIndexPage,
     renderIndividualFilePage,
     renderAdminFunPanel,
-    renderUserManagementPanel
+    renderUserManagementPanel,
+    renderBasicImageHub
 }

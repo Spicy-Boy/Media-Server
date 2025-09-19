@@ -8,7 +8,7 @@ const storage = multer.diskStorage({
         {
             //path is image drive -> username folder "[username]_images"
             //ex: public/images/aaron_images/happy.png
-            let imagePath = process.env.IMAGE_DELIVERY_LOCATION+"/"+req.body.username+"_images/"
+            let imagePath = process.env.IMAGE_DELIVERY_LOCATION+"/"+req.session.activeUser.username+"_images/"
 
             fs.mkdirSync(imagePath, { recursive: true });
 

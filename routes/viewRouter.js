@@ -16,7 +16,8 @@ const {
     renderUserIndexPage,
     renderIndividualFilePage,
     renderAdminFunPanel,
-    renderUserManagementPanel
+    renderUserManagementPanel,
+    renderBasicImageHub
 } = require("../controllers/viewController");
 
 router.get("/login", renderLoginPage);
@@ -41,6 +42,8 @@ router.get("/home", validateLoginWithRedirect, renderHomePage);
 // vv if no :username parameter, send to session page
 router.get("/u", validateLoginWithRedirect, updateUserPermissionsAndFiles, validateIsUploader, renderUserIndexPage);
 router.get("/u/:username", validateLoginWithRedirect, updateUserPermissionsAndFiles, validateIsUploader, renderUserIndexPage);
+
+router.get("/i/:username", validateLoginWithRedirect, updateUserPermissionsAndFiles, validateIsUploader, renderBasicImageHub);
 
 router.get("/ai", validateLoginWithRedirect, updateUserPermissionsAndFiles, validateIsUploader, (req, res) => {
     res.sendFile(path.join(__dirname, "../public/html/aiQueryPage.html"));
