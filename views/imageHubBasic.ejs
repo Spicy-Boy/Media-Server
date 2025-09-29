@@ -30,7 +30,7 @@
             color: white;
         }
 
-        .gallery-segment-pictures {
+        .gallery-picture-container {
             width: 95%;
         }
 
@@ -116,7 +116,7 @@
                 <h1>July 10th, 2025</h1>
             </div>
 
-            <div class="gallery-segment-pictures flex-row flex-wrap">
+            <div class="gallery-picture-container flex-row flex-wrap">
 
                 <div class="gallery-image" style="background-image: url('/images/800px-Luddite.jpg')" onClick="openFullImage('/images/800px-Luddite.jpg')"></div>
 
@@ -129,17 +129,41 @@
     </div>
 
     <!-- vvv the lightbox from which images are displayed! -->
-    <div id="image-display" class="hidden"> 
+    <div id="image-display" class="hidden" onClick="closeDisplayOnClickingBackdrop(event)"> 
         <span onclick="closeDisplay()" class="close">&times;</span>
         <img id="image-to-be-displayed" src="" alt="A beautiful picture projected from magic box.">
     </div>
 </body>
 
-<script>
+<script> //script for enlarging selected image
 
-    runFetch();
+    function closeDisplayOnClickingBackdrop(event) {
+        // Only trigger close if the backdrop itself was clicked
+        if (event.target.id === "image-display") {
+            closeDisplay();
+        }
+    }
+    
+    function openFullImage(src)
+    {
+        console.log('OPENING!');
+        const display = document.getElementById('image-display');
+        const image = document.getElementById('image-to-be-displayed');
+        image.src = src;
+        display.classList.remove("hidden");
+    }
 
-    async function runFetch()
+    function closeDisplay() {
+        document.getElementById("image-display").classList.add("hidden");
+    }
+
+</script>
+
+<script> //script for fetching list of images from the database
+
+    populateImagesObjectFromDatabase();
+
+    async function populateImagesObjectFromDatabase()
     {
         let images = await fetchImagesByUsername(pageUsername);
         //TESTER vv
@@ -167,23 +191,6 @@
         }
 
     }
-</script>
-
-<script> //script for enlarging selected image
-    
-    function openFullImage(src)
-    {
-        console.log('OPENING!');
-        const display = document.getElementById('image-display');
-        const image = document.getElementById('image-to-be-displayed');
-        image.src = src;
-        display.classList.remove("hidden");
-    }
-
-    function closeDisplay() {
-        document.getElementById("image-display").classList.add("hidden");
-    }
-
 </script>
 
 <script> // ^_^ script for uploading files when the BEGIN UPLOAD button is pressed
