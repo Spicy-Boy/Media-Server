@@ -135,7 +135,58 @@
     </div>
 </body>
 
-<script> //script for uploading files when the BEGIN UPLOAD button is pressed
+<script>
+
+    runFetch();
+
+    async function runFetch()
+    {
+        let images = await fetchImagesByUsername(pageUsername);
+        //TESTER vv
+        // console.log(images);
+    }
+
+    async function fetchImagesByUsername(username) 
+    {
+        try
+        {
+            const response = await fetch("/api/image/getImagesByUsername/"+username, {
+                method: "GET"
+            });
+
+            const data = await response.json();
+
+            //TESTER vv
+            // console.log(data);
+            return data;
+
+        }
+        catch (error)
+        {
+            console.log('fetchImagesByUsername failed!', error);
+        }
+
+    }
+</script>
+
+<script> //script for enlarging selected image
+    
+    function openFullImage(src)
+    {
+        console.log('OPENING!');
+        const display = document.getElementById('image-display');
+        const image = document.getElementById('image-to-be-displayed');
+        image.src = src;
+        display.classList.remove("hidden");
+    }
+
+    function closeDisplay() {
+        document.getElementById("image-display").classList.add("hidden");
+    }
+
+</script>
+
+<script> // ^_^ script for uploading files when the BEGIN UPLOAD button is pressed
 
     //much of this code is adapted from simpleUploadLogin.js to handle the client side of file uploading vv
 
@@ -157,7 +208,6 @@
         let files = fileInput.files;
 
         let numberOfFiles = files.length;
-
 
         for (const file of files)
         {
@@ -211,6 +261,7 @@
         consoleMessage.style.color = "white";
         return uploadConsole.appendChild(consoleMessage);
     }
+
     function addUploadStatusToConsoleDOM(success, statusMessage)
     {
         if (!statusMessage)
@@ -229,57 +280,6 @@
         }
 
         return uploadConsole.appendChild(consoleMessage);
-    }
-
-</script>
-
-<script>
-
-    runFetch();
-
-    async function runFetch()
-    {
-        let images = await fetchImagesByUsername(pageUsername);
-        //TESTER vv
-        // console.log(images);
-    }
-
-    async function fetchImagesByUsername(username) 
-    {
-        try
-        {
-            const response = await fetch("/api/image/getImagesByUsername/"+username, {
-                method: "GET"
-            });
-
-            const data = await response.json();
-
-            //TESTER vv
-            // console.log(data);
-            return data;
-
-        }
-        catch (error)
-        {
-            console.log('fetchImagesByUsername failed!', error);
-        }
-
-    }
-</script>
-
-<script>
-    
-    function openFullImage(src)
-    {
-        console.log('OPENING!');
-        const display = document.getElementById('image-display');
-        const image = document.getElementById('image-to-be-displayed');
-        image.src = src;
-        display.classList.remove("hidden");
-    }
-
-    function closeDisplay() {
-        document.getElementById("image-display").classList.add("hidden");
     }
 
 </script>

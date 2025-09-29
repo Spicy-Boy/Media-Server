@@ -186,7 +186,15 @@ async function renderBasicImageHub(req, res)
 
         let targetUser;
 
-        targetUser = await User.findOne({ username });
+        if (username)
+        {
+            targetUser = await User.findOne({ username });
+        }
+        else
+        {
+            targetUser = req.session.activeUser;
+        }
+
 
         if (targetUser)
         {
@@ -196,7 +204,7 @@ async function renderBasicImageHub(req, res)
         }
     } catch (error)
     {
-        console.error(errorObj);
+        console.error(error);
         res.json("SORRY! Something went wrong loading the renderBasicImageHub.");
     }
 }
