@@ -14,7 +14,8 @@ const {
 const {
     createImageDatabaseEntry,
     getImagesByUsername,
-    sendImageById
+    sendImageById,
+    createGalleryFromMongoIds
 } = require("../../controllers/imageController");
 
 router.post("/uploadImageWithMulter", validateLogin, updateUserPermissionsAndFiles, validateIsUploader,
@@ -35,5 +36,7 @@ router.post("/uploadImageWithMulter", validateLogin, updateUserPermissionsAndFil
 router.get("/getImagesByUsername/:username", validateLogin, updateUserPermissionsAndFiles, getImagesByUsername);
 
 router.get("/sendImageById/:imageId", validateLogin, sendImageById);
+
+router.post("/createGalleryFromMongoIds", validateLogin, createGalleryFromMongoIds);
 
 module.exports = router;

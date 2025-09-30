@@ -15,63 +15,101 @@ const { v4: uuidv4 } = require('uuid');
 ### The gallery is presented to the user through its view, if a user is authorized to view it ###
 */
 
+// const gallerySchema = new mongoose.Schema(
+//     {
+//         creator: { //reference uuid of user that created the gallery!
+//             type: String,
+//             required: true,
+//             unique: true
+//         },
+//         title: String,
+//         isPublic: { //NOT USED yet.. for public web sharing of galleries!
+//             type: Boolean,
+//             required: true,
+//             default: false
+//         },
+//         password: { //password used to access gallery. If null, bypass
+//             type: String,
+//             required: true,
+//             default: null
+//         },
+//         authorizedViewers: //can view gallery
+//         [{
+//             userId: { //uuid of a user authorized to view the gallery
+//                 type: String,
+//                 required: true,
+//                 unique: true
+//             }
+            
+//         }],
+//         authorizedContributors:  //can view and upload to gallery
+//         [{
+//             userId: { //uuid of user authorized to contribute and make changes to
+//                 type: String,
+//                 required: true,
+//                 unique: true
+//             },
+//             isPermittedToMakeDeletions: { //if true, this user can delete any files from the gallery besides their own
+//                 type: Boolean,
+//                 required: true,
+//                 default: false
+//             }
+//         }],
+//         images: 
+//         [{
+//             fileId: {
+//                 type: String,
+//                 unique: true
+//             },
+//             name: String,
+//             size: Number,
+//             location: String, //a file path
+//             date: { //date uploaded
+//                 type: Date,
+//                 default: Date.now
+//             },
+//             dateCreated: { //the file's internal date of creation
+//                 type: Date
+//             }
+//         }]
+//     }
+// );
+
 const gallerySchema = new mongoose.Schema(
     {
-        creator: { //reference uuid of user that created the gallery!
+        title: {
             type: String,
             required: true,
             unique: true
         },
-        title: String,
-        isPublic: { //NOT USED yet.. for public web sharing of galleries!
-            type: Boolean,
-            required: true,
-            default: false
-        },
-        password: { //password used to access gallery. If null, bypass
+        galleryId: {
             type: String,
             required: true,
-            default: null
+            default: uuidv4
         },
-        authorizedViewers: //can view gallery
-        [{
-            userId: { //uuid of a user authorized to view the gallery
-                type: String,
-                required: true,
-                unique: true
+        creator: String,
+        days: [
+            {
+                date: {
+                    type: Date,
+                    required: true,
+                },
+                images: [
+                    {
+                        type: Schema.Types.ObjectId,
+                        ref: "Image"
+                    }
+                ],
+                featuredImage: {
+                    type: Schema.Types.ObjectId,
+                    ref: "Image",
+                },
+                header: {
+                    type: String
+                }
             }
-            
-        }],
-        authorizedContributors:  //can view and upload to gallery
-        [{
-            userId: { //uuid of user authorized to contribute and make changes to
-                type: String,
-                required: true,
-                unique: true
-            },
-            isPermittedToMakeDeletions: { //if true, this user can delete any files from the gallery besides their own
-                type: Boolean,
-                required: true,
-                default: false
-            }
-        }],
-        images: 
-        [{
-            fileId: {
-                type: String,
-                unique: true
-            },
-            name: String,
-            size: Number,
-            location: String, //a file path
-            date: { //date uploaded
-                type: Date,
-                default: Date.now
-            },
-            dateCreated: { //the file's internal date of creation
-                type: Date
-            }
-        }]
+        ]
+
     }
 );
 

@@ -1,6 +1,11 @@
 const fs = require("fs");
+
 const User = require("../models/userModel");
-const Image = require("../models/imageModel")
+const Image = require("../models/imageModel");
+const Gallery = require("../models/galleryModel");
+
+const mongoose = require("mongoose");
+
 const sharp = require('sharp');
 const ExifParser = require('exif-parser');
 
@@ -36,10 +41,10 @@ async function sendImageById(req, res)
     }
     catch (error)
     {
-        console.log('getImagesByUsername failed:',error);
+        console.log('sendImagesById failed:',error);
         res.status(400).json({
           success: false,
-          errorMsg: "Failed to retrieve images from server - internal error!"
+          errorMsg: "Failed to retrieve image from server - internal error!"
         });
     }
 }
@@ -94,6 +99,7 @@ async function createImageDatabaseEntry(req, res)
 }
 
 // vv entirely chat gpt function, it is now 5:41 am Friday 9/19/25
+// vv update many days later: I'm not sure I needed this at all
 function getPhotoTakenDate(filePath) {
     try {
         const buffer = fs.readFileSync(filePath);      // Read the file into a buffer
@@ -114,8 +120,58 @@ function getPhotoTakenDate(filePath) {
     }
 }
 
+//vv so named because it uses the mongoDB auto-generated img._id's to query the db instead of my own imgId UUIDs 
+async function createGalleryFromMongoIds(req, res)
+{
+    try
+    {
+        let title = req.body.title;
+        let creator = req.session.activeUser.username;
+        let imageIds = req.body.imageIds;
+        
+        //this is chatgpt magic vvv db aggregation
+        const groupedImages = await Image.aggregate([
+            { $match: { _id: { $in: imageIds.map(id => new mongoose.Types.ObjectId(id)) } } },
+            { $sort: { imgDate: 1 } }, //sort images oldest -> newest
+            {
+                $group: {
+                    _id: { $dateToString: { format: "%Y-%m-%d", date: "$imgDate" } }, //_id comes out as a Y/M/D format
+                    images: { $push: "$_id" },
+                    // featuredImage: { $first: "$_id" } // first image of the day
+                }
+            },
+            { $sort: { _id: 1 } } // oldest to newest
+        ]);
+
+        const days = groupedImages.map(dayGroup => ({
+            date: new Date(dayGroup._id), //_id is the Y/M/D format
+            images: dayGroup.images
+        }));
+
+        const gallery = new Gallery({
+            title,
+            creator,
+            days
+        });
+
+        // await gallery.save();
+
+        res.status(201).json({success: true, gallery, errorMsg: "Successfully created gallery '"+title+"'"});
+
+    }
+    catch (error)
+    {
+        console.log('ERROR CREATING Gallery:',error);
+        res.status(400).json({
+          success: false,
+          errorMsg: "Failed to create the gallery!"
+        });
+    }
+}
+
 module.exports = {
     createImageDatabaseEntry,
     getImagesByUsername,
-    sendImageById
+    sendImageById,
+    createGalleryFromMongoIds
 };
