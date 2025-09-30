@@ -127,9 +127,11 @@
         </div>
     </div>
 
-    <div id="gallery-list">
+    <!-- <div id="gallery-list">
         
-    </div>
+    </div> -->
+
+    <button id="generate-gallery-DOM-button">CREATE GALLERY</button>
 
     <div id="gallery" class="flex-column flex-centered">
         <!-- GALLERY HOLDER -->
@@ -144,8 +146,6 @@
 
                 <div class="gallery-image" style="background-image: url('/images/800px-Luddite.jpg')" onClick="openFullImage('/images/800px-Luddite.jpg')"></div>
 
-                <div class="gallery-image" style="background-image: url('/images/landscape.jpg')" onClick="openFullImage('/images/landscape.jpg')"></div>
-
             </div>
 
         </div>
@@ -157,262 +157,26 @@
         <span onclick="closeDisplay()" class="close">&times;</span>
         <img id="image-to-be-displayed" src="" alt="A beautiful picture projected from magic box.">
     </div>
+
+    <template id="gallery-day-template">
+        <div class="gallery-segment-day flex-column">
+
+            <div class="gallery-segment-date-label">
+                <h1>DATE</h1>
+            </div>
+
+            <div class="gallery-picture-container flex-row flex-wrap">
+
+            </div>
+
+        </div>
+    </template>
+
+    <template id="gallery-image-template">
+        <div class="gallery-image" style="background-image: url('imgsrc')" onClick="openFullImage('imgsrc')"></div>
+    </template>
 </body>
 
-<script> // script TODO gallery creation
-
-    // const Image = require('./models/Image'); // adjust path if needed
-
-    // async function getImagesGroupedByDay() {
-    // const results = await Image.aggregate([
-    //     {
-    //     $group: {
-    //         _id: {
-    //         $dateToString: { format: "%Y-%m-%d", date: "$imgDate" }
-    //         },
-    //         images: { $push: "$$ROOT" }, // push entire document
-    //         count: { $sum: 1 } // number of images per day
-    //     }
-    //     },
-    //     { $sort: { _id: -1 } } // optional: sort by date descending
-    // ]);
-
-    // return results;
-    // }
-
-</script>
-
-<script> //script for enlarging selected image
-
-    function closeDisplayOnClickingBackdrop(event) {
-        // Only trigger close if the backdrop itself was clicked
-        if (event.target.id === "image-display") {
-            closeDisplay();
-        }
-    }
-    
-    function openFullImage(src)
-    {
-        console.log('OPENING!');
-        const display = document.getElementById('image-display');
-        const image = document.getElementById('image-to-be-displayed');
-        image.src = src;
-        display.classList.remove("hidden");
-    }
-
-    function closeDisplay() {
-        document.getElementById("image-display").classList.add("hidden");
-    }
-
-</script>
-
-<script> //script for fetching list of images from the database
-
-    let images;
-
-    populateImagesObjectFromDatabase();
-
-    async function populateImagesObjectFromDatabase()
-    {
-        images = await fetchImagesByUsername(pageUsername);
-        //TESTER vv
-        // console.log(images);
-    }
-
-    async function fetchImagesByUsername(username) 
-    {
-        try
-        {
-            const response = await fetch("/api/image/getImagesByUsername/"+username, {
-                method: "GET"
-            });
-
-            const data = await response.json();
-
-            //TESTER vv
-            // console.log(data);
-            return data;
-
-        }
-        catch (error)
-        {
-            console.log('fetchImagesByUsername failed!', error);
-        }
-
-    }
-</script>
-
-<script> //script for sending a request to create a gallery
-
-    let selectedImages; //for simplicity, I am ignoring a selection system for now in favor of just creating a gallery with all the images from DB
-
-    let galleryCreationForm = document.getElementById('gallery-creation-panel');
-
-    galleryCreationForm.addEventListener("submit", async function(e) {
-        e.preventDefault();
-
-        formData = new FormData(this);
-        const title = formData.get("galleryTitle");
-
-        addGalleryCreationToConsoleDOM(title);
-
-        await populateImagesObjectFromDatabase();
-
-        selectedImages = images; //for simplicity sake, selected images is just all the images the user has uploaded
-
-        let selectedImgIds = selectedImages.map(img => img._id);
-
-        //TESTER vvv
-        console.log(selectedImgIds);
-        //TESTER vvv
-        console.log("Creating gallery from:",selectedImages);
-
-        const response = await fetch(galleryCreationForm.action, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(
-                {
-                    title: title,
-                    imageIds: selectedImgIds
-                }
-            )
-        });
-
-        const result = await response.json();
-
-        addGalleryCreationStatusToConsoleDOM(result.success, result.errorMsg)
-
-        console.log("Result: ", result);
-    });
-
-</script>
-
-<script> // ^_^ script for uploading files when the BEGIN UPLOAD button is pressed
-
-    //much of this code is adapted from simpleUploadLogin.js to handle the client side of file uploading vv
-
-    const uploadButton = document.getElementById('upload-button');
-    const fileInput = document.getElementById('images-input');
-
-    const uploadConsole = document.getElementById('upload-console'); //attach DOM elements to this to keep the user informed of their upload progress
-
-    let fileNo = 1;
-    let fileName = "";
-
-    uploadButton.addEventListener("click", async (event) => {
-        event.preventDefault();
-        // TESTER VV
-        // console.log(fileInput.files);
-
-        fileNo = 1;
-
-        let files = fileInput.files;
-
-        let numberOfFiles = files.length;
-
-        for (const file of files)
-        {
-            const lastModifiedTimestamp = file.lastModified;
-            //TESTER vv
-            const lastModifiedDate = new Date(lastModifiedTimestamp);
-            console.log(lastModifiedDate);
-            //TESTER ^^
-
-            fileName = file.name;
-
-            console.log('('+fileNo+'/'+numberOfFiles+') Preparing to upload:',fileName);
-            addUploadToConsoleDOM(numberOfFiles);
-            try
-            {
-                const formData = new FormData();
-                formData.append("uploaded_file", file); //uploaded_file matches the parameter expected by multer in the route definition
-                formData.append("lastModified", lastModifiedTimestamp)
-                const response = await fetch("/api/image/uploadImageWithMulter", {
-                    method: "POST",
-                    body: formData,
-                });
-
-                const result = await response.json();
-                if (result.success)
-                {
-                    console.log('Successfully uploaded',fileName);
-                    addUploadStatusToConsoleDOM(result.success, result.errorMsg);
-                }
-                else
-                {
-                    console.log('Failed to upload',fileName);
-                    addUploadStatusToConsoleDOM(result.success, result.errorMsg);
-                }
-            }
-            catch (error)
-            {
-                console.log('Request to upload failed!', error);
-            }
-
-            // addUploadStatusToConsoleDOM(true, null);
-            fileNo++; //END
-        }
-
-    });
-
-    function addUploadToConsoleDOM(numberOfFiles)
-    {
-        const consoleMessage = document.createElement("div");
-        consoleMessage.innerText = '('+fileNo+'/'+numberOfFiles+') Preparing to upload: '+fileName;
-        consoleMessage.style.color = "white";
-        return uploadConsole.appendChild(consoleMessage);
-    }
-
-    function addUploadStatusToConsoleDOM(success, statusMessage)
-    {
-        if (!statusMessage)
-        {   
-            statusMessage = "NO MESSAGE";
-        }
-        const consoleMessage = document.createElement("div");
-        consoleMessage.textContent = "Status: "+statusMessage;
-        if (!success)
-        {
-            consoleMessage.style.color = "red";
-        }
-        else
-        {
-            consoleMessage.style.color = "white";
-        }
-
-        return uploadConsole.appendChild(consoleMessage);
-    }
-
-    function addGalleryCreationToConsoleDOM(title)
-    {
-        const consoleMessage = document.createElement("div");
-        consoleMessage.innerText = 'Creating a gallery called '+title;
-        consoleMessage.style.color = "white";
-        return uploadConsole.appendChild(consoleMessage);
-    }
-
-    function addGalleryCreationStatusToConsoleDOM(success, statusMessage)
-    {
-        if (!statusMessage)
-        {   
-            statusMessage = "NO MESSAGE";
-        }
-        const consoleMessage = document.createElement("div");
-        consoleMessage.textContent = "Gallery Creation Status: "+statusMessage;
-        if (!success)
-        {
-            consoleMessage.style.color = "red";
-        }
-        else
-        {
-            consoleMessage.style.color = "white";
-        }
-        
-        return uploadConsole.appendChild(consoleMessage);
-    }
-
-</script>
+<script src="./js/TESTgalleryFunctionality.js"></script>
 
 </html>
