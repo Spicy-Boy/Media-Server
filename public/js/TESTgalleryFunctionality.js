@@ -58,6 +58,7 @@ async function fetchImagesByUsername(username)
 //script for sending a request to create a gallery
 
 let testGallery; //object to contain gallery dates and image references
+let galleryObjectFromDB;
 
 let selectedImages; //for simplicity, I am ignoring a selection system for now in favor of just creating a gallery with all the images from DB
 
@@ -100,6 +101,7 @@ galleryCreationForm.addEventListener("submit", async function(e) {
     addGalleryCreationStatusToConsoleDOM(result.success, result.errorMsg);
 
     testGallery = result.gallery;
+    gallery = testGallery; //LOL don't ask.... ;_;
 });
 
 
@@ -108,17 +110,19 @@ galleryCreationForm.addEventListener("submit", async function(e) {
 const createGalleryDOMButton = document.getElementById('generate-gallery-DOM-button');
 const dayContainerTemplate = document.getElementById('gallery-day-template');
 const imageContainerTemplate = document.getElementById('gallery-image-template');
-const galleryDOM = document.getElementById('gallery');
+const galleryContainer = document.getElementById('gallery');
 
 createGalleryDOMButton.addEventListener("click", (event) => {
     createGalleryDOMButton.style.display = "none";
 
-    testGallery.days.forEach(day => { //iterate through each day listed in the gallery
+    gallery.days.forEach(day => { //iterate through each day listed in the gallery
         const dayContainer = dayContainerTemplate.content.cloneNode(true);
         
-        dayContainer.innerText = "HELL";
+        const dateHeader = dayContainer.querySelector(gallery.);
+        dateHeader.innerText = "HI";
 
-        
+        // vv attach finished day to the gallery (with all headers and images attached to it)
+        galleryContainer.appendChild(dayContainer);
     })
 })
 
