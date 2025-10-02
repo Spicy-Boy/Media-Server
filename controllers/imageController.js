@@ -35,9 +35,9 @@ async function sendImageById(req, res)
 
     try
     {
-        const images = await Image.find({ imgId }).sort({ imgDate: 1 });
+        const image = await Image.find({ imgId });
 
-        res.status(200).send(images);
+        res.status(200).send(image);
     }
     catch (error)
     {
@@ -47,6 +47,27 @@ async function sendImageById(req, res)
           errorMsg: "Failed to retrieve image from server - internal error!"
         });
     }
+}
+
+//vv uses the mongoDB unique _id to find the right image document.. supposedly faster?
+async function sendImageByMongoId(req, res)
+{
+    let mongoId = req.params.mongoId;
+
+    try
+    {
+        const image = await Image.findById(mongoId);
+
+        res.status(200).sendFile(process.env.IMAGE_DELIVERY_LOCATION+"/"+image.username+"_images/"+image.name);
+    }
+    catch (error)
+    {
+        console.log('sendImagesById failed:',error);
+        res.status(400).json({
+          success: false,
+          errorMsg: "Failed to retrieve image from server (mongoId) - internal error!"
+        });
+    } 
 }
 
 async function createImageDatabaseEntry(req, res)

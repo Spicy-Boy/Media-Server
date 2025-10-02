@@ -113,13 +113,31 @@ const imageContainerTemplate = document.getElementById('gallery-image-template')
 const galleryContainer = document.getElementById('gallery');
 
 createGalleryDOMButton.addEventListener("click", (event) => {
+    //TESTER vvv
+    console.log(gallery);
     createGalleryDOMButton.style.display = "none";
 
     gallery.days.forEach(day => { //iterate through each day listed in the gallery
         const dayContainer = dayContainerTemplate.content.cloneNode(true);
         
-        const dateHeader = dayContainer.querySelector(gallery.);
-        dateHeader.innerText = "HI";
+        const dateHeader = dayContainer.querySelector("h1");
+        const rawDate = new Date(day.date);
+        const formattedDate = rawDate.toLocaleDateString("en-us", {
+            year: "numeric",
+            month: "long",
+            day: "numeric"
+        }); //Month Day, Year format, en-US
+        dateHeader.innerText = formattedDate;
+
+        const pictureContainer = dayContainer.querySelector(".gallery-picture-container");
+
+        day.images.forEach(img => {
+            const pictureDiv = imageContainerTemplate.content.cloneNode(true);
+
+            pictureDiv.style.backgroundImage = `url(${})`;
+
+            pictureContainer.appendChild(pictureDiv)
+        });
 
         // vv attach finished day to the gallery (with all headers and images attached to it)
         galleryContainer.appendChild(dayContainer);
