@@ -1,12 +1,5 @@
 //script for enlarging selected image
 
-function closeDisplayOnClickingBackdrop(event) {
-    // Only trigger close if the backdrop itself was clicked
-    if (event.target.id === "image-display") {
-        closeDisplay();
-    }
-}
-
 function openFullImage(src)
 {
     console.log('OPENING!');
@@ -14,6 +7,14 @@ function openFullImage(src)
     const image = document.getElementById('image-to-be-displayed');
     image.src = src;
     display.classList.remove("hidden");
+}
+
+function closeDisplayOnClickingBackdrop(event) {
+    // Only trigger close if the backdrop itself was clicked
+    console.log('hi');
+    if (event.target.id === "image-display") {
+        closeDisplay();
+    }
 }
 
 function closeDisplay() {
@@ -114,7 +115,7 @@ const galleryContainer = document.getElementById('gallery');
 
 createGalleryDOMButton.addEventListener("click", (event) => {
     //TESTER vvv
-    console.log(gallery);
+    console.log("Gallery:",gallery);
     createGalleryDOMButton.style.display = "none";
 
     gallery.days.forEach(day => { //iterate through each day listed in the gallery
@@ -132,9 +133,15 @@ createGalleryDOMButton.addEventListener("click", (event) => {
         const pictureContainer = dayContainer.querySelector(".gallery-picture-container");
 
         day.images.forEach(img => {
-            const pictureDiv = imageContainerTemplate.content.cloneNode(true);
+            const pictureDiv = imageContainerTemplate.content.cloneNode(true).querySelector(".gallery-image");
 
-            pictureDiv.style.backgroundImage = `url(${})`;
+            //TESTER vv
+            // console.log("pictureDiv",pictureDiv);
+            // console.log("img",img);
+
+            let imageUrl = "/api/image/getByMID/"+img;
+            pictureDiv.style.backgroundImage = `url(${imageUrl})`;
+            pictureDiv.onclick = () => openFullImage(imageUrl);
 
             pictureContainer.appendChild(pictureDiv)
         });

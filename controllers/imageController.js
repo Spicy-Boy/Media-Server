@@ -29,25 +29,25 @@ async function getImagesByUsername(req, res)
     }
 }
 
-async function sendImageById(req, res)
-{
-    let imgId = req.params.imageId
+// async function sendImageById(req, res)
+// {
+//     let imgId = req.params.imageId
 
-    try
-    {
-        const image = await Image.find({ imgId });
+//     try
+//     {
+//         const image = await Image.find({ imgId });
 
-        res.status(200).send(image);
-    }
-    catch (error)
-    {
-        console.log('sendImagesById failed:',error);
-        res.status(400).json({
-          success: false,
-          errorMsg: "Failed to retrieve image from server - internal error!"
-        });
-    }
-}
+//         res.status(200).send(image);
+//     }
+//     catch (error)
+//     {
+//         console.log('sendImagesById failed:',error);
+//         res.status(400).json({
+//           success: false,
+//           errorMsg: "Failed to retrieve image from server - internal error!"
+//         });
+//     }
+// }
 
 //vv uses the mongoDB unique _id to find the right image document.. supposedly faster?
 async function sendImageByMongoId(req, res)
@@ -58,6 +58,8 @@ async function sendImageByMongoId(req, res)
     {
         const image = await Image.findById(mongoId);
 
+        // image location --> process.env.IMAGE_DELIVERY_LOCATION+"/"+img.username+"_images/"+img.name;
+
         res.status(200).sendFile(process.env.IMAGE_DELIVERY_LOCATION+"/"+image.username+"_images/"+image.name);
     }
     catch (error)
@@ -65,7 +67,7 @@ async function sendImageByMongoId(req, res)
         console.log('sendImagesById failed:',error);
         res.status(400).json({
           success: false,
-          errorMsg: "Failed to retrieve image from server (mongoId) - internal error!"
+          errorMsg: "Failed to retrieve image from server - is the ID correct in the url?"
         });
     } 
 }
@@ -193,6 +195,6 @@ async function createGalleryFromMongoIds(req, res)
 module.exports = {
     createImageDatabaseEntry,
     getImagesByUsername,
-    sendImageById,
+    sendImageByMongoId,
     createGalleryFromMongoIds
 };

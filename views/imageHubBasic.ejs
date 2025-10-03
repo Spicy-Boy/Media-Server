@@ -57,6 +57,15 @@
             border: 4px groove;
         }
 
+        .gallery-date-header {
+            margin-bottom: 1px;
+        }
+
+        .gallery-date-subheader {
+            margin-bottom: 10px;
+            margin-top: 0px
+        }
+
         #image-display {
             position: fixed;
             top: 50%;
@@ -77,6 +86,25 @@
             max-height: 99%;
 
             text-align: center;
+        }
+
+        #image-display-left-arrow {
+            position: fixed;
+            top: 95%;
+            left: 15px;
+
+            size: 15px;
+            opacity: 50%;
+            cursor: pointer;
+        }
+        #image-display-right-arrow {
+            position: fixed;
+            top: 95%;
+            right: 15px;
+
+            size: 15px;
+            opacity: 50%;
+            cursor: pointer;
         }
 
         .hidden {
@@ -153,16 +181,19 @@
     </div>
 
     <!-- vvv the lightbox from which images are displayed! -->
-    <div id="image-display" class="hidden" onClick="closeDisplay()"> 
+    <div id="image-display" class="hidden" onclick="closeDisplayOnClickingBackdrop(event)"> 
         <span onclick="closeDisplay()" class="close">&times;</span>
         <img id="image-to-be-displayed" src="" alt="A beautiful picture projected from magic box.">
+        <div id="image-display-left-arrow">⬅️</div>
+        <div id="image-display-right-arrow">➡️</div>
     </div>
 
     <template id="gallery-day-template">
         <div class="gallery-segment-day flex-column">
 
             <div class="gallery-segment-date-label">
-                <h1>DATE</h1>
+                <h1 class="gallery-date-header">DATE</h1>
+                <h2 class="gallery-date-subheader"></h2>
             </div>
 
             <div class="gallery-picture-container flex-row flex-wrap">
@@ -175,7 +206,7 @@
     </template>
 
     <template id="gallery-image-template">
-        <div class="gallery-image" style="background-image: url('imgsrc')" onClick="openFullImage('imgsrc')"></div>
+        <div class="gallery-image" style="background-image: url('imgsrc')"></div>
     </template>
 </body>
 
