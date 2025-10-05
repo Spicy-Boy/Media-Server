@@ -8,6 +8,7 @@ const {
     validateAdminAuth,
     validateIsCurator,
     validateIsUploader,
+    validateLogin,
 } = require("../middlewares/authRemaster");
 
 const {
@@ -17,7 +18,8 @@ const {
     renderIndividualFilePage,
     renderAdminFunPanel,
     renderUserManagementPanel,
-    renderBasicImageHub
+    renderBasicImageHub,
+    renderBasicGallery
 } = require("../controllers/viewController");
 
 router.get("/login", renderLoginPage);
@@ -45,6 +47,8 @@ router.get("/u/:username", validateLoginWithRedirect, updateUserPermissionsAndFi
 
 router.get("/i/:username", validateLoginWithRedirect, updateUserPermissionsAndFiles, validateIsUploader, renderBasicImageHub);
 router.get("/i", validateLoginWithRedirect, updateUserPermissionsAndFiles, validateIsUploader, renderBasicImageHub);
+
+router.get("/g/:galleryId", validateLogin, updateUserPermissionsAndFiles, validateIsUploader, renderBasicGallery);
 
 router.get("/ai", validateLoginWithRedirect, updateUserPermissionsAndFiles, validateIsUploader, (req, res) => {
     res.sendFile(path.join(__dirname, "../public/html/aiQueryPage.html"));

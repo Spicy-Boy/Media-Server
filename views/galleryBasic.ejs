@@ -3,33 +3,85 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>:)</title>
+    <title>Gallery: <%=targetGallery.name%></title>
 
     <link rel="stylesheet" type="text/css" href="css/style.css">
+    <link rel="stylesheet" type="text/css" href="css/galleryStyle.css">
 
-    <style>
-        body {
-            background-color: black;
-            color: white;
-        }
-        .panel-container {
-            display: flex;
-            flex-direction: row;
-            flex-wrap: wrap;
-        }
-    </style>
+    <script>
+        let pageGalleryId = "<%=targetGallery.galleryId%>";
+    </script>
+
 
 </head>
 
 <body>
-    <div id="gallery-container">
-        <div id="[date]" class="date-container">
-            <div class="gallery-entry">
-                <img>
+    <div class="flex-row flex-centered">
+        <%if (isThisActiveUserPage) {%>
+        <form class="suicune-form flex-column flex-centered" style="width: 99%;" enctype="multipart/form-data" method="post">
+            <img src="/images/smeargle.png">
+            <div id="upload-files" style="margin-bottom: 15px;">
+                <label for="images-input">Choose images to upload: </label>
+                <input id="images-input" name="uploaded_file" type="file" multiple>
             </div>
+
+            <input type="submit" value="BEGIN UPLOAD" id="upload-button">
+
+        </form>
+
+        <form id="gallery-creation-panel" class="flex-column flex-centered gallery-creation-form" style="width: 99%; padding-top: 15px;" action="/api/image/createGalleryFromMongoIds">
+            <div class="flex-row">
+                <label for="gallery-title">Title for Gallery:&nbsp;&nbsp;</label>
+                <input type="text" id="gallery-title" value="" name="galleryTitle" placeholder="Choose a title" required>
+            </div>
+            <p>NOTE: The gallery will be created with all your uploaded images... I haven't bothered to create a selection system yet!</p>
+            <input type="submit" value="CREATE GALLERY" id="create-gallery-button">
+        </form>
+        <%}%>
+
+        <div id="upload-console" style="max-height: 200px; overflow-y: auto" class="flex-column">
+
         </div>
+    </div>
+
+    <center><h1><%=targetGallery.name%></h1></center>
+
+    <div id="gallery" class="flex-column flex-centered">
 
     </div>
+
+    <div id="image-display" class="hidden" onclick="closeDisplayOnClickingBackdrop(event)"> 
+        <span onclick="closeDisplay()" class="close">&times;</span>
+        <img id="image-to-be-displayed" src="" alt="A beautiful picture projected from magic box.">
+        <div id="image-display-left-arrow">⬅️</div>
+        <div id="image-display-right-arrow">➡️</div>
+    </div>
+
+    <!-- TEMPLATES VVV used by js to create dynamic galleries on the fly -->
+    <template id="gallery-day-template">
+        <div class="gallery-segment-day flex-column">
+
+            <div class="gallery-segment-date-label">
+                <h1 class="gallery-date-header">DATE</h1>
+                <h2 class="gallery-date-subheader"></h2>
+            </div>
+
+            <div class="gallery-picture-container flex-row flex-wrap">
+
+                <!-- contains the "gallery-image" containers -->
+
+            </div>
+
+        </div>
+    </template>
+
+    <template id="gallery-image-template">
+        <div class="gallery-image" style="background-image: url('imgsrc')"></div>
+    </template>
+
 </body>
+
+<script src="./js/galleryScripts/imageDisplayFunctionality.js"></script>
+<script src="./js/galleryScripts/generateGalleryFromTemplates.js"></script>
 
 </html>

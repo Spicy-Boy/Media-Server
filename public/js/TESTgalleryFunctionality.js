@@ -2,16 +2,20 @@
 
 function openFullImage(src)
 {
-    console.log('OPENING!');
+    //TESTER VVV
+    // console.log('OPENING!');
+
     const display = document.getElementById('image-display');
     const image = document.getElementById('image-to-be-displayed');
+
+    currentImageIndex = imageUrlList.indexOf(src); //match image url to the url list to get an index
+
     image.src = src;
     display.classList.remove("hidden");
 }
 
 function closeDisplayOnClickingBackdrop(event) {
     // Only trigger close if the backdrop itself was clicked
-    console.log('hi');
     if (event.target.id === "image-display") {
         closeDisplay();
     }
@@ -23,7 +27,7 @@ function closeDisplay() {
 
 //script for fetching list of images from the database
 
-let images;
+let images; 
 
 populateImagesObjectFromDatabase();
 
@@ -113,6 +117,9 @@ const dayContainerTemplate = document.getElementById('gallery-day-template');
 const imageContainerTemplate = document.getElementById('gallery-image-template');
 const galleryContainer = document.getElementById('gallery');
 
+let imageUrlList = []; //to store image urls for traversal
+let currentImageIndex = -1; //keep track of currently opened image
+
 createGalleryDOMButton.addEventListener("click", (event) => {
     //TESTER vvv
     console.log("Gallery:",gallery);
@@ -133,14 +140,21 @@ createGalleryDOMButton.addEventListener("click", (event) => {
         const pictureContainer = dayContainer.querySelector(".gallery-picture-container");
 
         day.images.forEach(img => {
+            console.log('hi');
             const pictureDiv = imageContainerTemplate.content.cloneNode(true).querySelector(".gallery-image");
 
             //TESTER vv
             // console.log("pictureDiv",pictureDiv);
             // console.log("img",img);
 
+            //NOTE: img in this case is just the key for the image's mongoID that I refer to as MID
+
             let imageUrl = "/api/image/getByMID/"+img;
             pictureDiv.style.backgroundImage = `url(${imageUrl})`;
+            // pictureDiv.setAttribute("data-MID", img);
+
+            imageUrlList.push(imageUrl);
+
             pictureDiv.onclick = () => openFullImage(imageUrl);
 
             pictureContainer.appendChild(pictureDiv)
@@ -149,7 +163,72 @@ createGalleryDOMButton.addEventListener("click", (event) => {
         // vv attach finished day to the gallery (with all headers and images attached to it)
         galleryContainer.appendChild(dayContainer);
     })
+
+    //TESTER vvv
+    // console.log("imageUrlList",imageUrlList);
 })
+
+// :D script for traversing the images with left and right arrow
+
+document.addEventListener("keydown", (event) => {
+    if (event.key === "ArrowLeft") 
+    {
+
+        currentImageIndex = currentImageIndex - 1;
+        if (currentImageIndex < 0)
+        {
+            currentImageIndex = imageUrlList.length - 1;
+        }
+        //TESTER vv
+        // console.log("Index!",currentImageIndex);
+
+        openFullImage(imageUrlList[currentImageIndex]);
+    }
+    if (event.key === "ArrowRight") 
+    {
+        currentImageIndex = currentImageIndex + 1;
+        if (currentImageIndex > imageUrlList.length - 1)
+        {
+            currentImageIndex = 0;
+        }
+        //TESTER vv
+        // console.log("Index!",currentImageIndex);
+
+        openFullImage(imageUrlList[currentImageIndex]);
+    }
+    if (event.key === "Escape") {
+        closeDisplay();
+    }
+});
+
+let imageLeftArrow = document.getElementById('image-display-left-arrow');
+let imageRightArrow = document.getElementById('image-display-right-arrow');
+
+imageLeftArrow.onclick = () => {
+
+        currentImageIndex = currentImageIndex - 1;
+        if (currentImageIndex < 0)
+        {
+            currentImageIndex = imageUrlList.length - 1;
+        }
+        //TESTER vv
+        // console.log("Index!",currentImageIndex);
+
+        openFullImage(imageUrlList[currentImageIndex]);   
+}
+
+imageRightArrow.onclick = () => {
+    currentImageIndex = currentImageIndex + 1;
+    if (currentImageIndex > imageUrlList.length - 1)
+    {
+        currentImageIndex = 0;
+    }
+    //TESTER vv
+    // console.log("Index!",currentImageIndex);
+
+    openFullImage(imageUrlList[currentImageIndex]);
+}
+
 
 // ^_^ script for uploading files when the BEGIN UPLOAD button is pressed
 

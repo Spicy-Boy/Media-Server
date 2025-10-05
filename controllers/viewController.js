@@ -1,4 +1,5 @@
 const User = require('../models/userModel');
+const Gallery = require('../models/galleryModel');
 
 async function renderHomePage(req, res)
 {
@@ -209,6 +210,30 @@ async function renderBasicImageHub(req, res)
     }
 }
 
+async function renderBasicGallery(req, res)
+{
+    try 
+    {
+        const {galleryId} = req.params;
+
+        let targetGallery;
+
+        if (username)
+        {
+            targetGallery = await Gallery.findOne({ galleryId });
+        }
+
+        if (targetGallery)
+        {
+            res.render("galleryBasic", {targetGallery});
+        }
+    } catch (error)
+    {
+        console.error(error);
+        res.json("SORRY! Something went wrong loading the renderBasicGallery.");
+    }   
+}
+
 module.exports = {
     renderHomePage,
     renderLoginPage,
@@ -219,5 +244,6 @@ module.exports = {
     renderIndividualFilePage,
     renderAdminFunPanel,
     renderUserManagementPanel,
-    renderBasicImageHub
+    renderBasicImageHub,
+    renderBasicGallery
 }

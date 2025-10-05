@@ -9,6 +9,8 @@ const mongoose = require("mongoose");
 const sharp = require('sharp');
 const ExifParser = require('exif-parser');
 
+const path = require("path");
+
 async function getImagesByUsername(req, res)
 {
     let username = req.params.username;
@@ -60,7 +62,11 @@ async function sendImageByMongoId(req, res)
 
         // image location --> process.env.IMAGE_DELIVERY_LOCATION+"/"+img.username+"_images/"+img.name;
 
-        res.status(200).sendFile(process.env.IMAGE_DELIVERY_LOCATION+"/"+image.username+"_images/"+image.name);
+        const filePath = path.resolve(process.env.IMAGE_DELIVERY_LOCATION+"/"+image.username+"_images/"+image.name);
+
+        console.log('FILEPATH:',filePath);
+
+        res.status(200).sendFile(filePath);
     }
     catch (error)
     {
@@ -177,7 +183,7 @@ async function createGalleryFromMongoIds(req, res)
             days
         });
 
-        // await gallery.save();
+        await gallery.save();
 
         res.status(201).json({success: true, gallery, errorMsg: "Successfully created gallery '"+title+"'"});
 
@@ -188,6 +194,36 @@ async function createGalleryFromMongoIds(req, res)
         res.status(400).json({
           success: false,
           errorMsg: "Failed to create the gallery!"
+        });
+    }
+}
+
+async function getGalleryById(req, res)
+{
+    try
+    {
+        let galleryId = req.params.galleryId;
+
+        const gallery = await Gallery.find({ galleryId });
+
+        if (!gallery)
+        {
+            return res.s
+            
+            tatus(404).json({
+                success: false,
+                errorMsg: "Gallery not found."
+            });
+        }
+
+        res.status(200).send(gallery);
+    }
+    catch (error)
+    {
+        console.log('ERROR getting gallery:',error);
+        res.status(400).json({
+          success: false,
+          errorMsg: "Failed to find the gallery!"
         });
     }
 }
