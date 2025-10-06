@@ -8,8 +8,8 @@ XXX - Added left/right buttons to DOM that allow user to traverse the list of im
 
 XXX - Added keyboard controls (left right a and d) to traverse the list of images
 
-todo - make independent page for gallery
+XXX - make independent page for gallery
 
-todo - transfer all scripts to their own files. put gallery scripts into a subfolder for galleries (should have always been that way ;_;)
+XXX - transfer all scripts to their own files. put gallery scripts into a subfolder for galleries (should have always been that way ;_;)
 
-todo - add links to a user's galleries 
+XXX - add links to a user's galleries 

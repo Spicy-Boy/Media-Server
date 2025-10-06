@@ -96,8 +96,15 @@ const gallerySchema = new mongoose.Schema(
                 },
                 images: [
                     {
-                        type: Schema.Types.ObjectId,
-                        ref: "Image"
+                        _id: { 
+                            type: Schema.Types.ObjectId,
+                            ref: "Image",
+                            required: true
+                        },
+                        imgDate: {
+                            type: Date,
+                            required: true
+                        }
                     }
                 ],
                 featuredImage: {

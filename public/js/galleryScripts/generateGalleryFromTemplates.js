@@ -46,16 +46,15 @@ function generateGalleryDOM()
         const pictureContainer = dayContainer.querySelector(".gallery-picture-container");
 
         day.images.forEach(img => {
-            console.log('hi');
             const pictureDiv = imageContainerTemplate.content.cloneNode(true).querySelector(".gallery-image");
 
             //TESTER vv
             // console.log("pictureDiv",pictureDiv);
             // console.log("img",img);
 
-            //NOTE: img in this case is just the key for the image's mongoID that I refer to as MID
+            //NOTE: img._id
 
-            let imageUrl = "/api/image/getByMID/"+img;
+            let imageUrl = "/api/image/getByMID/"+img._id;
             pictureDiv.style.backgroundImage = `url(${imageUrl})`;
             // pictureDiv.setAttribute("data-MID", img);
 

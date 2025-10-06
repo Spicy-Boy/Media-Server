@@ -68,11 +68,12 @@ let galleryObjectFromDB;
 let selectedImages; //for simplicity, I am ignoring a selection system for now in favor of just creating a gallery with all the images from DB
 
 let galleryCreationForm = document.getElementById('gallery-creation-panel');
+let galleryCreationButton = document.getElementById('create-gallery-button');
 
-galleryCreationForm.addEventListener("submit", async function(e) {
+galleryCreationButton.addEventListener("click", async function(e) {
     e.preventDefault();
 
-    formData = new FormData(this);
+    formData = new FormData(galleryCreationForm);
     const title = formData.get("galleryTitle");
 
     addGalleryCreationToConsoleDOM(title);
@@ -112,7 +113,7 @@ galleryCreationForm.addEventListener("submit", async function(e) {
 
 //script to display the gallery at push of a button
 
-const createGalleryDOMButton = document.getElementById('generate-gallery-DOM-button');
+// const createGalleryDOMButton = document.getElementById('generate-gallery-DOM-button');
 const dayContainerTemplate = document.getElementById('gallery-day-template');
 const imageContainerTemplate = document.getElementById('gallery-image-template');
 const galleryContainer = document.getElementById('gallery');
@@ -120,53 +121,53 @@ const galleryContainer = document.getElementById('gallery');
 let imageUrlList = []; //to store image urls for traversal
 let currentImageIndex = -1; //keep track of currently opened image
 
-createGalleryDOMButton.addEventListener("click", (event) => {
-    //TESTER vvv
-    console.log("Gallery:",gallery);
-    createGalleryDOMButton.style.display = "none";
+// createGalleryDOMButton.addEventListener("click", (event) => {
+//     //TESTER vvv
+//     console.log("Gallery:",gallery);
+//     createGalleryDOMButton.style.display = "none";
 
-    gallery.days.forEach(day => { //iterate through each day listed in the gallery
-        const dayContainer = dayContainerTemplate.content.cloneNode(true);
+//     gallery.days.forEach(day => { //iterate through each day listed in the gallery
+//         const dayContainer = dayContainerTemplate.content.cloneNode(true);
         
-        const dateHeader = dayContainer.querySelector("h1");
-        const rawDate = new Date(day.date);
-        const formattedDate = rawDate.toLocaleDateString("en-us", {
-            year: "numeric",
-            month: "long",
-            day: "numeric"
-        }); //Month Day, Year format, en-US
-        dateHeader.innerText = formattedDate;
+//         const dateHeader = dayContainer.querySelector("h1");
+//         const rawDate = new Date(day.date);
+//         const formattedDate = rawDate.toLocaleDateString("en-us", {
+//             year: "numeric",
+//             month: "long",
+//             day: "numeric"
+//         }); //Month Day, Year format, en-US
+//         dateHeader.innerText = formattedDate;
 
-        const pictureContainer = dayContainer.querySelector(".gallery-picture-container");
+//         const pictureContainer = dayContainer.querySelector(".gallery-picture-container");
 
-        day.images.forEach(img => {
-            console.log('hi');
-            const pictureDiv = imageContainerTemplate.content.cloneNode(true).querySelector(".gallery-image");
+//         day.images.forEach(img => {
+//             console.log('hi');
+//             const pictureDiv = imageContainerTemplate.content.cloneNode(true).querySelector(".gallery-image");
 
-            //TESTER vv
-            // console.log("pictureDiv",pictureDiv);
-            // console.log("img",img);
+//             //TESTER vv
+//             // console.log("pictureDiv",pictureDiv);
+//             // console.log("img",img);
 
-            //NOTE: img in this case is just the key for the image's mongoID that I refer to as MID
+//             //NOTE: img in this case is just the key for the image's mongoID that I refer to as MID
 
-            let imageUrl = "/api/image/getByMID/"+img;
-            pictureDiv.style.backgroundImage = `url(${imageUrl})`;
-            // pictureDiv.setAttribute("data-MID", img);
+//             let imageUrl = "/api/image/getByMID/"+img;
+//             pictureDiv.style.backgroundImage = `url(${imageUrl})`;
+//             // pictureDiv.setAttribute("data-MID", img);
 
-            imageUrlList.push(imageUrl);
+//             imageUrlList.push(imageUrl);
 
-            pictureDiv.onclick = () => openFullImage(imageUrl);
+//             pictureDiv.onclick = () => openFullImage(imageUrl);
 
-            pictureContainer.appendChild(pictureDiv)
-        });
+//             pictureContainer.appendChild(pictureDiv)
+//         });
 
-        // vv attach finished day to the gallery (with all headers and images attached to it)
-        galleryContainer.appendChild(dayContainer);
-    })
+//         // vv attach finished day to the gallery (with all headers and images attached to it)
+//         galleryContainer.appendChild(dayContainer);
+//     })
 
-    //TESTER vvv
-    // console.log("imageUrlList",imageUrlList);
-})
+//     //TESTER vvv
+//     // console.log("imageUrlList",imageUrlList);
+// })
 
 // :D script for traversing the images with left and right arrow
 

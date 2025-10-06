@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Image Hub</title>
 
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" type="text/css" href="css/galleryStyle.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" type="text/css" href="/css/galleryStyle.css">
 
     <%
     let isThisActiveUserPage = false;
@@ -36,7 +36,7 @@
                 <input id="images-input" name="uploaded_file" type="file" multiple>
             </div>
 
-            <input type="submit" value="BEGIN UPLOAD" id="upload-button">
+            <input type="button" value="BEGIN UPLOAD" id="upload-button">
 
         </form>
 
@@ -46,7 +46,7 @@
                 <input type="text" id="gallery-title" value="" name="galleryTitle" placeholder="Choose a title" required>
             </div>
             <p>NOTE: The gallery will be created with all your uploaded images... I haven't bothered to create a selection system yet!</p>
-            <input type="submit" value="CREATE GALLERY" id="create-gallery-button">
+            <input type="button" value="CREATE GALLERY" id="create-gallery-button">
         </form>
         <%}%>
 
@@ -150,6 +150,6 @@
 
 </script>
 
-<script src="./js/TESTgalleryFunctionality.js"></script>
+<script src="/js/TESTgalleryFunctionality.js"></script>
 
 </html>

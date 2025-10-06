@@ -227,8 +227,13 @@ async function renderBasicGallery(req, res)
 
         if (targetGallery)
         {
-            res.render("galleryBasic", {targetGallery, activeUser});
+            return res.render("galleryBasic", {targetGallery, activeUser});
         }
+        else
+        {
+            return res.status(404).send("No such gallery!")
+        }
+        
     } catch (error)
     {
         console.error(error);
