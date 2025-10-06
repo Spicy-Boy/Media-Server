@@ -21,7 +21,18 @@
         //these variables are created server-side for use with scripts
         let pageUsername = "<%=targetUser.username%>";
 
-        let isThisActiveUserPageLocalVariable = <%=isThisActiveUserPage%>;
+        let activeUsername = "<%=activeUser.Username%>"
+
+        let isThisActiveUserPageLocalVariable;
+
+        if (pageUsername == activeUsername)
+        {
+            isThisActiveUserPageLocalVariable = true;
+        }
+        else
+        {
+            isThisActiveUserPageLocalVariable = false;            
+        }
 
         let files;
 

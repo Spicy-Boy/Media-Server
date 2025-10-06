@@ -16,6 +16,8 @@ const {
     getImagesByUsername,
     sendImageByMongoId,
     createGalleryFromMongoIds,
+    getGalleriesByUsername,
+    getGalleryById
 } = require("../../controllers/imageController");
 
 router.post("/uploadImageWithMulter", validateLogin, updateUserPermissionsAndFiles, validateIsUploader,
@@ -37,8 +39,12 @@ router.get("/getImagesByUsername/:username", validateLogin, updateUserPermission
 
 // router.get("/sendImageById/:imageId", validateLogin, sendImageById);
 
-router.post("/createGalleryFromMongoIds", validateLogin, createGalleryFromMongoIds);
+router.post("/createGalleryFromMongoIds", validateLogin, updateUserPermissionsAndFiles, validateIsUploader, createGalleryFromMongoIds);
+router.get("/getGalleryById/:galleryId", validateLogin, updateUserPermissionsAndFiles, validateIsUploader, getGalleryById);
+router.get("/getGalleriesByUsername/:username", validateLogin, updateUserPermissionsAndFiles, validateIsUploader, getGalleriesByUsername);
 
+//get image vvv by its mongo assigned ID (_id)
 router.get("/getByMID/:mongoId", validateLogin, sendImageByMongoId);
+
 
 module.exports = router;

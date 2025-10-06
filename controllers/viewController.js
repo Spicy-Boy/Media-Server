@@ -218,14 +218,16 @@ async function renderBasicGallery(req, res)
 
         let targetGallery;
 
-        if (username)
+        if (galleryId)
         {
             targetGallery = await Gallery.findOne({ galleryId });
         }
 
+        let activeUser = req.session.activeUser;
+
         if (targetGallery)
         {
-            res.render("galleryBasic", {targetGallery});
+            res.render("galleryBasic", {targetGallery, activeUser});
         }
     } catch (error)
     {

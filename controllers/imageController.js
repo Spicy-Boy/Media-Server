@@ -200,30 +200,69 @@ async function createGalleryFromMongoIds(req, res)
 
 async function getGalleryById(req, res)
 {
+    let galleryId = req.params.galleryId;
+
     try
     {
-        let galleryId = req.params.galleryId;
 
         const gallery = await Gallery.find({ galleryId });
 
         if (!gallery)
         {
-            return res.s
-            
-            tatus(404).json({
+            return res.status(404).json({
                 success: false,
                 errorMsg: "Gallery not found."
             });
         }
 
-        res.status(200).send(gallery);
+        return res.status(200).send(gallery[0]);
     }
     catch (error)
     {
         console.log('ERROR getting gallery:',error);
-        res.status(400).json({
+        return res.status(400).json({
           success: false,
           errorMsg: "Failed to find the gallery!"
+        });
+    }
+}
+
+async function getGalleriesByUsername(req, res)
+{
+    let username = req.params.username;
+
+    //TESTER vv
+    // console.log('Username:',username);
+
+    try
+    {
+        const galleries = await Gallery.find({ creator: username });
+
+        if (!galleries.length)
+        {
+            return res.status(404).json({
+                success: false,
+                errorMsg: "Galleries not found. Correct username?"
+            });
+        }
+
+        //TESTER vv
+        // console.log('Galleries:',galleries);
+
+        // return res.status(200).send(galleries);
+        return res.status(200).json({
+                success: true,
+                errorMsg: "Galleries found!",
+                galleries: galleries
+            });
+        
+    }
+    catch (error)
+    {
+        console.log('ERROR getting galleries:',error);
+        return res.status(400).json({
+          success: false,
+          errorMsg: "Failed to find the galleries!"
         });
     }
 }
@@ -232,5 +271,7 @@ module.exports = {
     createImageDatabaseEntry,
     getImagesByUsername,
     sendImageByMongoId,
-    createGalleryFromMongoIds
+    createGalleryFromMongoIds,
+    getGalleriesByUsername,
+    getGalleryById
 };

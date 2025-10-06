@@ -48,8 +48,8 @@ async function fetchImagesByUsername(username)
 
         const data = await response.json();
 
-        //TESTER vv
-        // console.log(data);
+        // TESTER vv
+        // console.log("data from image fetch:",data);
         return data;
 
     }

@@ -48,7 +48,7 @@ router.get("/u/:username", validateLoginWithRedirect, updateUserPermissionsAndFi
 router.get("/i/:username", validateLoginWithRedirect, updateUserPermissionsAndFiles, validateIsUploader, renderBasicImageHub);
 router.get("/i", validateLoginWithRedirect, updateUserPermissionsAndFiles, validateIsUploader, renderBasicImageHub);
 
-router.get("/g/:galleryId", validateLogin, updateUserPermissionsAndFiles, validateIsUploader, renderBasicGallery);
+router.get("/g/:galleryId", validateLoginWithRedirect, updateUserPermissionsAndFiles, validateIsUploader, renderBasicGallery);
 
 router.get("/ai", validateLoginWithRedirect, updateUserPermissionsAndFiles, validateIsUploader, (req, res) => {
     res.sendFile(path.join(__dirname, "../public/html/aiQueryPage.html"));

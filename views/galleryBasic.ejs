@@ -3,13 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gallery: <%=targetGallery.name%></title>
+    <title>Gallery: <%=targetGallery.title%></title>
 
-    <link rel="stylesheet" type="text/css" href="css/style.css">
-    <link rel="stylesheet" type="text/css" href="css/galleryStyle.css">
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+    <link rel="stylesheet" type="text/css" href="/css/galleryStyle.css">
+
+    
+    <%
+        let isThisActiveUserPage = false;
+        if (activeUser.username == targetGallery.creator)
+        {
+            isThisActiveUserPage = true;
+        }
+    %>
 
     <script>
         let pageGalleryId = "<%=targetGallery.galleryId%>";
+
     </script>
 
 
@@ -25,18 +35,9 @@
                 <input id="images-input" name="uploaded_file" type="file" multiple>
             </div>
 
-            <input type="submit" value="BEGIN UPLOAD" id="upload-button">
+            <input type="submit" value="BEGIN UPLOAD & ADD TO GALLERY" id="upload-button">
 
-        </form>
-
-        <form id="gallery-creation-panel" class="flex-column flex-centered gallery-creation-form" style="width: 99%; padding-top: 15px;" action="/api/image/createGalleryFromMongoIds">
-            <div class="flex-row">
-                <label for="gallery-title">Title for Gallery:&nbsp;&nbsp;</label>
-                <input type="text" id="gallery-title" value="" name="galleryTitle" placeholder="Choose a title" required>
-            </div>
-            <p>NOTE: The gallery will be created with all your uploaded images... I haven't bothered to create a selection system yet!</p>
-            <input type="submit" value="CREATE GALLERY" id="create-gallery-button">
-        </form>
+        </form>>
         <%}%>
 
         <div id="upload-console" style="max-height: 200px; overflow-y: auto" class="flex-column">
@@ -44,7 +45,7 @@
         </div>
     </div>
 
-    <center><h1><%=targetGallery.name%></h1></center>
+    <center><h1 class="gallery-title"><%=targetGallery.title%></h1></center>
 
     <div id="gallery" class="flex-column flex-centered">
 
@@ -81,7 +82,9 @@
 
 </body>
 
-<script src="./js/galleryScripts/imageDisplayFunctionality.js"></script>
-<script src="./js/galleryScripts/generateGalleryFromTemplates.js"></script>
+<script src="/js/galleryScripts/imageDisplayFunctionality.js"></script>
+<script src="/js/galleryScripts/uploadImagesAndAddToGallery.js"></script>
+<script src="/js/galleryScripts/generateGalleryFromTemplates.js"></script>
+
 
 </html>

@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Image Hub</title>
 
-    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" type="text/css" href="css/galleryStyle.css">
 
     <%
@@ -55,28 +55,15 @@
         </div>
     </div>
 
-    <!-- <div id="gallery-list">
-        
-    </div> -->
+    <div id="gallery-list" class="flex-column">
+        <!-- to display galleries! -->
+    </div>
 
-    <button id="generate-gallery-DOM-button">CREATE GALLERY</button>
+    <!-- <button id="generate-gallery-DOM-button">CREATE GALLERY</button> -->
 
     <div id="gallery" class="flex-column flex-centered">
         <!-- GALLERY HOLDER -->
          
-        <!-- <div class="gallery-segment-day flex-column"> -->
-
-            <!-- <div class="gallery-segment-date-label">
-                <h1>July 10th, 2025</h1>
-            </div>
-
-            <div class="gallery-picture-container flex-row flex-wrap">
-
-                <div class="gallery-image" style="background-image: url('/images/800px-Luddite.jpg')" onClick="openFullImage('/images/800px-Luddite.jpg')"></div>
-
-            </div>
-
-        </div> -->
         <!-- GALLERY HOLDER -->
     </div>
 
@@ -109,6 +96,59 @@
         <div class="gallery-image" style="background-image: url('imgsrc')"></div>
     </template>
 </body>
+
+<script>
+
+    fetchAndDisplayGalleries();
+
+    async function fetchAndDisplayGalleries()
+    {
+        try
+        {
+            let galleryList;
+
+            const response = await fetch("/api/image/getGalleriesByUsername/"+pageUsername, {
+                method: "GET"
+            });
+
+            let allGalleries = await response.json();
+            //structure should be allGalleries.galleries to see them all
+            //tester vvv
+            // console.log('allGalleries:',allGalleries);
+            if (allGalleries.success)
+            {
+                galleryList = document.getElementById('gallery-list');
+                console.log(galleryList);
+
+                let header = document.createElement('h1');
+
+                header.textContent = "YOUR GALLERIES";
+                galleryList.appendChild(header);
+
+                allGalleries.galleries.forEach(gallery => {
+                    console.log('Gallery:',gallery);
+                    let newGalleryLink = document.createElement('a');
+                    newGalleryLink.href = ("/g/"+gallery.galleryId);
+                    newGalleryLink.textContent = gallery.title;
+                    newGalleryLink.classList.add("gallery-navigation-link");
+                    galleryList.appendChild(newGalleryLink);
+                });
+            }
+            else
+            {
+                console.log('NO GALLERIES FOUND!!');
+            }
+            
+
+        }
+        catch(error)
+        {
+            console.log('An error occurred fetching a list of galleries for you:',error);
+        }
+    }
+
+
+</script>
 
 <script src="./js/TESTgalleryFunctionality.js"></script>
 
