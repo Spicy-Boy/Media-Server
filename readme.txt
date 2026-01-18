@@ -1,15 +1,32 @@
 hi
 
-TODO: for Julian
+*Main TODO: 
 
-XXX - track index of image currently displayed in light box. Every time you click an image, the "selected" index is saved
+O - fix auth access to redirect to login page when loading a private file's page
 
-XXX - Added left/right buttons to DOM that allow user to traverse the list of images
+O - Add copy link feature to main file menu (for ease of sharing multiple links)
 
-XXX - Added keyboard controls (left right a and d) to traverse the list of images
+*File Uploading TODO:
 
-XXX - make independent page for gallery
+O - Create a temporary database entry when a file begins Uploading
 
-XXX - transfer all scripts to their own files. put gallery scripts into a subfolder for galleries (should have always been that way ;_;)
+O - Keep track of how large file is, how many chunks, and which chunks are
+complete VS incompletely uploaded
 
-XXX - add links to a user's galleries 
+O - Allow a user to resume an upload if it fails somehow, or notify user if a file fails to upload
+
+*Gallery TODO:
+
+O - Rewrite code that saves image database entries. Ensure that date modified is being saved correctly from each file.
+
+O - Rewrite code that creates database entries for galleries. Ensure that the division of dates accurately reflects the files (currently it places images on the wrong day)
+
+O - Create a proper gallery management page (creating galleries, seeing your galleries, unlisting them)
+
+O - Create proper gallery editing
+
+*Public File Hosting TODO:
+
+O - Create a curator system whereby users can create pages for videos/files, fill in proper metadata, and choose to publish these pages so they show up on a main directory page
+
+O -

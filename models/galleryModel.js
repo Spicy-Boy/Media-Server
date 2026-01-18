@@ -101,7 +101,7 @@ const gallerySchema = new mongoose.Schema(
                             ref: "Image",
                             required: true
                         },
-                        imgDate: {
+                        imgDate: { //the file's internal modified date, saved
                             type: Date,
                             required: true
                         }

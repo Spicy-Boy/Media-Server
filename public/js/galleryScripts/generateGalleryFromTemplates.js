@@ -2,7 +2,7 @@ console.log('LOADING gallery generation script..');
 
 let galleryObjectFromDB; //gallery will be pulled from the server into  here
 
-beginGalleryCreation();
+// beginGalleryCreation();
 
 console.log('DOM Gallery Generation Complete!');
 
@@ -12,7 +12,7 @@ async function beginGalleryCreation()
 {
     galleryObjectFromDB = await fetchGalleryFromDB();
 
-    generateGalleryDOM();
+    generateEntireGalleryDOM();
 }
 
 async function fetchGalleryFromDB()
@@ -25,7 +25,12 @@ async function fetchGalleryFromDB()
     return data;
 }
 
-function generateGalleryDOM()
+// vv targets a specific date container and populate its pictures from that part of the gallery, can be called from a button 
+function generateGalleryDOMByDate()
+{
+}
+
+function generatEntireGalleryDOM()
 {
     const dayContainerTemplate = document.getElementById('gallery-day-template');
     const imageContainerTemplate = document.getElementById('gallery-image-template');
