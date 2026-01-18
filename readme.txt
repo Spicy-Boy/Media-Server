@@ -23,7 +23,9 @@ O - Rewrite code that creates database entries for galleries. Ensure that the di
 
 O - Create a proper gallery management page (creating galleries, seeing your galleries, unlisting them)
 
-O - Create proper gallery editing
+O - Create proper gallery editing system (delete and add images)
+
+O - Hide each section of the gallery behind a button, click button to generate the HTML and build the goods
 
 *Public File Hosting TODO:
 
