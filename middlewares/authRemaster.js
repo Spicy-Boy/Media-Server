@@ -228,8 +228,15 @@ async function validateLoginConditionallyForFile (req, res, next) //FOR VIEWS/PA
                 return next();
             }
 
-            console.log('validateLoginConditionallyForFile: Auth failed! '+req.path);
-            return res.status(403).send("<center><h1>:)</h1></center>");
+            console.log('validateLoginConditionallyForFile: Auth failed! '+req.path)+' !!! Redirecting';
+
+            //attaches the user's original destination to their session so that they can be returned when successfully logging in
+            req.session.returnTo = req.originalUrl;
+
+            return res.redirect("/redirectLogin");
+
+            // old vvv doesn't redirect, snarky
+            // return res.status(403).send("<center><h1>:)</h1></center>");
         }
         else
         {

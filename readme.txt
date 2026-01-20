@@ -2,7 +2,7 @@ hi
 
 *Main TODO: 
 
-O - fix auth access to redirect to login page when loading a private file's page
+X - fix auth access to redirect to login page when loading a private file's page
 
 O - Add copy link feature to main file menu (for ease of sharing multiple links)
 
@@ -31,4 +31,4 @@ O - Hide each section of the gallery behind a button, click button to generate t
 
 O - Create a curator system whereby users can create pages for videos/files, fill in proper metadata, and choose to publish these pages so they show up on a main directory page
 
-O -
+O - Present each video with a pretty page
