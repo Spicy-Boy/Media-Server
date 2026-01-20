@@ -299,6 +299,7 @@
                             
                             <td class="upload-list-link-column">
                                 <a href="/u/<%=targetUser.username%>/<%=file.fileId%>">LINK</a>
+                                <span class="clipboard-button" title="Copy link to file!" data-href="/u/<%=targetUser.username%>/<%=file.fileId%>">📋</span>
                             </td>
                             
                             <td class="upload-list-size-column">
@@ -429,10 +430,37 @@
         console.log('Finished calculating file sizes!');
     </script>
 
+    <script> //script for making the copy link clipboard icons work
+        let clipboards = document.querySelectorAll(".clipboard-button");
+
+        clipboards.forEach(clipboardButton => {
+            // console.log(clipboard.dataset.href);
+
+            clipboardButton.addEventListener("click", async () => {
+                //the stored url is the relative path, we need to add the full site URL to it
+                const relativePath = clipboardButton.dataset.href;
+                const fullUrl = new URL(relativePath, window.location.origin).href;
+
+                try {
+                    //write the url to the user's clipboard
+                    await navigator.clipboard.writeText(fullUrl);
+
+                    //show a temporary checkmark to show it worked
+                    const originalText = clipboardButton.textContent;
+                    clipboardButton.textContent = "✅";
+                    setTimeout(() => clipboardButton.textContent = originalText, 1000);
+                } catch (err) {
+                console.error("Clipboard copy failed:", err);
+                }
+            });
+        });
+    </script>
+
     <script> //make a backup of the table for use in restoring after searches
         let tableBodyFull = document.getElementById("list"); //id of table on user portal is "list"
         let tableFullBackup = tableBodyFull.cloneNode(true);  //save a clone of the table  
     </script>
+
 
     <%if (isThisActiveUserPage) {%>
     <script src="/js/simpleUploadLogic.js"></script>
