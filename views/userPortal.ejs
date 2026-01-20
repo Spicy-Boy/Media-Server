@@ -85,7 +85,7 @@
             <div class="mobile-file-details desktop-invisible" style="justify-content: center; align-items: center;">
                 <span>
                     <!-- dynamic: a href="/u/:username/:fileId" -->
-                    🔗<a href="" class="file-link" style="text-decoration: underline">LINK</a> ~ Size:
+                    🔗<a href="" class="file-link" style="text-decoration: underline">LINK</a> <span class="clipboard-button" title="Copy link to file!" data-href="#">📋</span> ~ Size:
                     <!-- dynamic: contents of class="fileSize" -->
                     <span class="fileSize"></span>
                     <!-- dynamic: span id = "mobile-eyeball-FILEID" and if eyeball is printed-->
@@ -105,6 +105,7 @@
         <td class="upload-list-link-column">
             <!-- dynamic: a href="[/u/:username/:fileId]" -->
             <a href="#" class="file-link">LINK</a>
+            <span class="clipboard-button" title="Copy link to file!" data-href="#">📋</span>
         </td>
     
         <td class="upload-list-size-column">
@@ -281,7 +282,7 @@
 
                                 <div class="mobile-file-details desktop-invisible" style="justify-content: center; align-items: center;">
                                     <span>
-                                        🔗<a href="/u/<%=targetUser.username%>/<%=file.fileId%>" style="text-decoration: underline">LINK</a> ~ Size:
+                                        🔗<a href="/u/<%=targetUser.username%>/<%=file.fileId%>" style="text-decoration: underline">LINK</a> <span class="clipboard-button" title="Copy link to file!" data-href="/u/<%=targetUser.username%>/<%=file.fileId%>">📋</span> ~ Size:
                                         <span class="fileSize"><%=file.size%></span>
                                         <span id="mobile-eyeball-<%=file.fileId%>">
                                             <% if (file.isPublic) { %>

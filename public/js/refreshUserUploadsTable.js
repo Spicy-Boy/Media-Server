@@ -77,6 +77,29 @@ async function generateNewUploadList()
             link.href = "/u/"+pageUsername+"/"+file.fileId;
         });
 
+        //clipboard link copying
+        clonedRow.querySelectorAll(".clipboard-button").forEach(clipboardButton => {
+            clipboardButton.dataset.href = "/u/"+pageUsername+"/"+file.fileId;
+
+            clipboardButton.addEventListener("click", async () => {
+                //the stored url is the relative path, we need to add the full site URL to it
+                const relativePath = clipboardButton.dataset.href;
+                const fullUrl = new URL(relativePath, window.location.origin).href;
+
+                try {
+                    //write the url to the user's clipboard
+                    await navigator.clipboard.writeText(fullUrl);
+
+                    //show a temporary checkmark to show it worked
+                    const originalText = clipboardButton.textContent;
+                    clipboardButton.textContent = "✅";
+                    setTimeout(() => clipboardButton.textContent = originalText, 1000);
+                } catch (err) {
+                console.error("Clipboard copy failed:", err);
+                }
+            });
+        });
+
         //grab each instance of the fileSize span and populate it with raw size data
         clonedRow.querySelectorAll(".fileSize").forEach(span => {
             let basicSize = Number(file.size);
