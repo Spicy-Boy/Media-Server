@@ -2,18 +2,23 @@ hi
 
 *Main TODO: 
 
-X - fix auth access to redirect to login page when loading a private file's page
+XX - fix auth access to redirect to login page when loading a private file's page
 
-O - Add copy link feature to main file menu (for ease of sharing multiple links)
+XX - Add copy link feature to main file menu (for ease of sharing multiple links)
+
+*Video Streaming TODO:
+
+O - Research streaming methods. Can my server files plug into Roku?
+
+O - Research streaming to a webpage. Can my server files be streamed to a user's web browser? 
 
 *File Uploading TODO:
 
-O - Create a temporary database entry when a file begins Uploading
+O - Create a temporary database entry when a file begins uploading
 
-O - Keep track of how large file is, how many chunks, and which chunks are
-complete VS incompletely uploaded
+O - Keep track of how large file is, how many chunks, and which chunks are complete VS incompletely uploaded
 
-O - Allow a user to resume an upload if it fails somehow, or notify user if a file fails to upload
+O - Allow a user to resume an upload if it fails somehow, or notify user if a file fails to upload (it will be up to the user to provide the same file to resume.. or corruption will occur)
 
 *Gallery TODO:
 
@@ -26,6 +31,8 @@ O - Create a proper gallery management page (creating galleries, seeing your gal
 O - Create proper gallery editing system (delete and add images)
 
 O - Hide each section of the gallery behind a button, click button to generate the HTML and build the goods
+
+O - Add video file support
 
 *Public File Hosting TODO:
 
