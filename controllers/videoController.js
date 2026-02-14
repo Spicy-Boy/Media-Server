@@ -4,10 +4,11 @@ const path = require("path");
 // straight form chat gpt.. lets see if it works!
 async function streamVideoTEST (req, res)
 {
-    const videoPath = path.join(__dirname, "video.mp4");
-    ^^ make this shit acquire the location of a file specified by its like code or something (query database if needed
-        
-    )
+    let testPath = "../public/AARON_files/[Muhn Pace] Enies Lobby - 1.mp4"
+    
+    const videoPath = path.join(__dirname, testPath);
+    // ^^ make this shit acquire the location of a file specified by its like code or something (query database if needed
+
     const videoSize = fs.statSync(videoPath).size;
 
     const range = req.headers.range;
