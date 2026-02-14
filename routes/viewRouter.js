@@ -54,10 +54,17 @@ router.get("/ai", validateLoginWithRedirect, updateUserPermissionsAndFiles, vali
     res.sendFile(path.join(__dirname, "../public/html/aiQueryPage.html"));
 });
 
+//obscures my pathing for github
 let userManagementPath = process.env.USER_MANAGEMENT_PATH;
 let genericAdminPath = process.env.GENERIC_ADMIN_PATH;
 
 router.get(genericAdminPath, validateLoginWithRedirect, updateUserPermissionsAndFiles, validateAdminAuth, renderAdminFunPanel);
 router.get(userManagementPath, validateLoginWithRedirect, updateUserPermissionsAndFiles, validateAdminAuth, renderUserManagementPanel);
+
+//*^*^*^* TEST ROUTES *^*^*^*
+router.get("/testvideo", validateLoginWithRedirect, (req, res) => {
+    return res.render("video-hosting-pages/test-video-streaming");
+});
+//^*^*^**^*^*^*^**^*^*^*^*^*^
 
 module.exports = router;

@@ -31,5 +31,8 @@ router.use("/image", imageRouter);
 const aiRouter = require("./api-routes/aiRouter");
 router.use("/ai", aiRouter);
 
+const videoRouter = require("./api-routes/videoRouter");
+router.use("/video", videoRouter)
+
 module.exports = router;
 
