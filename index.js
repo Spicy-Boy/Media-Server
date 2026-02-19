@@ -48,7 +48,6 @@ app.use(async (req, res, next) => {
 
         await BannedIP.create({ip: ip, reason: "Automated ban after attempting to access "+path});
 
-        
         return res.status(404).send("Not found");
     }
 
