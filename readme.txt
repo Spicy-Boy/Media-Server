@@ -6,9 +6,20 @@ XX - fix auth access to redirect to login page when loading a private file's pag
 
 XX - Add copy link feature to main file menu (for ease of sharing multiple links)
 
+O - Add a text upload box to website (notes)
+O - Add a hyperlink space (and maybe multiple) to keep track of links
+O - Keep track of date uploaded
+O - Add a page for viewing notes, or at least a list
+
+O - Ultimate item... make it compatible with MARKDOWN!!!
+
 *Video Streaming TODO:
 
-O - Research streaming methods. Can my server files plug into Roku?
+X - Successful mp4 upload templates
+
+O - Research: can my server stream mkv videos? Thats the main format of my files!
+
+O - Research: Can my server files plug into Roku?
 
 O - Research streaming to a webpage. Can my server files be streamed to a user's web browser? 
 
@@ -39,3 +50,8 @@ O - Add video file support
 O - Create a curator system whereby users can create pages for videos/files, fill in proper metadata, and choose to publish these pages so they show up on a main directory page
 
 O - Present each video with a pretty page
+
+*App TODO:
+
+O - Find a way to create an android app that can directly upload selected images from my phone's gallery app
+
