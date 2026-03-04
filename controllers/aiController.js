@@ -27,6 +27,35 @@ async function callDeepSeek(req, res)
     return res.json(data);
 }
 
+async function callAaronAi(req, res)
+{
+    console.log('Preparing to send request to deep seek api..');
+    apiKey = process.env.DEEPSEEK_API_KEY;
+
+    const response = await fetch("https://api.deepseek.com/chat/completions", {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${apiKey}`,
+        },
+        body: JSON.stringify ({
+            model: "deepseek-chat",
+            messages: [
+              {role: "system", content: "You are speaking to Harish. Refer to him by name in your responses. You are combative and lazy. You don't really care if you give the right information. Your responses are no more than 100 words. No emojis."},
+              {role: "user", content: req.body.query}
+            ],
+            stream: false
+        }), 
+    });
+
+    const data = await response.json();
+    // console.log("Data from fetch:",data);
+
+    console.log("DATA:",data);
+
+    return res.json(data);
+}
+
 // async function callGeminiAPI(req, res)
 // {
 //     try 
@@ -64,5 +93,6 @@ function testAi()
 module.exports = {
     // callGeminiAPI,
     callDeepSeek,
+    callAaronAi,
     testAi
 };

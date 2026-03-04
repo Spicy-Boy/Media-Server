@@ -58,7 +58,8 @@ async function callAPI(userQuery, newRobotMessageDiv, messageBox)
 
     try 
     {
-        const response = await fetch("http://localhost:8080/api/ai/callDeepSeek", {
+        // const response = await fetch("http://localhost:8080/api/ai/callDeepSeek", {
+        const response = await fetch("https://latienda.zapto.org/api/ai/callDeepSeek", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ query: userQuery })

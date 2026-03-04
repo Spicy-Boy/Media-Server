@@ -2,6 +2,7 @@ const router = require("express").Router();
 
 const {
     callDeepSeek,
+    callAaronAi,
     testAi
 } = require("../../controllers/aiController");
 
@@ -13,11 +14,13 @@ const {
     validateIsUploader,
  } = require("../../middlewares/authRemaster");
 
-router.use(validateLogin);
+// router.use(validateLogin);
 
 router.post("/callDeepSeek", callDeepSeek);
 
-router.use(updateUserPermissionsAndFiles);
+router.post("/callAaronAI", callAaronAi);
+
+// router.use(updateUserPermissionsAndFiles);
 
 router.get("/test", validateAdminAuth, testAi);
 
