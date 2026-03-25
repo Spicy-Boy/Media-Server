@@ -506,6 +506,10 @@ header {
 
     margin-left: auto;
     margin-right: auto;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 #notes-reveal-button {
     width: 90%; 
@@ -518,6 +522,20 @@ header {
     text-decoration: underline;
     cursor: pointer;
 }
+
+#notes-submission-panel {
+    background-color: #202020;
+
+    max-width: 94%;
+}
+#notes-submission-panel p{
+    margin: 0px;
+    padding-top: 5px;
+}
+#notes-submission-panel textarea{
+    margin-bottom: 8px;
+}
+
 
 .desktop-invisible {
     display: block;

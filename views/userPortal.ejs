@@ -183,6 +183,26 @@
                     <span>[+]</span>
                     Notes
                 </div>
+                <div id="notes-submission-panel">
+                
+                <form id="notes-submission-form" class="notes-submission-form" action="" enctype="multipart/form-data" method="post">
+
+                    <p style="color: #707070; margin-bottom: 5px;">Write a note:</p>
+
+                    <textarea id="notes-submission-content" name="content" rows="4" cols="35"></textarea>
+                    
+                    <br>
+
+                    <input id="notes-submission-file" name="file" type="file">
+            
+                    <input id="notes-submission-button" type="submit" value="Post Comment">
+                    
+                    <div>
+                        <span id='notes-submission-status'></span>
+                    </div>
+
+                </form>
+                </div>
             </div>
 
             <!--
@@ -393,9 +413,9 @@
             <input id="quick-edit-file" name="file" type="file">
             
             <input id="quick-edit-comment-submission" type="submit" value="Post Comment">
-        <div>
-            <span id='quick-edit-comment-status'></span>
-        </div>
+            <div>
+                <span id='quick-edit-comment-status'></span>
+            </div>
 
         </form>
     </div>
