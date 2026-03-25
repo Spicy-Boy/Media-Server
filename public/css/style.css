@@ -500,6 +500,25 @@ header {
     overflow-y: auto; /* add scroll */
 }
 
+#notes {
+    width: 99%;
+    padding: 15px;
+
+    margin-left: auto;
+    margin-right: auto;
+}
+#notes-reveal-button {
+    width: 90%; 
+    background-color: #3d3d3d;
+    padding: 8px;
+}
+#notes-reveal-button:hover {
+    background-color: #5a5a5a;
+    color: white;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
 .desktop-invisible {
     display: block;
 }
@@ -1159,6 +1178,10 @@ footer a:visited {
 
     .sneaky-anna {
         display: block;
+    }
+
+    #notes-reveal-button {
+        /* margin-left: 5px; */
     }
 }
 
