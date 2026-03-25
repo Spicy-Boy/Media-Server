@@ -59,6 +59,10 @@ document.addEventListener("click", async (e) => {
         quickEditDiv.style.display = "flex";
         document.getElementById('quick-edit-filename').textContent = specificFile.name;
         document.getElementById('quick-edit-filesize').textContent = calculateFileSize(Number(specificFile.size));
+
+        //reset comment status and visibility status for each new file quick edit window opened
+        commentSubmissionStatus.textContent = "";
+        quickEditToggleVisibilityMessage.textContent = "";
     }
 });
 
@@ -168,6 +172,8 @@ selectAllButton.addEventListener("click", () => {
 const quickEditCloseButton = document.getElementById('button-close-quick-edit');
 quickEditCloseButton.addEventListener("click", () => {
     quickEditDiv.style.display = "none";
+    commentSubmissionStatus.textContent = "";
+    quickEditToggleVisibilityMessage.textContent = "";
 });
 
 //DOM elements to change every time the quick edit menu is open!
@@ -408,6 +414,9 @@ commentSubmissionButton.addEventListener("click", async (event) => {
         {
             console.log('Comment added succesfully!');
             commentSubmissionStatus.textContent = "SUCCESS!";
+
+            //erase content of comment window
+            document.getElementById("quick-edit-content").value = "";
         }
         else
         {
