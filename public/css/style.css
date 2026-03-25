@@ -487,6 +487,19 @@ header {
     max-width: 150px;
 }
 
+#active-uploads {
+    /* background-color: red; */
+
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    flex-wrap: wrap;
+    
+    max-width: 400px;
+    max-height: 500px;
+    overflow-y: auto; /* add scroll */
+}
+
 .desktop-invisible {
     display: block;
 }
@@ -529,10 +542,13 @@ header {
     background-color: #363636;
     /* max-height: 100px; */
     /* max-width: 250px; */
-    width: 200px;
+    width: 175px;
     margin-top: 3px;
     margin-bottom: 3px;
     border: #b3b2b2 2px inset;
+
+    margin-left: 5px;
+    margin-right: 5px;
 
     padding-bottom: 3px;
 

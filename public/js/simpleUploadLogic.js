@@ -209,6 +209,12 @@ function updateUploadElement(fileNo, chunkId, chunkCount, uploadInfo, status)
 function createUploadElement(fileNo, fileName, fileSize)
 {
     const uploadDiv = document.createElement("div");
+
+    //Makes alignment nicey nicey vvv w/ cancel btn
+    uploadDiv.style.display = "flex";
+    uploadDiv.style.flexDirection = "column";
+    // uploadDiv.style.alignItems = "flex-start";
+
     uploadDiv.id = "file-"+fileNo;
     uploadDiv.className = "individual-upload";
     uploadDiv.innerHTML = `<span id="fileName-${fileNo}">${fileName}
@@ -224,14 +230,19 @@ function createUploadElement(fileNo, fileName, fileSize)
     
     const additionalDetailsDiv = document.createElement("div");
     additionalDetailsDiv.className = "text-align-left";
-    additionalDetailsDiv.innerHTML = "&nbsp;"
+    // additionalDetailsDiv.innerHTML = "&nbsp;"
     additionalDetailsDiv.style.marginTop = "4px";
     uploadDiv.appendChild(additionalDetailsDiv);
 
     const cancelButton = document.createElement("button");
     cancelButton.id = "cancel"+fileNo;
     cancelButton.textContent = "Cancel";
-    additionalDetailsDiv.appendChild(cancelButton);
+
+    //vv float cancel button to bottom
+    
+    cancelButton.style.marginTop = "auto";
+    cancelButton.style.alignSelf = "flex-start";
+    uploadDiv.appendChild(cancelButton);
 
     // cancelButton.addEventListener("click", function () {
     //     // console.log(this);
