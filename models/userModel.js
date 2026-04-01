@@ -72,7 +72,7 @@ const userSchema = new mongoose.Schema(
             default: false
         },
         isCurator: {
-            //curators can manage public-facing content and transport uploads from user drives' to public-facing content pages
+            //curators can manage public-facing content and transport uploads from user drives to public-facing content pages
             type: Boolean,
             default: false
         },
@@ -80,7 +80,34 @@ const userSchema = new mongoose.Schema(
             //frozen users are prevented (via middleware) from performing any requests whatsoever... I think... value is checked in the validateLogin function of authRemaster
             type: Boolean,
             default: false
-        }
+        },
+        notes: [ //images uploaded 
+                {
+                    username: String,
+                    noteId: {
+                        type: String,
+                        required: true,
+                        default: uuidv4,
+                    },
+                    textTitle: {
+                        type: String,
+                        default: () => new Date().toISOString()
+                    },
+                    textContent: {
+                        type: String,
+                        default: ""
+                    },
+                    createdAt: {
+                        type: Date,
+                        default: Date.now
+                    },
+                    imgUrl: String, //location of accompanying image, if any
+                    imgSize: Number,
+                    imgWidth: Number,
+                    imgHeight: Number,
+                    imgFileType: String,
+                }
+            ],
     }
 )
 

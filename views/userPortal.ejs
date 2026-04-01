@@ -189,19 +189,22 @@
 
                     <p style="color: #707070; margin-bottom: 5px;">Write a note:</p>
 
+                    <input type="text" id="notes-submission-title" name="title" placeholder="Note Title (optional)" style="width: 50%; margin-bottom: 5px;">
+
                     <textarea id="notes-submission-content" name="content" rows="4" cols="35"></textarea>
                     
                     <br>
 
                     <input id="notes-submission-file" name="file" type="file">
             
-                    <input id="notes-submission-button" type="submit" value="Post Comment">
+                    <input id="notes-submission-button" type="submit" value="Post Note">
                     
-                    <div>
+                    <div style="margin-bottom: 5px;">
                         <span id='notes-submission-status'></span>
                     </div>
 
                 </form>
+                
                 </div>
             </div>
 
@@ -492,6 +495,8 @@
         let tableBodyFull = document.getElementById("list"); //id of table on user portal is "list"
         let tableFullBackup = tableBodyFull.cloneNode(true);  //save a clone of the table  
     </script>
+
+    <script src="/js/noteSubmissionForUserPortalScript.js"></script>
 
 
     <%if (isThisActiveUserPage) {%>

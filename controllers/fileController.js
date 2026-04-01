@@ -6,7 +6,6 @@ const sharp = require('sharp');
 
 function createPersonalFilePath (username)
 {
-
     // let filepath = "C:\\mailbox\\upload\\"+username+";
 }
 
@@ -506,9 +505,84 @@ async function addCommentToFile(req, res)
     }
 }
 
-// todo!! fix the refresh button template and code to reflect new changes in the user index
+async function addNoteToUser(req, res)
+{
+    const username = req.params.username;
 
-// todo!! uuuhhh news posting?
+    try {
+        const dbUser = await User.findOne({username: username});
+        if (!dbUser) {
+            return res.status(404).json({ error: "User not found!"});
+        }
+
+        if (dbUser.username !== req.session.activeUser.username)
+        {
+            return res.status(403).json({ error: "You do not have permission >:(" });
+        }
+
+        console.log('Submitting a note for user',dbUser.username);
+
+        let newNote = {
+            username: dbUser.username,
+            textContent: req.body.content
+        }
+
+        if (req.body.title && req.body.title.trim() !== "") 
+        {
+            newNote.textTitle = req.body.title.trim();
+        }
+
+        //vvv pasted from comment code, variable names unchanged
+        if (req.file)
+        {
+            console.log('Analyzing file...');
+            
+            let commentImgPath = process.env.MAIL_DELIVERY_LOCATION+"/"+username+"_files/";
+
+            newNote.imgUrl = `${commentImgPath}${req.file.filename}`;
+
+            newNote.imgSize = Math.floor(((req.file.size / 1024) * 100) /100);
+
+            newNote.imgFileType = req.file.mimetype;
+
+            try {
+                const imgMetadata = await sharp(req.file.path).metadata();
+                newNote.imgWidth = imgMetadata.width;
+                newNote.imgHeight = imgMetadata.height;
+            } 
+            catch (error)
+            {
+                console.error("Error processing image metadata:",error);
+                return res.status(500).json({ 
+                    error: "An error occurred while processing the uploaded image on the backend." 
+                });
+            }
+        }
+        else
+        {
+            newNote.imgUrl = "";
+        }
+
+        if (newNote.textContent == "" && newNote.imgUrl == "")
+        {
+            return res.status(500).json({ error: "Note is not acceptable for submission... is it blank?" });
+        }
+
+        dbUser.notes.push(newNote);
+        await dbUser.save();
+
+        return res.status(201).json({
+            success: true
+        })
+    }
+    catch (error)
+    {
+        console.log("An error occured adding a note to user "+username+"!",error);
+        return res.status(500).json({ 
+            error: "A backend error occured. Please try again later or contact administrator!" 
+        });
+    }
+}
 
 module.exports = {
     uploadInChunks,
@@ -519,5 +593,6 @@ module.exports = {
     sendFile,
     sendSingleUsersFileList,
     addCommentToFile,
-    sendCommentFileByIndex
+    sendCommentFileByIndex,
+    addNoteToUser
 };

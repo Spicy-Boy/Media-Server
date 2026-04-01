@@ -3,7 +3,7 @@ const fs = require("fs");
 const path = require("path");
 
 //MULTER middleware
-//used for donation uploading, simple as!!!
+//used for comment uploading, simple as!!!
 const storage = multer.diskStorage({
     destination: (req, file, cb) =>
     {
@@ -24,4 +24,24 @@ const storage = multer.diskStorage({
 
 const uploadCommentImage = multer({storage: storage});
 
-module.exports = uploadCommentImage;
+const noteStorage = multer.diskStorage({
+    destination: (req, file, cb) =>
+    {
+        let noteImgPath = process.env.MAIL_DELIVERY_LOCATION+"/"+req.params.username+"_files/note_files/";
+
+        fs.mkdirSync(noteImgPath, { recursive: true });
+
+        cb(null, noteImgPath);
+    },
+    filename: (req, file, cb) =>
+    {
+        cb(null, file.originalname);
+    }
+});
+
+const uploadNoteImage = multer({storage: noteStorage});
+
+module.exports = {
+    uploadCommentImage,
+    uploadNoteImage
+};

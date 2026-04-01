@@ -1,5 +1,11 @@
 const router = require("express").Router();
-const uploadCommentImage = require("../../middlewares/multerForComments");
+// const uploadCommentImage = require("../../middlewares/multerForComments");
+// const uploadNoteImage = require("../../middlewares/multerForComments");
+
+const {
+    uploadCommentImage,
+    uploadNoteImage
+} = require("../../middlewares/multerForComments");
 
 const {
     updateUserPermissionsAndFiles,
@@ -19,7 +25,8 @@ const {
     toggleVisibility,
     sendSingleUsersFileList,
     addCommentToFile,
-    sendCommentFileByIndex
+    sendCommentFileByIndex,
+    addNoteToUser
 } = require("../../controllers/fileController");
 
 /* LOGIN AND PERMISSIONS VALIDATION BELOW THESE LINE!*/
@@ -34,6 +41,8 @@ router.post("/createEntry", validateLogin, updateUserPermissionsAndFiles, valida
 
 router.post("/addComment/:username/:fileId", validateLogin, updateUserPermissionsAndFiles, validateIsUploader, uploadCommentImage.single('uploaded_file'), addCommentToFile);
 router.get("/sendCommentFileByIndex/:username/:fileId/:index", validateLoginConditionallyForFile, sendCommentFileByIndex);
+
+router.post("/addNote/:username", validateLogin, updateUserPermissionsAndFiles, validateIsUploader, uploadNoteImage.single('uploaded_file'), addNoteToUser);
 
 router.get("/sendFileToWebpage/:username/:fileId", validateLoginConditionallyForFile, sendFile);
 
