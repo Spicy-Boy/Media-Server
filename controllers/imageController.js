@@ -162,6 +162,7 @@ async function createGalleryFromMongoIds(req, res)
         let imageIds = req.body.imageIds;
         
         //this is chatgpt magic vvv db aggregation
+        //UPDATE 4/11 this is totally busted and doesn't place images in the right day.
         const groupedImages = await Image.aggregate([
             { $match: { _id: { $in: imageIds.map(id => new mongoose.Types.ObjectId(id)) } } },
             { $sort: { imgDate: 1 } }, //sort images oldest -> newest
