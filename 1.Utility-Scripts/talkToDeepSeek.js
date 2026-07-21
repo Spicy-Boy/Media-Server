@@ -3,7 +3,8 @@ async function callDeepSeek()
     let userQuery = "How do I make a flan?"
 
     try {
-        const response = await fetch("http://localhost:8080/api/ai/callAaronAi", {
+        // const response = await fetch("http://localhost:8080/api/ai/callAaronAi", {
+        const response = await fetch("https://"+process.env.DOMAIN+"/api/ai/callAaronAi", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ query: userQuery })
@@ -19,5 +20,5 @@ async function callDeepSeek()
     }
 }
 
-console.log('STARTING CALL TEST!');
+// console.log('STARTING CALL TEST!');
 callDeepSeek();
