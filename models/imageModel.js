@@ -18,16 +18,21 @@ const imageSchema = new mongoose.Schema(
             required: true,
             default: uuidv4
         },
-        imgSize: Number,
+        imgSize: Number, //in bytes?
         imgWidth: Number,
         imgHeight: Number,
-        imgDate: {
+        imgDate: { //the original lastModified date of uploaded file converted to a Date
+            //allows one to organize photos by date taken
+            type: Date,
+            required: true
+        },
+        dateUploaded: { //date that the image was actually uploaded to the server.. don't get confused!
             type: Date,
             required: true
         },
         imgFileType: String,
         location: String, //a file path 
-        //file location is saved just in case the .env mail delivery location changes. This keeps a record of where the file was uploaded originally to aid in future recovery efforts
+        //file location is saved just in case the .env mail delivery location changes, or some other disaster. This keeps a record of where the file was uploaded originally to aid in future recovery efforts
     }
 )
 
