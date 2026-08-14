@@ -1,14 +1,16 @@
 hi
 
-*Main TODO: 
+* Main TODO: 
 
-XX - fix auth access to redirect to login page when loading a private file's page
+O - Create thumbnails for every uploaded image
 
-XX - Add copy link feature to main file menu (for ease of sharing multiple links)
+O - Create way to import uploaded files and generate thumbnails for them
 
-O - Add a text upload box to website (notes)
-O - Add a hyperlink space (and maybe multiple) to keep track of links
-O - Keep track of date uploaded
+O - Create a console viewport that can display messages going to and coming back from server
+
+O - 
+
+* NOTES TODO: 
 O - Add a page for viewing notes, or at least a list
 
 O - Ultimate item... make it compatible with MARKDOWN!!!

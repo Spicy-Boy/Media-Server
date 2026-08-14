@@ -552,6 +552,14 @@ header {
     display: none;
 }
 
+/* IMAGE and GALLERY Portals mobile styles*/
+
+#upload-and-console-wrapper {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+}
+
 /* USER PORTAL / user-index page styles! */
 .user-index-body {
       background-color: #151515; 
@@ -897,6 +905,12 @@ footer a:visited {
 
 @media (min-width: 800px) {
 
+    /* IMAGE and GALLERY Portals desktop/tablet styles*/
+
+    #upload-and-console-wrapper {
+        display: flex;
+        flex-direction: row;
+    }
 
     /* USER PORTAL / user-index page styles! */
     #upload-and-list-wrapper{
@@ -1359,6 +1373,12 @@ footer a:visited {
 
 .hover-red:hover{
     background-color: red;
+}
+
+.auto-margins {
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 99%;
 }
 
 

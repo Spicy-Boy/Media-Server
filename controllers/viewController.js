@@ -179,6 +179,7 @@ async function renderUserManagementPanel(req, res)
     }
 }
 
+// DEFUNCT vvv
 async function renderBasicImageHub(req, res)
 {
     try 
@@ -201,12 +202,43 @@ async function renderBasicImageHub(req, res)
         {
             targetUser.password = ""; //client doesnt actually see targetUser, the render engine that builds the ejs html does!
             targetUser.files = null;
-            res.render("imageHubBasic", {targetUser});
+            res.render("OLD-OG-imageHubBasic", {targetUser});
         }
     } catch (error)
     {
         console.error(error);
         res.json("SORRY! Something went wrong loading the renderBasicImageHub.");
+    }
+}
+
+async function renderImageHubAndGalleryPortal(req, res)
+{
+    try 
+    {
+        const {username} = req.params;
+
+        let targetUser;
+
+        if (username)
+        {
+            targetUser = await User.findOne({ username });
+        }
+        else
+        {
+            targetUser = req.session.activeUser;
+        }
+
+
+        if (targetUser)
+        {
+            targetUser.password = ""; //client doesnt actually see targetUser, the render engine that builds the ejs html does!
+            targetUser.files = null;
+            res.render("images-and-galleries-pages/imageHubAndGalleryPortalPerUser", {targetUser});
+        }
+    } catch (error)
+    {
+        console.error(error);
+        res.json("SORRY! Something went wrong loading the renderImageHubAndGalleryPortal.");
     }
 }
 
@@ -227,7 +259,7 @@ async function renderBasicGallery(req, res)
 
         if (targetGallery)
         {
-            return res.render("galleryBasic", {targetGallery, activeUser});
+            return res.render("OLD-OG-galleryBasic", {targetGallery, activeUser});
         }
         else
         {
@@ -252,5 +284,6 @@ module.exports = {
     renderAdminFunPanel,
     renderUserManagementPanel,
     renderBasicImageHub,
-    renderBasicGallery
+    renderBasicGallery,
+    renderImageHubAndGalleryPortal,
 }

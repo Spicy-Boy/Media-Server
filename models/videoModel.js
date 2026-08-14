@@ -13,13 +13,13 @@ const imageSchema = new mongoose.Schema(
             type: String,
             required: true,
         },
-        imgId: {
+        vidId: {
             type: String,
             required: true,
             default: uuidv4
         },
         imgSize: Number, //in bytes
-        imgWidth: Number,
+        imgWidth: Number, //aspect ratio of video??
         imgHeight: Number,
         imgDate: { //the original lastModified date of uploaded file converted to a Date
             //allows one to organize photos by date taken
@@ -30,7 +30,7 @@ const imageSchema = new mongoose.Schema(
             type: Date,
             required: true
         },
-        imgFileType: String,
+        imgFileType: String, //videos like mp4
         location: String, //a file path 
         //file location is saved just in case the .env mail delivery location changes, or some other disaster. This keeps a record of where the file was uploaded originally to aid in future recovery efforts
         hasThumbnail: {

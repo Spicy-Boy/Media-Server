@@ -19,7 +19,8 @@ const {
     renderAdminFunPanel,
     renderUserManagementPanel,
     renderBasicImageHub,
-    renderBasicGallery
+    renderBasicGallery,
+    renderImageHubAndGalleryPortal
 } = require("../controllers/viewController");
 
 router.get("/login", renderLoginPage);
@@ -45,8 +46,8 @@ router.get("/home", validateLoginWithRedirect, renderHomePage);
 router.get("/u", validateLoginWithRedirect, updateUserPermissionsAndFiles, validateIsUploader, renderUserIndexPage);
 router.get("/u/:username", validateLoginWithRedirect, updateUserPermissionsAndFiles, validateIsUploader, renderUserIndexPage);
 
-router.get("/i/:username", validateLoginWithRedirect, updateUserPermissionsAndFiles, validateIsUploader, renderBasicImageHub);
-router.get("/i", validateLoginWithRedirect, updateUserPermissionsAndFiles, validateIsUploader, renderBasicImageHub);
+router.get("/i/:username", validateLoginWithRedirect, updateUserPermissionsAndFiles, validateIsUploader, renderImageHubAndGalleryPortal);
+router.get("/i", validateLoginWithRedirect, updateUserPermissionsAndFiles, validateIsUploader, renderImageHubAndGalleryPortal);
 
 router.get("/g/:galleryId", validateLoginWithRedirect, updateUserPermissionsAndFiles, validateIsUploader, renderBasicGallery);
 

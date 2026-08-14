@@ -1,0 +1,72 @@
+<!-- Name TOO descriptive? Nonsense.. this page is customized per logged-in user to present their uploads -->
+<!DOCTYPE html>
+<html>
+<head>
+
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Hub</title>
+
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- <link rel="stylesheet" type="text/css" href="/css/galleryStyle.css"> -->
+
+    <%
+    let isThisActiveUserPage = false;
+    if (activeUser.username == targetUser.username)
+    {
+        isThisActiveUserPage = true;
+    }
+    %>
+    <script>
+        let pageUsername = "<%=targetUser.username%>";
+    </script>
+
+</head>
+
+<body style="background-color: #000000;" class="white">
+
+    <%- include("../partials/userIndexHeader") %>
+
+<div id="upload-and-console-wrapper" style="margin-left: auto; margin-right: auto; max-width: 95%;">
+
+    <div id="image-uploading-container" class="flex-row flex-centered" >
+
+        <form class="suicune-form flex-column flex-centered" style="width: 99%;" enctype="multipart/form-data" method="post">
+            <h3>UPLOAD IMAGES</h3>
+            <img src="/images/smeargle.png">
+            <div id="upload-files" style="margin-bottom: 15px;">
+                <label for="images-input">Choose images to upload: </label>
+                <br>
+                <input id="images-input" name="uploaded_file" type="file" multiple class="auto-margins">
+            </div>
+
+            <input type="button" value="BEGIN UPLOAD" id="upload-button">
+        </form>
+
+    </div>
+
+    <div id="console-container">
+        hi
+    </div>
+
+</div>
+
+<!-- vvv presents user's images organized either by date uploaded or internal modified date -->
+<!-- either way, each image date container is a template that gets added to the display. The images themselves are not loaded unless the user presses the [+] plus button to load the thumbnails -->
+ <!-- UPLOAD: images are uploaded in order and added to list view with temporary thumbnail -->
+<!-- LIST VIEW: display images/videos as downloadable links like in the user upload portal. When hover over link, show thumbnail of image -->
+ <!-- GALLERY VIEW: display images/videos as square thumbnails arranged in a rectangle by dateUploaded or imageDate (date photo was taken/created)-->
+ <!-- TODO: make videos downloadable, no stream yet.. generate thumbnail from video and option to set new custom thumbnail -->
+  <!-- videoModel.js -->
+<div id="images-display-wrapper">
+    
+
+    <div id="image-display-"
+
+</div>
+    
+</body>
+
+
+</html>
