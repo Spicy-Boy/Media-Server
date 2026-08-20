@@ -1,3 +1,5 @@
+const { createImageDatabaseEntry } = require("../../../controllers/imageController");
+
 console.log('HELLO! LOADING uploadImagesSmeargleFrontEnd SCRIPT!');
 
 const uploadButton = document.getElementById('upload-button');
@@ -47,6 +49,9 @@ uploadButton.addEventListener("click", async (event) => {
 
             formData.append("lastModified", fileCreationDate);
 
+
+            check createImageDatabaseEntry in back end image controller!!!
+
             const response = await fetch("/api/image/uploadImageWithMulter", {
                 method: "POST",
                 body: formData,
@@ -60,7 +65,7 @@ uploadButton.addEventListener("click", async (event) => {
             }
             else
             {
-                console.log('('+fileNo+'/'+numberOfFiles+') Failed to upload',fileName);
+                console.log('Failed to upload',fileName);
 
                 addMessageToConsole("> Smeargle: "+fileName+" failed to upload! ("+fileNo+"/"+numberOfFiles+")");
 
