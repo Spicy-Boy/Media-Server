@@ -30,15 +30,15 @@
 
 <div id="upload-and-console-wrapper" style="margin-left: auto; margin-right: auto; max-width: 95%;">
 
-    <div id="image-uploading-container" class="flex-row flex-centered" >
+    <div id="image-uploading-container" class="flex-row flex-centered">
 
-        <form class="suicune-form flex-column flex-centered" style="width: 99%;" enctype="multipart/form-data" method="post">
-            <h3>UPLOAD IMAGES</h3>
+        <form class="suicune-form flex-column flex-centered smeargle-box" enctype="multipart/form-data" method="post">
+            <h3 style="padding: 0; margin: 0;">UPLOAD IMAGES</h3>
             <img src="/images/smeargle.png">
             <div id="upload-files" style="margin-bottom: 15px;">
                 <label for="images-input">Choose images to upload: </label>
                 <br>
-                <input id="images-input" name="uploaded_file" type="file" multiple class="auto-margins">
+                <input id="images-input" name="uploaded_file" type="file" multiple class="auto-margins" style="  max-width: 66%;">
             </div>
 
             <input type="button" value="BEGIN UPLOAD" id="upload-button">
@@ -47,7 +47,31 @@
     </div>
 
     <div id="console-container">
-        hi
+        
+        <div id="console-header">
+            <div id="console-header-title">
+            Console
+            </div>
+
+        
+            <div id="console-header-options">
+                <label style="text-decoration: underline;" for="auto-snap-console-checkbox">Auto-Snap</label>
+                <input style="" type="checkbox" id="auto-snap-console-checkbox" name="auto-snap-console-checkbox" checked>
+            </div>
+
+        </div>
+        
+        <!-- the console window uses class="console-entry" divs to present messages -->
+        <div id="console-window">
+
+            <div class="console-entry">
+                > Hey you
+            </div>
+            <div class="console-entry">
+                > yeah?
+            </div>
+
+        </div>
     </div>
 
 </div>
@@ -60,14 +84,15 @@
  <!-- GALLERY VIEW: display images/videos as square thumbnails arranged in a rectangle by dateUploaded or imageDate (date photo was taken/created)-->
  <!-- TODO: make videos downloadable, no stream yet.. generate thumbnail from video and option to set new custom thumbnail -->
   <!-- videoModel.js -->
+
 <div id="images-display-wrapper">
-    
+    <div id="image-display-">
 
-    <div id="image-display-"
-
+    </div>
 </div>
     
 </body>
 
+<script src="/js/consoleScripts/updateConsoleWIndow.js"></script>
 
 </html>

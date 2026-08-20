@@ -1,6 +1,6 @@
 // begin by getting the DOM elements for the submit button, the textbox, and the container for messages
 
-console.log("hi");
+// console.log("hi");
 
 let waiting = false; //prevents spamming button :)
 let intervalId;

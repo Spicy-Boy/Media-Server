@@ -1,0 +1,7 @@
+consoleScripts is a folder containing scripts related to displaying a console to the user
+
+the purpose of the console is to communicate with the back end server from the front end
+
+the console allows users to see the status of requests to the server
+
+also... COMMANDS! We can make requests to the server and sometimes the server is nice enough to respond
