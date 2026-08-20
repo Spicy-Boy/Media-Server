@@ -605,9 +605,9 @@ header {
     margin-left: auto;
     margin-right: 20px;
 }
-#console-header-title {
+/* #console-header-title {
     
-}
+} */
 
 .console-entry {
     overflow-wrap: anywhere;
@@ -1319,9 +1319,9 @@ footer a:visited {
         display: block;
     }
 
-    #notes-reveal-button {
+    /* #notes-reveal-button {
         /* margin-left: 5px; */
-    }
+    /* } */
 }
 
 /* UTILITY! Pure functionality in easy class form */
