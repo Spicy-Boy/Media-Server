@@ -45,9 +45,11 @@ async function createImageDatabaseEntry(req, res)
 
         await newImage.save();
 
+        let messageToUser = "Successfully uploaded "+fileName+".";
+
         res.status(201).json({
             success: true,
-            message: "Upload Successful!",
+            message: messageToUser,
             image: {
                 _id: newImage._id,
                 imgDate: newImage.imgDate
@@ -69,7 +71,7 @@ async function createImageDatabaseEntry(req, res)
 
         res.status(400).json({
           success: false,
-          message: "Failed to create database entry for upload. Duplicate file name? CONTACT ADMIN!"
+          message: "Failed to create database entry for "+fileName+". CONTACT ADMIN!"
         });
     }
 }

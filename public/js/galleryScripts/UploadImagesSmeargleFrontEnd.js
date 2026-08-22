@@ -38,6 +38,7 @@ uploadButton.addEventListener("click", async (event) => {
         const fileName = file.name;
 
         console.log('('+fileNo+'/'+numberOfFiles+') Preparing to upload:',fileName);
+        addMessageToConsole("> Preparing to upload: "+fileName+". ("+fileNo+"/"+numberOfFiles+")")
 
         try
         {
