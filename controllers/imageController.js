@@ -2,7 +2,7 @@ const fs = require("fs");
 
 const User = require("../models/userModel");
 const Image = require("../models/imageModel");
-const Gallery = require("../models/galleryModel");
+const Gallery = require("../models/OLD-galleryModel");
 
 const mongoose = require("mongoose");
 
@@ -153,185 +153,191 @@ function getPhotoTakenDate(filePath) {
 }
 
 //vv so named because it uses the mongoDB auto-generated img._id's to query the db instead of my own imgId UUIDs 
+
 async function createGalleryFromMongoIds(req, res)
 {
-    try
-    {
-        let title = req.body.title;
-        let creator = req.session.activeUser.username;
-        let imageIds = req.body.imageIds;
+    //UNDER CONSTRUCTION!
+    // try
+    // {
+    //     let title = req.body.title;
+    //     let creator = req.session.activeUser.username;
+    //     let imageIds = req.body.imageIds;
         
-        //this is chatgpt magic vvv db aggregation
-        //UPDATE 4/11 this is totally busted and doesn't place images in the right day.
-        const groupedImages = await Image.aggregate([
-            { $match: { _id: { $in: imageIds.map(id => new mongoose.Types.ObjectId(id)) } } },
-            { $sort: { imgDate: 1 } }, //sort images oldest -> newest
-            {
-                $group: {
-                    _id: { $dateToString: { format: "%Y-%m-%d", date: "$imgDate" } }, //_id comes out as a Y/M/D format
-                    images: { $push: 
-                        {
-                        _id: "$_id",
-                        imgDate: "$imgDate" 
-                        }
-                    },
-                    // featuredImage: { $first: "$_id" } // first image of the day
-                }
-            },
-            { $sort: { _id: 1 } } // oldest to newest
-        ]);
+    //     //this is chatgpt magic vvv db aggregation
+    //     //UPDATE 4/11 this is totally busted and doesn't place images in the right day.
+    //     const groupedImages = await Image.aggregate([
+    //         { $match: { _id: { $in: imageIds.map(id => new mongoose.Types.ObjectId(id)) } } },
+    //         { $sort: { imgDate: 1 } }, //sort images oldest -> newest
+    //         {
+    //             $group: {
+    //                 _id: { $dateToString: { format: "%Y-%m-%d", date: "$imgDate" } }, //_id comes out as a Y/M/D format
+    //                 images: { $push: 
+    //                     {
+    //                     _id: "$_id",
+    //                     imgDate: "$imgDate" 
+    //                     }
+    //                 },
+    //                 // featuredImage: { $first: "$_id" } // first image of the day
+    //             }
+    //         },
+    //         { $sort: { _id: 1 } } // oldest to newest
+    //     ]);
 
-        const days = groupedImages.map(dayGroup => ({
-            date: new Date(dayGroup._id), //_id is the Y/M/D format
-            images: dayGroup.images
-        }));
+    //     const days = groupedImages.map(dayGroup => ({
+    //         date: new Date(dayGroup._id), //_id is the Y/M/D format
+    //         images: dayGroup.images
+    //     }));
 
-        const gallery = new Gallery({
-            title,
-            creator,
-            days
-        });
+    //     const gallery = new Gallery({
+    //         title,
+    //         creator,
+    //         days
+    //     });
 
-        await gallery.save();
+    //     await gallery.save();
 
-        res.status(201).json({success: true, gallery, errorMsg: "Successfully created gallery '"+title+"'"});
+    //     res.status(201).json({success: true, gallery, errorMsg: "Successfully created gallery '"+title+"'"});
 
-    }
-    catch (error)
-    {
-        console.log('ERROR CREATING Gallery:',error);
-        res.status(400).json({
-          success: false,
-          errorMsg: "Failed to create the gallery!"
-        });
-    }
+    // }
+    // catch (error)
+    // {
+    //     console.log('ERROR CREATING Gallery:',error);
+    //     res.status(400).json({
+    //       success: false,
+    //       errorMsg: "Failed to create the gallery!"
+    //     });
+    // }
 }
 
 async function updateGalleryWithMongoIds(req, res)
 {
-    try
-    {
-        //CAUTION: Chatgpt wrote this function ;_;
-        const galleryId = req.params.galleryId;
-        const newImages = req.body.imageList; // array of { _id, imgDate }
+    // UNDER CONSTRUCTION!!!
+    // try
+    // {
+    //     //CAUTION: Chatgpt wrote this function ;_;
+    //     const galleryId = req.params.galleryId;
+    //     const newImages = req.body.imageList; // array of { _id, imgDate }
 
-        if (!Array.isArray(newImages) || newImages.length === 0) {
-            return res.status(400).json({ success: false, errorMsg: "No images provided to update." });
-        }
+    //     if (!Array.isArray(newImages) || newImages.length === 0) {
+    //         return res.status(400).json({ success: false, errorMsg: "No images provided to update." });
+    //     }
 
-        // Fetch the gallery
-        const gallery = await Gallery.findOne({ galleryId: galleryId });
-        if (!gallery) {
-            return res.status(404).json({ success: false, errorMsg: "Gallery not found." });
-        }
+    //     // Fetch the gallery
+    //     const gallery = await Gallery.findOne({ galleryId: galleryId });
+    //     if (!gallery) {
+    //         return res.status(404).json({ success: false, errorMsg: "Gallery not found." });
+    //     }
 
-        // Insert each image into the correct day
-        newImages.forEach(img => {
-            const imgDayStr = new Date(img.imgDate).toISOString().slice(0, 10); // "YYYY-MM-DD"
-            let day = gallery.days.find(d => d.date.toISOString().slice(0, 10) === imgDayStr);
+    //     // Insert each image into the correct day
+    //     newImages.forEach(img => {
+    //         const imgDayStr = new Date(img.imgDate).toISOString().slice(0, 10); // "YYYY-MM-DD"
+    //         let day = gallery.days.find(d => d.date.toISOString().slice(0, 10) === imgDayStr);
 
-            if (day) {
-                // Day exists → push new image
-                day.images.push(img);
-                // Sort images within the day by imgDate
-                day.images.sort((a, b) => new Date(a.imgDate) - new Date(b.imgDate));
-            } else {
-                // Day doesn't exist → create new day
-                gallery.days.push({
-                    date: new Date(imgDayStr),
-                    images: [img],
-                    featuredImage: img._id // optional: first image of the day
-                });
-            }
-        });
+    //         if (day) {
+    //             // Day exists → push new image
+    //             day.images.push(img);
+    //             // Sort images within the day by imgDate
+    //             day.images.sort((a, b) => new Date(a.imgDate) - new Date(b.imgDate));
+    //         } else {
+    //             // Day doesn't exist → create new day
+    //             gallery.days.push({
+    //                 date: new Date(imgDayStr),
+    //                 images: [img],
+    //                 featuredImage: img._id // optional: first image of the day
+    //             });
+    //         }
+    //     });
 
-        // Sort days in gallery by date
-        gallery.days.sort((a, b) => new Date(a.date) - new Date(b.date));
+    //     // Sort days in gallery by date
+    //     gallery.days.sort((a, b) => new Date(a.date) - new Date(b.date));
 
-        await gallery.save();
+    //     await gallery.save();
 
-        res.status(200).json({ 
-            success: true, 
-            gallery,
-            errorMsg: "Gallery updated successfully" });
-    } 
-    catch(error)
-    {
-        console.log('ERROR OCCURRED UPDATING A GALLERY:',error);
-        return res.status(400).json({
-          success: false,
-          errorMsg: "Failed to update the gallery!"
-        });
-    }
+    //     res.status(200).json({ 
+    //         success: true, 
+    //         gallery,
+    //         errorMsg: "Gallery updated successfully" });
+    // } 
+    // catch(error)
+    // {
+    //     console.log('ERROR OCCURRED UPDATING A GALLERY:',error);
+    //     return res.status(400).json({
+    //       success: false,
+    //       errorMsg: "Failed to update the gallery!"
+    //     });
+    // }
 }
 
 async function getGalleryById(req, res)
 {
-    let galleryId = req.params.galleryId;
 
-    try
-    {
+    //UNDER CONSTRUCTION!!!
+//     let galleryId = req.params.galleryId;
 
-        const gallery = await Gallery.find({ galleryId });
+//     try
+//     {
 
-        if (!gallery)
-        {
-            return res.status(404).json({
-                success: false,
-                errorMsg: "Gallery not found."
-            });
-        }
+//         const gallery = await Gallery.find({ galleryId });
 
-        return res.status(200).send(gallery[0]);
-    }
-    catch (error)
-    {
-        console.log('ERROR getting gallery:',error);
-        return res.status(400).json({
-          success: false,
-          errorMsg: "Failed to find the gallery!"
-        });
-    }
+//         if (!gallery)
+//         {
+//             return res.status(404).json({
+//                 success: false,
+//                 errorMsg: "Gallery not found."
+//             });
+//         }
+
+//         return res.status(200).send(gallery[0]);
+//     }
+//     catch (error)
+//     {
+//         console.log('ERROR getting gallery:',error);
+//         return res.status(400).json({
+//           success: false,
+//           errorMsg: "Failed to find the gallery!"
+//         });
+//     }
 }
 
 async function getGalleriesByUsername(req, res)
 {
-    let username = req.params.username;
+    //UNDER CONSTRUCTION!!!
+//     let username = req.params.username;
 
-    //TESTER vv
-    // console.log('Username:',username);
+//     //TESTER vv
+//     // console.log('Username:',username);
 
-    try
-    {
-        const galleries = await Gallery.find({ creator: username });
+//     try
+//     {
+//         const galleries = await Gallery.find({ creator: username });
 
-        if (!galleries.length)
-        {
-            return res.status(404).json({
-                success: false,
-                errorMsg: "Galleries not found. Correct username?"
-            });
-        }
+//         if (!galleries.length)
+//         {
+//             return res.status(404).json({
+//                 success: false,
+//                 errorMsg: "Galleries not found. Correct username?"
+//             });
+//         }
 
-        //TESTER vv
-        // console.log('Galleries:',galleries);
+//         //TESTER vv
+//         // console.log('Galleries:',galleries);
 
-        // return res.status(200).send(galleries);
-        return res.status(200).json({
-                success: true,
-                errorMsg: "Galleries found!",
-                galleries: galleries
-            });
+//         // return res.status(200).send(galleries);
+//         return res.status(200).json({
+//                 success: true,
+//                 errorMsg: "Galleries found!",
+//                 galleries: galleries
+//             });
         
-    }
-    catch (error)
-    {
-        console.log('ERROR getting galleries:',error);
-        return res.status(400).json({
-          success: false,
-          errorMsg: "Failed to find the galleries!"
-        });
-    }
+//     }
+//     catch (error)
+//     {
+//         console.log('ERROR getting galleries:',error);
+//         return res.status(400).json({
+//           success: false,
+//           errorMsg: "Failed to find the galleries!"
+//         });
+//     }
 }
 
 module.exports = {

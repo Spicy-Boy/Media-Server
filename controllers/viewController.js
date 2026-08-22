@@ -1,5 +1,5 @@
 const User = require('../models/userModel');
-const Gallery = require('../models/galleryModel');
+const Gallery = require('../models/OLD-galleryModel');
 
 async function renderHomePage(req, res)
 {
