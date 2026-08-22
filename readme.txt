@@ -1,14 +1,14 @@
-hi
+* Console TODO:
+
+O - Add colored messaging (red if error, green if success, etc.)
 
 * Main TODO: 
+
+X - Create a console viewport that can display messages going to and coming back from server
 
 O - Create thumbnails for every uploaded image
 
 O - Create way to import uploaded files and generate thumbnails for them
-
-O - Create a console viewport that can display messages going to and coming back from server
-
-O - 
 
 * NOTES TODO: 
 O - Add a page for viewing notes, or at least a list
@@ -17,7 +17,7 @@ O - Ultimate item... make it compatible with MARKDOWN!!!
 
 *Video Streaming TODO:
 
-X - Successful mp4 upload templates
+X - Successful mp4 upload templates 
 
 O - Research: can my server stream mkv videos? Thats the main format of my files!
 
@@ -35,7 +35,7 @@ O - Allow a user to resume an upload if it fails somehow, or notify user if a fi
 
 *Gallery TODO:
 
-O - Rewrite code that saves image database entries. Ensure that date modified is being saved correctly from each file.
+X - Rewrite code that saves image database entries. Ensure that date modified is being saved correctly from each file.
 
 O - Rewrite code that creates database entries for galleries. Ensure that the division of dates accurately reflects the files (currently it places images on the wrong day)
 
