@@ -1,5 +1,3 @@
-const { createImageDatabaseEntry } = require("../../../controllers/imageController");
-
 console.log('HELLO! LOADING uploadImagesSmeargleFrontEnd SCRIPT!');
 
 const uploadButton = document.getElementById('upload-button');
@@ -21,23 +19,23 @@ uploadButton.addEventListener("click", async (event) => {
     //vv method from updateConsoleWindow.js
     if (numberOfFiles > 1)
     {
-        addMessageToConsole("> Smeargle: copying "+numberOfFiles+" files to the server!");
+        addMessageToConsole("> Uploading "+numberOfFiles+" files to the server!");
     }
     else
     {
-        addMessageToConsole("> Smeargle: copying "+numberOfFiles+" file to the server!");
+        addMessageToConsole("> Uploading "+numberOfFiles+" file to the server!");
     }
-
 
     let imagesForGallery = [];
 
     for (const file of files)
     {
-        const fileCreationDate = file.lastModified;
-        // console.log(lastModifiedDate);
-        // TESTER ^^
+        const fileCreationDate = new Date(file.lastModified);
+        //TESTERS vvv
+        // console.log(file.lastModified);
+        // console.log(fileCreationDate);
 
-        fileName = file.name;
+        const fileName = file.name;
 
         console.log('('+fileNo+'/'+numberOfFiles+') Preparing to upload:',fileName);
 
@@ -48,9 +46,9 @@ uploadButton.addEventListener("click", async (event) => {
             formData.append("uploaded_file", file); //uploaded_file matches the parameter expected by multer in the route definition
 
             formData.append("lastModified", fileCreationDate);
+            // formData.append("originalName", fileName);
 
-
-            check createImageDatabaseEntry in back end image controller!!!
+            // check createImageDatabaseEntry in back end image controller!!!
 
             const response = await fetch("/api/image/uploadImageWithMulter", {
                 method: "POST",
@@ -61,21 +59,23 @@ uploadButton.addEventListener("click", async (event) => {
             if (result.success)
             {
                 console.log('('+fileNo+'/'+numberOfFiles+') Successfully uploaded',fileName);
-    
+
+                addMessageToConsole("> SERVER: "+result.message)
             }
             else
             {
                 console.log('Failed to upload',fileName);
 
-                addMessageToConsole("> Smeargle: "+fileName+" failed to upload! ("+fileNo+"/"+numberOfFiles+")");
+                addMessageToConsole("> ERROR: "+fileName+" failed to upload! ("+fileNo+"/"+numberOfFiles+")");
+
+                addMessageToConsole("> SERVER: "+result.message);
 
             }
-
         }
         catch (error)
         {
             console.log('Request to upload '+fileName+' failed!', error);
-            addMessageToConsole("> Smeargle: "+fileName+" failed to upload! ("+fileNo+"/"+numberOfFiles+")");
+            addMessageToConsole("> ERROR: "+fileName+" failed to upload! ("+fileNo+"/"+numberOfFiles+")");
         }
         fileNo++; //END
     }

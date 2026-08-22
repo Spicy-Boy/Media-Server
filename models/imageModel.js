@@ -4,12 +4,11 @@ const { v4: uuidv4 } = require('uuid');
 
 const imageSchema = new mongoose.Schema(
     {
-        name: {
+        name: { //file name
             type: String,
-            required: true,
-            unique: true
+            required: true
         },
-        username: { //of person that uploaded image
+        username: { //name of person that uploaded image
             type: String,
             required: true,
         },
@@ -22,22 +21,33 @@ const imageSchema = new mongoose.Schema(
         imgWidth: Number,
         imgHeight: Number,
         imgDate: { //the original lastModified date of uploaded file converted to a Date
-            //allows one to organize photos by date taken
+            //allows one to organize photos by date taken.. obviously not perfect because the user may manipulate the file before uploading
             type: Date,
             required: true
         },
         dateUploaded: { //date that the image was actually uploaded to the server.. don't get confused!
             type: Date,
-            required: true
+            required: true,
+            default: Date.now
         },
         imgFileType: String,
-        location: String, //a file path 
-        //file location is saved just in case the .env mail delivery location changes, or some other disaster. This keeps a record of where the file was uploaded originally to aid in future recovery efforts
+        locations:[ //a list of locations to keep track of all pile paths a file will go through
+            {
+                location: String, //a file path 
+                dateAdded: { 
+                    type: Date,
+                    default: Date.now
+                },
+            }
+        ],
+        //file locations are saved just in case the .env mail delivery location changes, or the file needs to move, or some other disaster. This keeps a record of where the file was uploaded originally to aid in future recovery efforts
         hasThumbnail: {
             type: Boolean, //set to true once the thumbnail is complete
             default: false,
         },
         thumbnailLocation: String, //a file path to original location of thumbnail upon first creation
+
+        //INCLUDE GALLERY IDs!!
         
     }
 )

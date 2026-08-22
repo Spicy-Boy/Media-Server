@@ -7,9 +7,72 @@ const Gallery = require("../models/OLD-galleryModel");
 const mongoose = require("mongoose");
 
 const sharp = require('sharp');
-const ExifParser = require('exif-parser');
 
 const path = require("path");
+
+//at the end of the image uploading pipeline, create a DB entry to track it
+async function createImageDatabaseEntry(req, res)
+{
+    //Note for future:
+    //user's can upload duplicate files, and a new database entry will be created for each upload even if only one actual unique file exists... this could get messy and should be fixed sometime
+    try
+    {
+        // TESTER vvv
+        console.log('Greetings from createImageDatabaseEntry');
+
+        const filePath = req.file.path;
+        const fileName = req.file.originalname;
+        const fileCreationDate = req.body.lastModified;
+
+        const fileStats = fs.statSync(filePath);
+
+        //use vv sharp to get width and height from uploaded file
+        const metadata = await sharp(filePath).metadata();
+        let width = metadata.width;
+        let height = metadata.height;
+
+        const newImage = new Image({
+            name: fileName,
+            imgSize: fileStats.size,
+            imgWidth: width,
+            imgHeight: height,
+            imgDate: fileCreationDate,
+            dateUploaded: new Date(),
+            imgFileType: req.file.mimetype,
+            location: filePath,
+            username: req.session.activeUser.username
+        });
+
+        await newImage.save();
+
+        res.status(201).json({
+            success: true,
+            message: "Upload Successful!",
+            image: {
+                _id: newImage._id,
+                imgDate: newImage.imgDate
+            }
+        });
+    }
+    catch (error)
+    {
+        console.log('createImageDatabaseEntry failed:',error);
+
+        //unique rule removed from the imageModel, so vvv deprecated
+        if (error.code === 11000)
+        {
+            return res.status(409).json({
+                success: false,
+                message: "An image named "+req.file.originalname+" already exists."
+            });
+        }
+
+        res.status(400).json({
+          success: false,
+          message: "Failed to create database entry for upload. Duplicate file name? CONTACT ADMIN!"
+        });
+    }
+}
 
 async function getImagesByUsername(req, res)
 {
@@ -78,79 +141,28 @@ async function sendImageByMongoId(req, res)
     } 
 }
 
-async function createImageDatabaseEntry(req, res)
-{
-    try
-    {
-        const filePath = req.file.path;
-        const fileName = req.file.originalname;
-        const fileStats = fs.statSync(filePath);
-
-        const metadata = await sharp(filePath).metadata();
-        let width = metadata.width;
-        let height = metadata.height;
-
-        //TESTER vv 
-        // console.log("created:",fileStats.birthtime);
-        // console.log('modified:',fileStats.mtime);
-
-        const lastModifiedDate = new Date(Number(req.body.lastModified));
-
-        const fileBirthDate = getPhotoTakenDate(filePath) || lastModifiedDate;
-
-        const newImage = new Image({
-            name: fileName,
-            imgSize: fileStats.size,
-            imgWidth: width,
-            imgHeight: height,
-            imgDate: fileBirthDate,
-            imgFileType: req.file.mimetype,
-            location: filePath,
-            username: req.session.activeUser.username
-        });
-
-        await newImage.save();
-
-        res.status(201).json({
-            success: true,
-            errorMsg: "Upload Successful!",
-            image: {
-                _id: newImage._id,
-                imgDate: newImage.imgDate
-            }
-        });
-    }
-    catch (error)
-    {
-        console.log('createImageDatabaseEntry failed:',error);
-        res.status(400).json({
-          success: false,
-          errorMsg: "Failed to create database entry for upload. Duplicate file name? CONTACT ADMIN!"
-        });
-    }
-}
-
 // vv entirely chat gpt function, it is now 5:41 am Friday 9/19/25
 // vv update many days later: I'm not sure I needed this at all
-function getPhotoTakenDate(filePath) {
-    try {
-        const buffer = fs.readFileSync(filePath);      // Read the file into a buffer
-        const parser = ExifParser.create(buffer);      // Create EXIF parser
-        const result = parser.parse();                 // Parse EXIF data
+//DEPRECATED!!!!!!
+// function getPhotoTakenDate(filePath) {
+//     try {
+//         const buffer = fs.readFileSync(filePath);      // Read the file into a buffer
+//         const parser = ExifParser.create(buffer);      // Create EXIF parser
+//         const result = parser.parse();                 // Parse EXIF data
 
-        // DateTimeOriginal tag is the date photo was taken
-        const timestamp = result.tags.DateTimeOriginal;
+//         // DateTimeOriginal tag is the date photo was taken
+//         const timestamp = result.tags.DateTimeOriginal;
 
-        if (timestamp) {
-            return new Date(timestamp * 1000);        // Convert UNIX timestamp to JS Date
-        } else {
-            return false;                       // fallback to Jan 1, 1970
-        }
-    } catch (err) {
-        console.error("Refering to modified date -> Failed to read EXIF data:", err);
-        return false;                           // fallback
-    }
-}
+//         if (timestamp) {
+//             return new Date(timestamp * 1000);        // Convert UNIX timestamp to JS Date
+//         } else {
+//             return false;                       // fallback to Jan 1, 1970
+//         }
+//     } catch (err) {
+//         console.error("Refering to modified date -> Failed to read EXIF data:", err);
+//         return false;                           // fallback
+//     }
+// }
 
 //vv so named because it uses the mongoDB auto-generated img._id's to query the db instead of my own imgId UUIDs 
 
