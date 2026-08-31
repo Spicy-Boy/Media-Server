@@ -2,7 +2,7 @@
 
 O - Add colored messaging (red if error, green if success, etc.)
 
-* Main TODO: 
+* Main TODO:
 
 X - Create a console viewport that can display messages going to and coming back from server
 
@@ -17,7 +17,7 @@ O - Ultimate item... make it compatible with MARKDOWN!!!
 
 *Video Streaming TODO:
 
-X - Successful mp4 upload templates 
+X - (what is this?) Successful mp4 upload templates 
 
 O - Research: can my server stream mkv videos? Thats the main format of my files!
 

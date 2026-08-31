@@ -91,7 +91,7 @@ async function getImagesByUsername(req, res)
         console.log('getImagesByUsername failed:',error);
         res.status(400).json({
           success: false,
-          errorMsg: "Failed to retrieve images from server - internal error!"
+          message: "Failed to retrieve images from server - internal error!"
         });
     }
 }

@@ -322,6 +322,7 @@ async function sendCommentFileByIndex( req, res )
 }
 
 //checks if the file id set in req parameter exists in active user's files. If so, pop it out! Permanently deletes the file data from the database
+const fs2 = require("fs").promises;
 async function deleteFile(req, res)
 {
     try 
@@ -334,18 +335,21 @@ async function deleteFile(req, res)
 
         if (targetFile)
         {
+            try 
+            {
+                await fs2.unlink(targetFile.location);
+            } catch (error) {
+                console.error("File deletion from disc failed! Not saving changes to database.", error);
+
+                return res.status(500).send(
+                    `<center><h1 style="color: red">Deletion failed... please try again later!</h1></center>`);
+            }
+
             const indexToDelete = dbUser.files.indexOf(targetFile);
             dbUser.files.splice(indexToDelete, 1);
 
             console.log("Deleting "+targetFile.name+" from "+dbUser.username+"'s file list...");
             //literally vv deletes the file from disc
-            fs.unlink(targetFile.location, (error) => {
-                if (error)
-                {
-                    console.error("File deletion from disc failed! Not saving changes to database.",error);
-                    return res.send(`<center><h1 style="color: yellow">Deletion failed... please try again later!</h1></center>`);
-                }
-            });
 
             await dbUser.save();
 
