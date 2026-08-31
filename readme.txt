@@ -1,3 +1,7 @@
+BUGS!!!!!
+
+O - Attempting to delete a file where the file is missing causes error. There is no way to prune a file listing from database when its actual file is missing
+
 * Console TODO:
 
 O - Add colored messaging (red if error, green if success, etc.)
