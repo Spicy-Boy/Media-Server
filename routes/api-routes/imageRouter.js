@@ -25,7 +25,6 @@ router.post("/uploadImageWithMulter", validateLogin, updateUserPermissionsAndFil
 (req, res, next) => {
     uploadImageForGalleryWithMulter.single("uploaded_file")(req, res, (error) => {
       if (error) {
-        console.log('Multer error! File rejected somehow..');
 
         req.unpipe(); //stop piping the data, it was rejected
         req.resume(); //keep reading the data to finish the request, but it is no longer being saved
@@ -40,15 +39,21 @@ router.post("/uploadImageWithMulter", validateLogin, updateUserPermissionsAndFil
 }
 , createImageDatabaseEntry);
 
+//Gallery routes:
+router.get("/getGalleryById/:galleryId", validateLogin, updateUserPermissionsAndFiles, validateIsUploader, getGalleryById); //retrieve gallery object
+
+router.get("/getGalleriesByUsername/:username", validateLogin, updateUserPermissionsAndFiles, validateIsUploader, getGalleriesByUsername); //get all galleries belonging to a user
+
+router.post("/createNewGallery", validateLogin, updateUserPermissionsAndFiles, validateIsUploader, createNewGallery); //create a new gallery under logged-in user
+
+router.post("/addImageToGalleryById/:galleryId", validateLogin, updateUserPermissionsAndFiles, validateIsUploader, addImageToGalleryById); //find gallery by its id and 
+
 // /api/images/getImagesByUsername/:username
 router.get("/getImagesByUsername/:username", validateLogin, updateUserPermissionsAndFiles, getImagesByUsername);
 
 // router.get("/sendImageById/:imageId", validateLogin, sendImageById);
 
-router.post("/createGalleryFromMongoIds", validateLogin, updateUserPermissionsAndFiles, validateIsUploader, createGalleryFromMongoIds);
-router.post("/updateGalleryFromMongoIds/:galleryId", validateLogin, updateUserPermissionsAndFiles, validateIsUploader, updateGalleryWithMongoIds);
-router.get("/getGalleryById/:galleryId", validateLogin, updateUserPermissionsAndFiles, validateIsUploader, getGalleryById);
-router.get("/getGalleriesByUsername/:username", validateLogin, updateUserPermissionsAndFiles, validateIsUploader, getGalleriesByUsername);
+//OLD ROUTES vvv from first gallery prototypeWS
 
 //get image vvv by its mongo assigned ID (_id)
 router.get("/getByMID/:mongoId", validateLogin, sendImageByMongoId);

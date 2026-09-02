@@ -10,10 +10,20 @@ O - Add colored messaging (red if error, green if success, etc.)
 
 X - Create a console viewport that can display messages going to and coming back from server
 
-O - Figure out how to sort gallery entries
+O - Create thumbnails for every uploaded image, after image is uploaded
 
-O - Create thumbnails for every uploaded image
+O - add create gallery button to image portal
+O - add list of galleries to user's image portal (click to view, or edit)
 
+O - add edit gallery page for each gallery
+O - permissions: only creator and listed editors can see this page
+
+O - allow uploading images directly to the gallery via smeargle form on the edit page. Uploaded images are sorted into correct daySection of gallery. If section doesn't exist, then add it to gallery
+
+O - add view gallery page that simply displays a gallery
+O - consider pagination: only generate sections when user presses plus. Prevents massive load times for massive galleries
+
+... vvv only a single use case exists for the below vvv
 O - Create way to import uploaded files and generate thumbnails for them
 
 * NOTES TODO: 

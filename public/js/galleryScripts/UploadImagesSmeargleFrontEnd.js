@@ -51,16 +51,15 @@ uploadButton.addEventListener("click", async (event) => {
 
             // check createImageDatabaseEntry in back end image controller!!!
 
-            console.log('FETCHING!!!');
             const response = await fetch("/api/image/uploadImageWithMulter", {
                 method: "POST",
                 body: formData,
             });
 
             //TESTER vv
-            console.log("HTTP status:", response.status);
-            console.log("HTTP OK:", response.ok);
-            console.log("Content-Type:", response.headers.get("content-type")); 
+            // console.log("HTTP status:", response.status);
+            // console.log("HTTP OK:", response.ok);
+            // console.log("Content-Type:", response.headers.get("content-type")); 
 
             const result = await response.json();
             if (result.success)
