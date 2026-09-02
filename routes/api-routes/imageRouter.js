@@ -25,9 +25,14 @@ router.post("/uploadImageWithMulter", validateLogin, updateUserPermissionsAndFil
 (req, res, next) => {
     uploadImageForGalleryWithMulter.single("uploaded_file")(req, res, (error) => {
       if (error) {
+        console.log('Multer error! File rejected somehow..');
+
+        req.unpipe(); //stop piping the data, it was rejected
+        req.resume(); //keep reading the data to finish the request, but it is no longer being saved
+
         return res.status(400).json({
           success: false,
-          errorMsg: error.message
+          message: error.message
         });
       }
       next(); // continue to next middleware if no error

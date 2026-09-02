@@ -10,6 +10,8 @@ O - Add colored messaging (red if error, green if success, etc.)
 
 X - Create a console viewport that can display messages going to and coming back from server
 
+O - Figure out how to sort gallery entries
+
 O - Create thumbnails for every uploaded image
 
 O - Create way to import uploaded files and generate thumbnails for them

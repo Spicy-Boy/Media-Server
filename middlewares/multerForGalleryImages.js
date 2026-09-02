@@ -39,8 +39,10 @@ const fileFilter = (req, file, cb) =>
     } 
     else 
     {
-        cb(new Error("FAILED - not image or video file"), false); 
+        cb(new Error("File was rejected. Bad file type?"), false); 
     }
+
+    return;
 };
 
 const uploadImageForGalleryWithMulter = multer({storage, fileFilter});
