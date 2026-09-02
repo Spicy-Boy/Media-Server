@@ -10,6 +10,8 @@ const sharp = require('sharp');
 
 const path = require("path");
 
+const { v4: uuidv4 } = require('uuid');
+
 //at the end of the image uploading pipeline, create a DB entry to track it
 async function createImageDatabaseEntry(req, res)
 {
@@ -31,6 +33,8 @@ async function createImageDatabaseEntry(req, res)
         let width = metadata.width;
         let height = metadata.height;
 
+        let uuid = uuidv4();
+
         const newImage = new Image({
             name: fileName,
             imgSize: fileStats.size,
@@ -40,7 +44,8 @@ async function createImageDatabaseEntry(req, res)
             dateUploaded: new Date(),
             imgFileType: req.file.mimetype,
             location: filePath,
-            username: req.session.activeUser.username
+            username: req.session.activeUser.username,
+            imgId: uuid,
         });
 
         await newImage.save();
@@ -52,7 +57,8 @@ async function createImageDatabaseEntry(req, res)
             message: messageToUser,
             image: {
                 _id: newImage._id,
-                imgDate: newImage.imgDate
+                imgDate: newImage.imgDate,
+                imgId: newImage.imgId,
             }
         });
     }

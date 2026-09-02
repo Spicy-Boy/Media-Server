@@ -6,6 +6,8 @@ const fileInput = document.getElementById('images-input');
 let fileNo;
 let fileName;
 
+let listOfImageUUIDs = [];
+
 uploadButton.addEventListener("click", async (event) => {
     event.preventDefault();
     // TESTER VV
@@ -66,7 +68,10 @@ uploadButton.addEventListener("click", async (event) => {
             {
                 console.log('('+fileNo+'/'+numberOfFiles+') Successfully uploaded',fileName);
 
-                addMessageToConsole("> SERVER: "+result.message)
+                addMessageToConsole("> SERVER: "+result.message);
+
+                //NOTE: update this when you add video compatibility!!!!
+                listOfImageUUIDs.push(result.image.imgId);
             }
             else
             {
@@ -84,6 +89,13 @@ uploadButton.addEventListener("click", async (event) => {
             addMessageToConsole("> ERROR: "+fileName+" failed to upload! ("+fileNo+"/"+numberOfFiles+")");
         }
         fileNo++; //END
+    }
+
+    if (autoGenerateThumbnails)
+    {
+        listOfImageUUIDs.forEach(uuid => {
+            console.log('image: ', uuid);
+        });
     }
 });
 

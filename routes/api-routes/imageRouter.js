@@ -39,17 +39,20 @@ router.post("/uploadImageWithMulter", validateLogin, updateUserPermissionsAndFil
 }
 , createImageDatabaseEntry);
 
+router.get("/getImageByUuid"); TODOdahdh
+router.get("/getImageByMongoId"); TODOadhadh
+router.get("/getImagesByUsername"); TodoAHaha
+router.get("/sendImageByUuid"); todoahahah
+router.get("/sendImageByMongoId"); todoahagag
+
 //Gallery routes:
 router.get("/getGalleryById/:galleryId", validateLogin, updateUserPermissionsAndFiles, validateIsUploader, getGalleryById); //retrieve gallery object
 
 router.get("/getGalleriesByUsername/:username", validateLogin, updateUserPermissionsAndFiles, validateIsUploader, getGalleriesByUsername); //get all galleries belonging to a user
 
-router.post("/createNewGallery", validateLogin, updateUserPermissionsAndFiles, validateIsUploader, createNewGallery); //create a new gallery under logged-in user
+// router.post("/createNewGallery", validateLogin, updateUserPermissionsAndFiles, validateIsUploader, createNewGallery); //create a new gallery under logged-in user
 
-router.post("/addImageToGalleryById/:galleryId", validateLogin, updateUserPermissionsAndFiles, validateIsUploader, addImageToGalleryById); //find gallery by its id and 
-
-// /api/images/getImagesByUsername/:username
-router.get("/getImagesByUsername/:username", validateLogin, updateUserPermissionsAndFiles, getImagesByUsername);
+// router.post("/addImageToGalleryById/:galleryId", validateLogin, updateUserPermissionsAndFiles, validateIsUploader, addImageToGalleryById); //find gallery by its id and 
 
 // router.get("/sendImageById/:imageId", validateLogin, sendImageById);
 

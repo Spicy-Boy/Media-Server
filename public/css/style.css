@@ -614,7 +614,7 @@ header {
 }
 
 /* AI checkbox decoration vvv */
-#auto-snap-console-checkbox {
+.console-checkbox {
     appearance: none;
     -webkit-appearance: none;
 
@@ -627,11 +627,11 @@ header {
     cursor: pointer;
     vertical-align: middle;
 }
-#auto-snap-console-checkbox:checked {
+.console-checkbox:checked {
     background: white;
     border: 1px inset white;
 }
-#auto-snap-console-checkbox:checked::after {
+.console-checkbox:checked:after {
     content: "✓";
     display: block;
 
