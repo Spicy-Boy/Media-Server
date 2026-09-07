@@ -1,4 +1,5 @@
 const fs = require("fs");
+const fs2 = require('fs').promises;
 
 const User = require("../models/userModel");
 const Image = require("../models/imageModel");
@@ -121,14 +122,33 @@ async function generateThumbnailForImageByUuid(req, res)
 
     try
     {
-        const image = await Image.find({ imgId });
+        const image = await Image.findOne({ imgId });
 
         const filePath = path.resolve(process.env.IMAGE_DELIVERY_LOCATION+"/"+image.username+"_images/"+image.name);
 
-        // vvv thumbnail is saved under the image's uuid as a jpg
-        const newFilePath = path.resolve(process.env.IMAGE_DELIVERY_LOCATION+"/"+image.username+"_images/thumbnails"+image.imgId+".jpg"); 
+        //create thumbnail path
+        const thumbnailDirectoryPath = process.env.IMAGE_DELIVERY_LOCATION+"/"+image.username+"_images/thumbnails"
+        //tries to make the /thumbnails directory if it doesn't exist yet vv
+        await fs2.mkdir(thumbnailDirectoryPath, { recursive: true });
 
-        let messageToUser = ""
+        // vvv thumbnail is saved under the image's uuid as a jpg
+        const newThumbnailPath = path.resolve(process.env.IMAGE_DELIVERY_LOCATION+"/"+image.username+"_images/thumbnails/"+image.imgId+".jpg"); 
+    
+        await sharp(filePath).resize(150, 150, {
+            fit: 'fill', //fills square, distorts image
+            background: { r: 255, g: 255, b: 255, alpha: 1 }
+        })
+        .toFile(newThumbnailPath);
+
+        image.hasThumbnail = true;
+        await image.save();
+
+        let messageToUser = "Successfully generated a thumbnail for "+image.name+"!";
+
+        res.status(200).json({
+            success: true,
+            message: messageToUser,
+        });
     }
     catch (error)
     {
@@ -136,7 +156,7 @@ async function generateThumbnailForImageByUuid(req, res)
 
         res.status(400).json({
           success: false,
-          message: "Failed to generate thumbnail. Contact admin!"
+          message: "Failed to generate a thumbnail for uuid "+imgId+". Contact admin!"
         });
     }
 }

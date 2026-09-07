@@ -15,6 +15,7 @@ const {
     createImageDatabaseEntry,
     getImageByUuid,
     generateThumbnailForImageByUuid,
+
     getImagesByUsername,
     sendImageByMongoId,
     createGalleryFromMongoIds,
@@ -44,7 +45,7 @@ router.post("/uploadImageWithMulter", validateLogin, updateUserPermissionsAndFil
 
 router.get("/getImageByUuid/:uuid", validateLogin, updateUserPermissionsAndFiles, validateIsUploader, getImageByUuid); 
 
-// router.post("/generateThumbnailForImageByUuid", validateLogin, updateUserPermissionsAndFiles, validateIsUploader, generateThumbnailForImageByUuid);
+router.post("/generateThumbnailForImageByUuid/:uuid", validateLogin, updateUserPermissionsAndFiles, validateIsUploader, generateThumbnailForImageByUuid);
 
 router.get("/getImageByMongoId"); 
 router.get("/getImagesByUsername"); 

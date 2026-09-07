@@ -45,9 +45,11 @@ const imageSchema = new mongoose.Schema(
             type: Boolean, //set to true once the thumbnail is complete
             default: false,
         },
-        thumbnailLocation: String, //a file path to original location of thumbnail upon first creation
-
-        //INCLUDE GALLERY IDs!!
+        // thumbnailLocation: String, //a file path to original location of thumbnail upon first creation.. needed?? IDK!
+        galleryIds: { //keep track of the uuids of all galleries that an image has been added to
+            type: [String],
+            default: []
+        }
         
     }
 )
