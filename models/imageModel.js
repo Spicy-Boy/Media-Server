@@ -31,7 +31,7 @@ const imageSchema = new mongoose.Schema(
             default: Date.now
         },
         imgFileType: String,
-        locations:[ //a list of locations to keep track of all pile paths a file will go through
+        locations:[ //a list of locations to keep track of all file paths a file will go through in its life
             {
                 location: String, //a file path 
                 dateAdded: { 

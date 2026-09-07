@@ -93,10 +93,96 @@ uploadButton.addEventListener("click", async (event) => {
 
     if (autoGenerateThumbnails)
     {
-        listOfImageUUIDs.forEach(uuid => {
-            console.log('image: ', uuid);
+        let numberOfUuids = listOfImageUUIDs.length
+        let uuidNo = 1;
+        let uuidNoString;
+
+        if (numberOfUuids > 1)
+        {
+            addMessageToConsole("> Preparing to generate thumbnails for "+listOfImageUUIDs.length+" images!");
+        }
+        else
+        {
+            addMessageToConsole("> Preparing to generate thumbnails for 1 image!");
+        }
+
+        listOfImageUUIDs.forEach(async uuid => {
+            //tester vv
+            // console.log('image: ', uuid);
+            try
+            {
+                uuidNoString = "("+uuidNo+"/"+numberOfUuids+")";
+                addMessageToConsole("> Requesting a thumbnail. "+uuidNoString+"");
+                let urlForUuidSearch = "/api/image/generateThumbnailForImageByUuid/"+uuid;
+                //TESTER vvv
+                // let urlForUuidSearch = "/api/image/getImageByUuid/2323232";
+
+                const response = await fetch(urlForUuidSearch, {
+                    method: "GET"
+                });
+
+                const result = await response.json();
+
+                if (result.success)
+                {
+                    //TESTER vvv
+                    console.log('Success:',result.success);
+                    console.log('image location:',result.image.locations);
+                    console.log('message:',result.message);
+                    addMessageToConsole("> SERVER: "+result.message);
+                }
+                else
+                {
+                    return addMessageToConsole("> SERVER: "+result.message);
+                }
+            }
+            catch (error)
+            {
+                console.log('Request to generate thumbnail for '+fileName+' failed!', error);
+                addMessageToConsole("> ERROR: Failed to generate a thumbnail for "+fileName+" failed to ! ("+fileNo+"/"+numberOfFiles+")");
+            }
+
+            uuidNo++;
+/*
+            const response = await fetch("/api/image/generateThumbnailForImageByUuid", {
+                method: "POST",
+                body: formData,
+            });
+
+            const result = await response.json();
+            if (result.success)
+            {
+                console.log('('+fileNo+'/'+numberOfFiles+') Successfully uploaded',fileName);
+
+                addMessageToConsole("> SERVER: "+result.message);
+
+                //NOTE: update this when you add video compatibility!!!!
+                listOfImageUUIDs.push(result.image.imgId);
+            }
+            else
+            {
+                console.log('Failed to upload',fileName);
+
+                addMessageToConsole("> ERROR: "+fileName+" failed to upload! ("+fileNo+"/"+numberOfFiles+")");
+
+                addMessageToConsole("> SERVER: "+result.message);
+
+            }
+        }
+        catch (error)
+        {
+            console.log('Request to upload '+fileName+' failed!', error);
+            addMessageToConsole("> ERROR: "+fileName+" failed to upload! ("+fileNo+"/"+numberOfFiles+")");
+        }*/
+
         });
+        
     }
+
+    fileNo = 1;
+
+    listOfImageUUIDs = [];
+    
 });
 
 //     console.log('Preparing to add images to gallery titled',galleryObjectFromDB.title);

@@ -35,6 +35,11 @@ async function createImageDatabaseEntry(req, res)
 
         let uuid = uuidv4();
 
+        let locations = [];
+        locations.push({
+            location: filePath
+        });
+
         const newImage = new Image({
             name: fileName,
             imgSize: fileStats.size,
@@ -43,7 +48,7 @@ async function createImageDatabaseEntry(req, res)
             imgDate: fileCreationDate,
             dateUploaded: new Date(),
             imgFileType: req.file.mimetype,
-            location: filePath,
+            locations: locations,
             username: req.session.activeUser.username,
             imgId: uuid,
         });
@@ -78,6 +83,60 @@ async function createImageDatabaseEntry(req, res)
         res.status(400).json({
           success: false,
           message: "Failed to create database entry for "+fileName+". CONTACT ADMIN!"
+        });
+    }
+}
+
+//retrieves a single image by its unique number generated upon creation
+async function getImageByUuid(req, res)
+{
+    let imgId = req.params.uuid;
+
+    try
+    {
+        const imageObj = await Image.findOne({ imgId });
+
+        let messageToUser = "Successfully retrieved data for "+imageObj.name+".";
+
+        res.status(200).json({
+            image: imageObj,
+            success: true,
+            message: messageToUser,
+        });
+    }
+    catch (error)
+    {
+        console.log('getImageByUuid failed:',error);
+
+        res.status(400).json({
+          success: false,
+          message: "Failed to locate image. Wrong uuid?"
+        });
+    }
+}
+
+async function generateThumbnailForImageByUuid(req, res)
+{
+    let imgId = req.params.uuid;
+
+    try
+    {
+        const image = await Image.find({ imgId });
+
+        const filePath = path.resolve(process.env.IMAGE_DELIVERY_LOCATION+"/"+image.username+"_images/"+image.name);
+
+        // vvv thumbnail is saved under the image's uuid as a jpg
+        const newFilePath = path.resolve(process.env.IMAGE_DELIVERY_LOCATION+"/"+image.username+"_images/thumbnails"+image.imgId+".jpg"); 
+
+        let messageToUser = ""
+    }
+    catch (error)
+    {
+        console.log('generateThumbnailForImageByUuid failed:',error);
+
+        res.status(400).json({
+          success: false,
+          message: "Failed to generate thumbnail. Contact admin!"
         });
     }
 }
@@ -135,7 +194,8 @@ async function sendImageByMongoId(req, res)
 
         const filePath = path.resolve(process.env.IMAGE_DELIVERY_LOCATION+"/"+image.username+"_images/"+image.name);
 
-        console.log('FILEPATH:',filePath);
+        //TESTER vv
+        // console.log('FILEPATH:',filePath);
 
         res.status(200).sendFile(filePath);
     }
@@ -362,6 +422,9 @@ async function getGalleriesByUsername(req, res)
 
 module.exports = {
     createImageDatabaseEntry,
+    getImageByUuid,
+    generateThumbnailForImageByUuid,
+
     getImagesByUsername,
     sendImageByMongoId,
     createGalleryFromMongoIds,

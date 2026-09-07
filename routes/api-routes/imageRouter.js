@@ -13,12 +13,15 @@ const {
 
 const {
     createImageDatabaseEntry,
+    getImageByUuid,
+    generateThumbnailForImageByUuid,
     getImagesByUsername,
     sendImageByMongoId,
     createGalleryFromMongoIds,
     getGalleriesByUsername,
     getGalleryById,
     updateGalleryWithMongoIds
+
 } = require("../../controllers/imageController");
 
 router.post("/uploadImageWithMulter", validateLogin, updateUserPermissionsAndFiles, validateIsUploader,
@@ -39,11 +42,14 @@ router.post("/uploadImageWithMulter", validateLogin, updateUserPermissionsAndFil
 }
 , createImageDatabaseEntry);
 
-router.get("/getImageByUuid"); TODOdahdh
-router.get("/getImageByMongoId"); TODOadhadh
-router.get("/getImagesByUsername"); TodoAHaha
-router.get("/sendImageByUuid"); todoahahah
-router.get("/sendImageByMongoId"); todoahagag
+router.get("/getImageByUuid/:uuid", validateLogin, updateUserPermissionsAndFiles, validateIsUploader, getImageByUuid); 
+
+// router.post("/generateThumbnailForImageByUuid", validateLogin, updateUserPermissionsAndFiles, validateIsUploader, generateThumbnailForImageByUuid);
+
+router.get("/getImageByMongoId"); 
+router.get("/getImagesByUsername"); 
+router.get("/sendImageByUuid"); 
+router.get("/sendImageByMongoId");
 
 //Gallery routes:
 router.get("/getGalleryById/:galleryId", validateLogin, updateUserPermissionsAndFiles, validateIsUploader, getGalleryById); //retrieve gallery object
