@@ -81,6 +81,28 @@
     </div>
 
 </div>
+<div id ="gallery-creation-and-selection-wrapper" class="flex-row flex-centered" style="margin-left: auto; margin-right: auto; max-width: 95%;" >
+    <form id="gallery-creation-form" class="flex-column" style="justify-content: flex-start; align-items: flex-start; height: 99%; padding: 15px;">
+        <h2>CREATE A NEW GALLERY</h2>
+        
+        <label for="gallery-title">Title for New Gallery:&nbsp;&nbsp;</label>
+        <input type="text" id="gallery-title" value="" name="galleryTitle" placeholder="Choose a title" required>
+
+        <label for="gallery-description">Description:&nbsp;&nbsp;</label>
+        <textarea id="gallery-description" name="content" rows="4" cols="35"></textarea>
+
+        <input id="gallery-submission" type="submit" value="SUBMIT">
+
+    </form>
+
+    <div id="display-user-galleries" class="flex-column" style="align-items: flex-start; height: 100%; padding: 15px;">
+        <h1>Galleries:</h1>
+        <div id="gallery-list">
+            
+        </div>
+
+    </div>
+</div>
 
 <!-- vvv presents user's images organized either by date uploaded or internal modified date -->
 <!-- either way, each image date container is a template that gets added to the display. The images themselves are not loaded unless the user presses the [+] plus button to load the thumbnails -->

@@ -643,6 +643,10 @@ header {
     text-align: center;
 }
 
+#display-user-galleries {
+    width: 300px;
+}
+
 /* USER PORTAL / user-index page styles! */
 .user-index-body {
       background-color: #151515; 
@@ -994,6 +998,10 @@ footer a:visited {
         display: flex;
         flex-direction: row;
 
+        height: 339px;
+    }
+
+    #gallery-creation-and-selection-wrapper {
         height: 339px;
     }
 

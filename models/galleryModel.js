@@ -19,7 +19,7 @@ const gallerySchema = new mongoose.Schema(
         creator: String, //match the username of OG creator
         usersPermittedToUpload: [ //list of users that can also upload files
             {
-                additionalUploader: String,
+                username: String,
                 canEdit: Boolean, //if true, user can also edit descriptions, delete files, and do other stuff
             }
         ],
@@ -52,6 +52,7 @@ const gallerySchema = new mongoose.Schema(
                         listed: Boolean, //if false, don't show in gallery
                         alternativeTitle: String, //to be displayed instead of literal filename
                         imgDescription: String,
+                        isFavorite: Boolean, //marks hearted images
                     }
                 ],
                 featuredImage: { //the featured image of the gallery
@@ -60,11 +61,11 @@ const gallerySchema = new mongoose.Schema(
                 }
             }
         ],
-        daysByUploadedDate: [
-            {
+        // daysByUploadedDate: [ //TO BE DECIDED... ;_;
+        //     {
 
-            }
-        ],
+        //     }
+        // ],
 
     }
 );

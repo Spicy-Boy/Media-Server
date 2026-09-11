@@ -1,16 +1,13 @@
 const fs = require("fs");
-const fs2 = require('fs').promises;
+const fs2 = require('fs').promises; //uuhh lol
 
 const User = require("../models/userModel");
 const Image = require("../models/imageModel");
-const Gallery = require("../models/OLD-galleryModel");
+const Gallery = require("../models/galleryModel");
 
 const mongoose = require("mongoose");
-
 const sharp = require('sharp');
-
 const path = require("path");
-
 const { v4: uuidv4 } = require('uuid');
 
 //at the end of the image uploading pipeline, create a DB entry to track it
@@ -21,7 +18,7 @@ async function createImageDatabaseEntry(req, res)
     try
     {
         // TESTER vvv
-        console.log('Greetings from createImageDatabaseEntry');
+        // console.log('Greetings from createImageDatabaseEntry');
 
         const filePath = req.file.path;
         const fileName = req.file.originalname;
@@ -38,7 +35,7 @@ async function createImageDatabaseEntry(req, res)
 
         let locations = [];
         locations.push({
-            location: filePath
+            location: filePath //first date is automatically recorded by default in the model
         });
 
         const newImage = new Image({
@@ -116,6 +113,7 @@ async function getImageByUuid(req, res)
     }
 }
 
+// vv uses Sharp to generate a 150x150px thumbnail of an image already uploaded to the server 
 async function generateThumbnailForImageByUuid(req, res)
 {
     let imgId = req.params.uuid;
@@ -136,8 +134,9 @@ async function generateThumbnailForImageByUuid(req, res)
     
         await sharp(filePath).resize(150, 150, {
             fit: 'fill', //fills square, distorts image
-            background: { r: 255, g: 255, b: 255, alpha: 1 }
+            background: { r: 0, g: 0, b: 0, alpha: 1 }
         })
+        .rotate() //reads the photo's data and orients it properly
         .toFile(newThumbnailPath);
 
         image.hasThumbnail = true;
@@ -159,6 +158,78 @@ async function generateThumbnailForImageByUuid(req, res)
           message: "Failed to generate a thumbnail for uuid "+imgId+". Contact admin!"
         });
     }
+}
+
+// vv creates an empty gallery with some basic information to start
+async function createNewGallery(req, res)
+{
+    const title = req.body.title;
+    const galleryDescription = req.body.galleryDescription;
+    const creator = req.session.activeUser.username;
+
+    try 
+    {
+        const newGallery = new Gallery({
+            title: title,
+            galleryDescription: galleryDescription,
+            creator: creator,
+            usersPermittedToUpload: //I guess this is how we'll do it... lol
+            {
+                username: creator,
+                canEdit: true,
+            },
+            sectionsByModifiedDate: [],
+        });
+    }
+    catch (error)
+    {
+        console.log('createNewGallery failed:',error);
+
+        res.status(400).json({
+          success: false,
+          message: "Failed to create the new gallery... Contact admin!!!"
+        });
+    }
+}
+
+async function getGalleriesByUsername(req, res)
+{
+    let username = req.params.username;
+
+    try
+    {
+        const galleries = await Gallery.find({ creator: username });
+
+        if (galleries.length > 0)
+        {
+            res.status(400).json({
+                galleries: galleries,
+                success: true,
+                message: "Successfully found gallery data for "+username+"."
+            });
+        }
+        else
+        {
+            res.status(400).json({
+                success: false,
+                message: "No galleries found for "+username+"."
+            });
+        }
+    }
+    catch (error)
+    {
+        console.log('getGalleriesByUsername failed:',error);
+
+        res.status(400).json({
+          success: false,
+          message: "Failed to retrieve galleries for "+username+"."
+        });
+    }
+}
+
+async function getGalleryByUuid(req, res)
+{
+
 }
 
 async function getImagesByUsername(req, res)
@@ -399,8 +470,8 @@ async function getGalleryById(req, res)
 //     }
 }
 
-async function getGalleriesByUsername(req, res)
-{
+// async function getGalleriesByUsername(req, res)
+// {
     //UNDER CONSTRUCTION!!!
 //     let username = req.params.username;
 
@@ -438,17 +509,21 @@ async function getGalleriesByUsername(req, res)
 //           errorMsg: "Failed to find the galleries!"
 //         });
 //     }
-}
+// }
 
 module.exports = {
     createImageDatabaseEntry,
     getImageByUuid,
     generateThumbnailForImageByUuid,
+    createNewGallery,
+    getGalleriesByUsername,
+    getGalleryByUuid,
 
+    //vv old, need to be reviewed
     getImagesByUsername,
     sendImageByMongoId,
     createGalleryFromMongoIds,
     updateGalleryWithMongoIds,
-    getGalleriesByUsername,
+    // getGalleriesByUsername,
     getGalleryById
 };
