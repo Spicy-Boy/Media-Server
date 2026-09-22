@@ -82,22 +82,34 @@
 
 </div>
 <div id ="gallery-creation-and-selection-wrapper" class="flex-row flex-centered" style="margin-left: auto; margin-right: auto; max-width: 95%;" >
-    <form id="gallery-creation-form" class="flex-column" style="justify-content: flex-start; align-items: flex-start; height: 99%; padding: 15px;">
-        <h2>CREATE A NEW GALLERY</h2>
+    <form id="gallery-creation-form" class="width-50 margins-auto flex-column" style="justify-content: flex-start; align-items: flex-start; height: 99%; padding: 15px;">
+        <h2>CREATE A NEW GALLERY:</h2>
         
         <label for="gallery-title">Title for New Gallery:&nbsp;&nbsp;</label>
         <input type="text" id="gallery-title" value="" name="galleryTitle" placeholder="Choose a title" required>
-
+        <div>
+            <br>
+        </div>
         <label for="gallery-description">Description:&nbsp;&nbsp;</label>
         <textarea id="gallery-description" name="content" rows="4" cols="35"></textarea>
-
+        <div>
+            <br>
+        </div>
+        <div class="form-group-row">
+            <input class="console-checkbox" type="checkbox" id="use-selected-images-checkbox" name="use-selected-images-checkbox" checked>&nbsp;&nbsp;
+            <label for="use-selected-images-checkbox">Include selected images in new gallery?</label>
+        </div>
+        <div style="font-size: 10px;">NOTE: NO FUNCTIONALITY YET!</div>
+        <div>
+            <br>
+        </div>
         <input id="gallery-submission" type="submit" value="SUBMIT">
 
     </form>
 
-    <div id="display-user-galleries" class="flex-column" style="align-items: flex-start; height: 100%; padding: 15px;">
-        <h1>Galleries:</h1>
-        <div id="gallery-list">
+    <div id="display-user-galleries" class="tac width-50 margins-auto flex-column" style="align-items: flex-start; height: 100%; padding: 15px;">
+        <h2>GALLERIES:</h2>
+        <div id="gallery-list" >
             
         </div>
 
@@ -121,7 +133,8 @@
     
 </body>
 
-<script src="/js/consoleScripts/updateConsoleWIndow.js"></script>
+<script src="/js/consoleScripts/updateConsoleWindow.js"></script>
 <script src="/js/galleryScripts/uploadImagesSmeargleFrontEnd.js"></script>
+<script src="/js/galleryScripts/create"></script>
 
 </html>

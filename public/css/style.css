@@ -560,6 +560,15 @@ header {
     text-align: center;
 }
 
+.form-group-row {
+    display: flex;
+    flex-direction: row;
+    justify-content: left;
+}
+.form-group-row label {
+    width: 85%;
+}
+
 .smeargle-box {
     width: 99%;
 
