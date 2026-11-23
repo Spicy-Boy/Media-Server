@@ -1,3 +1,13 @@
+TODO - Late November 2026 URGENT
+
+O - get suicune delivery service going again but for gallery upload
+
+O - upload mp4 video with processing
+    - auto generate 3 thumbnails, choose one
+    - record duration (runtime)
+    - option to add label (an alt name) an image/video 
+        > file name is not changed
+
 BUGS!!!!!
 
 O - Attempting to delete a file where the file is missing causes error. There is no way to prune a file listing from database when its actual file is missing
@@ -10,7 +20,7 @@ O - Add colored messaging (red if error, green if success, etc.)
 
 X - Create a console viewport that can display messages going to and coming back from server
 
-O - Create thumbnails for every uploaded image, after image is uploaded
+X - Create thumbnails for every uploaded image, after image is uploaded
 
 O - add create gallery button to image portal
 O - add list of galleries to user's image portal (click to view, or edit)
