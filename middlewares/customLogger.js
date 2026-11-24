@@ -1,4 +1,5 @@
 const chalk = require("chalk");
+// import chalk from "chalk";
 
 function colorStatus(status) {
   if (status >= 500) return chalk.red(status);     // Server error

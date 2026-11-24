@@ -1,6 +1,7 @@
 const fs = require("fs");
 const path = require("path");
 
+//vv a test of how to stream videoooo
 async function streamVideoTEST (req, res)
 {
     try 

@@ -9,7 +9,7 @@ const imageSchema = new mongoose.Schema(
             required: true,
             unique: true
         },
-        username: { //of person that uploaded image
+        username: { //of person that uploaded video
             type: String,
             required: true,
         },
